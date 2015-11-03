@@ -17,7 +17,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="406dp"
-        android:id="@+id/listView"
+        android:id="@+id/your_inventory_listview"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.11" />
 

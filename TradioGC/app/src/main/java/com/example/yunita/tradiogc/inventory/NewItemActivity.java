@@ -21,7 +21,7 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 public class NewItemActivity extends ActionBarActivity {
     private InventoryController inventoryController;
     private Inventory inventory;
-    private Context mcontext = this;
+    private Context context = this;
     private EditText nameEdit;
     private EditText priceEdit;
     private EditText descriptionEdit;
@@ -32,16 +32,22 @@ public class NewItemActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_inventory);
-        inventoryController = new InventoryController(mcontext);
+        inventoryController = new InventoryController(context);
         //need to pass in an inventory
-        inventory = new Inventory();
+    }
 
-        //Spinner must be initialized here
+    @Override
+    protected void onStart(){
+        super.onStart();
+
         Spinner categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.categories_array,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
+        Thread thread = inventoryController.new LoadInventoryThread(LoginActivity.USERLOGIN, inventory);
+        // Update thread
+        thread.start();
         onClickListeners(categoriesChoice);
     }
 

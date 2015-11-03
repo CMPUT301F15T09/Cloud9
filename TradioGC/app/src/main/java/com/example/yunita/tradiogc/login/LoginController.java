@@ -6,10 +6,18 @@ import android.util.Log;
 
 import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.WebServer;
+import com.example.yunita.tradiogc.data.SearchHit;
+import com.example.yunita.tradiogc.inventory.Inventory;
+import com.example.yunita.tradiogc.inventory.Item;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -17,7 +25,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 
 public class LoginController {
 
@@ -38,6 +48,9 @@ public class LoginController {
         this.context = context;
         newUser = new User();
     }
+
+
+
 
     public void addUser(String username) {
         newUser.setUsername(username);

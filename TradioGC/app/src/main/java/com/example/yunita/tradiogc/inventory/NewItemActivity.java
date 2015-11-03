@@ -35,31 +35,33 @@ public class NewItemActivity extends ActionBarActivity {
         inventoryController = new InventoryController(mcontext);
         //need to pass in an inventory
         inventory = new Inventory();
-        onClickListeners();
-        }
 
-
-
-    public void onClickListeners() {
-        Button addItem = (Button) findViewById(R.id.add_item_button);
-
+        //Spinner must be initialized here
         Spinner categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.categories_array,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
+        onClickListeners(categoriesChoice);
+    }
+
+
+
+    public void onClickListeners(Spinner categoriesChoice) {
+        Button addItem = (Button) findViewById(R.id.add_item_button);
+        final Spinner categ_Choice = categoriesChoice;
+
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 privateChoice = (RadioButton) findViewById(R.id.private_radio_button);
-                //Should be in here
 
                 nameEdit = (EditText) findViewById(R.id.name_textEdit);
                 priceEdit = (EditText) findViewById(R.id.price_edit_text);
                 descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
                 String name = nameEdit.getText().toString();
                 //Wont work right now
-                int category = categoriesChoice.getSelectedItemPosition();
+                int category = categ_Choice.getSelectedItemPosition();
                 Boolean visibility = true;
                 if (privateChoice.isChecked()) {
                     visibility = false;

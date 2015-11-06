@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
@@ -17,7 +18,7 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import java.util.ArrayList;
 
 public class InventoryActivity extends ActionBarActivity {
-    private Inventory inventory = new Inventory();
+    public static Inventory inventory = new Inventory();
     private InventoryController inventoryController;
     private Context context = this;
 
@@ -26,10 +27,20 @@ public class InventoryActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.your_inventory);
         inventoryController = new InventoryController(context);
-        inventory = inventoryController.loadInventory(LoginActivity.USERLOGIN);
+
+        Thread thread = inventoryController.new LoadInventoryThread(LoginActivity.USERLOGIN.getUsername());
+        thread.start();
+        //inventory = inventoryController.loadInventory(LoginActivity.USERLOGIN.getUsername());
         onClickListeners();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        System.out.println(LoginActivity.USERLOGIN.getUsername());
+
+    }
 
     public void onClickListeners() {
         Button plus = (Button) findViewById(R.id.plus_button);

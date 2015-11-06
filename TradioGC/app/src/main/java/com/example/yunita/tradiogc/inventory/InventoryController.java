@@ -49,9 +49,9 @@ public class InventoryController {
     };
 
 
-    public void createItem(Inventory inventory, String name,int category,double price,String description,Boolean visibility){
+    public void createItem(String name,int category,double price,String description,Boolean visibility){
         Item item = new Item(name, category, price, description, visibility);
-        inventory.addItem(item);
+        InventoryActivity.inventory.addItem(item);
     }
 
     public void addInventory(User user, Inventory inventory) {
@@ -76,10 +76,10 @@ public class InventoryController {
         }
     }
 
-    public Inventory loadInventory(User username){
+    public Inventory loadInventory(String username){
         SearchHit<Inventory> sr = null;
         HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(webServer.getInventoryUrl() + username.getUsername());
+        HttpGet httpGet = new HttpGet(webServer.getInventoryUrl() + username);
 
         HttpResponse response = null;
 
@@ -147,17 +147,17 @@ public class InventoryController {
 
 
     class LoadInventoryThread extends Thread {
-        private User user;
-        private Inventory inventory;
+        private String user;
+        //private Inventory inventory;
 
-        public LoadInventoryThread(User user, Inventory inventory) {
-            this.inventory = inventory;
+        public LoadInventoryThread(String user) {
+            //this.inventory = inventory;
             this.user = user;
         }
 
         @Override
         public void run() {
-            inventory = loadInventory(user);
+            InventoryActivity.inventory = loadInventory(user);
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
@@ -165,7 +165,7 @@ public class InventoryController {
                 e.printStackTrace();
             }
 
-            ((Activity) context).runOnUiThread(doFinishAdd);
+            //((Activity) context).runOnUiThread(doFinishAdd);
         }
 
     }

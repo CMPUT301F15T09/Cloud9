@@ -45,7 +45,7 @@ public class NewItemActivity extends ActionBarActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
-        Thread thread = inventoryController.new LoadInventoryThread(LoginActivity.USERLOGIN, inventory);
+        Thread thread = inventoryController.new LoadInventoryThread(LoginActivity.USERLOGIN.getUsername());
         // Update thread
         thread.start();
         onClickListeners(categoriesChoice);
@@ -78,7 +78,7 @@ public class NewItemActivity extends ActionBarActivity {
                 double price = Double.parseDouble(priceEdit.getText().toString());
                 String description = descriptionEdit.getText().toString();
 
-                inventoryController.createItem(inventory, name, category, price, description, visibility);
+                //inventoryController.createItem(name, category, price, description, visibility);
 
 
                 Thread thread = inventoryController.new UpdateInventoryThread(LoginActivity.USERLOGIN, inventory);

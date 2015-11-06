@@ -48,7 +48,8 @@ public class InventoryController {
         }
     };
 
-
+    // Errors occurring in this area due to some of the methods changing
+    // Works up until we try to add the item
     public void createItem(String name,int category,double price,String description,Boolean visibility){
         Item item = new Item(name, category, price, description, visibility);
         InventoryActivity.inventory.addItem(item);

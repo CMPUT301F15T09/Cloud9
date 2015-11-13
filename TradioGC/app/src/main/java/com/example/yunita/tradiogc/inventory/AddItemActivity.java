@@ -1,11 +1,13 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -22,6 +24,7 @@ public class AddItemActivity extends AppCompatActivity {
     private RadioButton privateChoice;
     private Spinner categoriesChoice;
     private Spinner qualityChoice;
+    private Button uploadPhotoButton;
 
 
     @Override
@@ -37,6 +40,7 @@ public class AddItemActivity extends AppCompatActivity {
         descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
+        uploadPhotoButton = (Button) findViewById(R.id.upload_photo_button);
     }
 
     /**
@@ -52,6 +56,12 @@ public class AddItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
+
+        uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(AddItemActivity.this, UploadPhotoActivity.class));
+            }
+        });
     }
 
     /**

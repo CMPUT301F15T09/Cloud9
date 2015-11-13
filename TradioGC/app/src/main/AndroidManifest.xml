@@ -72,6 +72,10 @@
             android:label="@string/edit_item" >
         </activity>
         <activity
+            android:name=".inventory.UploadPhotoActivity"
+            android:label="@string/title_activity_item_search" >
+        </activity>
+        <activity
             android:name=".search.ItemSearchActivity"
             android:label="@string/title_activity_item_search" >
         </activity>

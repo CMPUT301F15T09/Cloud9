@@ -28,6 +28,7 @@ public class EditItemActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText quantityEdit;
     private Spinner qualityChoice;
+    private Button uploadPhotoButton;
     private Item item;
     private Button add;
     private Button save;
@@ -53,6 +54,7 @@ public class EditItemActivity extends AppCompatActivity {
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
         descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
+        uploadPhotoButton = (Button) findViewById(R.id.upload_photo_button);
         add = (Button) findViewById(R.id.add_item_button);
         save = (Button) findViewById(R.id.save_item_button);
     }
@@ -70,6 +72,12 @@ public class EditItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
+
+        uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(EditItemActivity.this, UploadPhotoActivity.class));
+            }
+        });
 
         add.setVisibility(View.GONE);
         save.setVisibility(View.VISIBLE);

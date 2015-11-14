@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 
@@ -29,7 +30,7 @@ public class UploadPhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_photo);
 
-        imageView = (ImageView)findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
         Button pickImage = (Button) findViewById(R.id.btn_pick);
         pickImage.setOnClickListener(new OnClickListener() {
@@ -69,10 +70,10 @@ public class UploadPhotoActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-
-
 }
 
 
 
 //code used from http://javatechig.com/android/writing-image-picker-using-intent-in-android
+
+//DO NOT load a large image into Android Studio. It will crash apparently. :/

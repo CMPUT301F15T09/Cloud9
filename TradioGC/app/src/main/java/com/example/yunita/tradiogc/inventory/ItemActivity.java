@@ -2,10 +2,14 @@ package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,6 +58,12 @@ public class ItemActivity extends AppCompatActivity {
             TextView description = (TextView) findViewById(R.id.itemDescription);
             TextView quantity = (TextView) findViewById(R.id.itemQuantity);
             TextView quality = (TextView) findViewById(R.id.itemQuality);
+
+            ImageView itemImage = (ImageView) findViewById(R.id.itemImage);
+            if(!item.getPhotos().equals("")){
+                itemImage.setImageBitmap(decodeImage(item.getPhotos()));
+            }
+
 
             // Hasn't been tested yet
             // Need to check if the item has a photo
@@ -141,6 +151,12 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = new Intent(context, EditItemActivity.class);
         intent.putExtra("index", index);
         startActivity(intent);
+    }
+
+    public Bitmap decodeImage(String encoded){
+        byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
     }
 
 }

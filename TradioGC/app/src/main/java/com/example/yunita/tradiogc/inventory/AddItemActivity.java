@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -37,6 +39,7 @@ public class AddItemActivity extends AppCompatActivity {
     private Uri imageFileUri;
     private ImageView tempPhoto;
     private String imageFilePath;
+    private Bitmap thumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +104,13 @@ public class AddItemActivity extends AppCompatActivity {
             }
             int quantity = Integer.parseInt(quantityEdit.getText().toString());
             int quality = qualityChoice.getSelectedItemPosition();
+            String photo = "";
+            if(thumbnail != null) {
+                photo = encodeImage(thumbnail);
+                System.out.println(thumbnail.getByteCount());
+            }
 
-            Item newItem = new Item(name, category, price, description, visibility, quantity, quality);
+            Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
             inventoryController.addItem(newItem);
 
             finish();
@@ -132,12 +140,14 @@ public class AddItemActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Bitmap thumbnail = BitmapFactory.decodeFile(imageFileUri.getPath());
-                double tHeight = thumbnail.getHeight() * 0.3;
-                double tWidth = thumbnail.getWidth()* 0.3;
+                Bitmap temp = BitmapFactory.decodeFile(imageFileUri.getPath());
+                double tHeight = temp.getHeight() * 0.2;
+                double tWidth = temp.getWidth()* 0.2;
 
-                Bitmap b = Bitmap.createScaledBitmap(thumbnail, (int)tWidth, (int)tHeight, true);
-                tempPhoto.setImageBitmap(b);
+                thumbnail = Bitmap.createScaledBitmap(temp, (int)tWidth, (int)tHeight, true);
+                tempPhoto.setImageBitmap(thumbnail);
+            } else {
+                thumbnail = null;
             }
         }
     }
@@ -150,4 +160,11 @@ public class AddItemActivity extends AppCompatActivity {
         tempPhoto.setImageResource(R.mipmap.ic_launcher);
     }
 
+    public String encodeImage(Bitmap photo){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
 }

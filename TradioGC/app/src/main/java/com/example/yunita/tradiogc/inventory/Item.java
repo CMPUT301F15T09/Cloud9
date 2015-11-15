@@ -1,5 +1,7 @@
 package com.example.yunita.tradiogc.inventory;
 
+import com.example.yunita.tradiogc.photo.Photos;
+
 import java.io.Serializable;
 
 
@@ -11,6 +13,7 @@ public class Item implements Serializable {
     private Boolean visibility;
     private int quantity;
     private int quality;
+    private String photos;
 
     /**
      * Class constructor.
@@ -30,7 +33,7 @@ public class Item implements Serializable {
      * @param quantity   contains an integer 1..* for the amount that the owner has of the item
      * @param quality    contains an integer that describes the item's quality; 0 is new and 1 is used
      */
-    public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality) {
+    public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality, String photos) {
         this.category = category;
         this.name = name;
         this.price = price;
@@ -38,6 +41,7 @@ public class Item implements Serializable {
         this.visibility = visibility;
         this.quality = quality;
         this.quantity = quantity;
+        this.photos = photos;
     }
 
     /**
@@ -168,6 +172,24 @@ public class Item implements Serializable {
      */
     public void setQuality(int quality) {
         this.quality = quality;
+    }
+
+    /**
+     * Gets the photos of this item.
+     *
+     * @return Photos
+     */
+    public String getPhotos() {
+        return photos;
+    }
+
+    /**
+     * Changes the photos of this item.
+     *
+     * @param photos new photos.
+     */
+    public void setPhotos(String photos) {
+        this.photos = photos;
     }
 
     /**

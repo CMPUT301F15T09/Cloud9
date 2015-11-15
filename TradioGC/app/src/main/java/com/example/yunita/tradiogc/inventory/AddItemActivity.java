@@ -1,16 +1,26 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
+
+import java.io.File;
 
 public class AddItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
@@ -23,6 +33,10 @@ public class AddItemActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private Spinner qualityChoice;
 
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private Uri imageFileUri;
+    private ImageView tempPhoto;
+    private String imageFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,7 @@ public class AddItemActivity extends AppCompatActivity {
         descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
+        tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
     }
 
     /**
@@ -92,6 +107,47 @@ public class AddItemActivity extends AppCompatActivity {
 
             finish();
         }
+    }
+
+    /**
+     *
+     * @param view
+     */
+    public void takeAPhoto(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+        File folderF = new File(folder);
+        if (!folderF.exists()) {
+            folderF.mkdir();
+        }
+
+        imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        File imageFile = new File(imageFilePath);
+        imageFileUri = Uri.fromFile(imageFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bitmap thumbnail = BitmapFactory.decodeFile(imageFileUri.getPath());
+                double tHeight = thumbnail.getHeight() * 0.3;
+                double tWidth = thumbnail.getWidth()* 0.3;
+
+                Bitmap b = Bitmap.createScaledBitmap(thumbnail, (int)tWidth, (int)tHeight, true);
+                tempPhoto.setImageBitmap(b);
+            }
+        }
+    }
+
+    public void cancelImage(View view){
+        File file = new File(imageFilePath);
+        if(file.exists()) {
+            file.delete();
+        }
+        tempPhoto.setImageResource(R.mipmap.ic_launcher);
     }
 
 }

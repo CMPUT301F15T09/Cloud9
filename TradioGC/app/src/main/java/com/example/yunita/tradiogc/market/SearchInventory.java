@@ -1,4 +1,4 @@
-package com.example.yunita.tradiogc.search;
+package com.example.yunita.tradiogc.market;
 
 import java.util.ArrayList;
 

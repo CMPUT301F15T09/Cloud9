@@ -13,7 +13,7 @@ import com.example.yunita.tradiogc.friends.FriendsActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.photo.PhotoActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
-import com.example.yunita.tradiogc.search.MarketActivity;
+import com.example.yunita.tradiogc.market.MarketActivity;
 
 public class MainActivity extends TabActivity {
 

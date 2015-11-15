@@ -6,8 +6,8 @@
     <color name="hover_login_button">#50000000</color>
     <color name="default_login_button">#10000000</color>
     <color name="primary_color">#009688</color>
-    <color name="button_color">#FFC107</color>
-    <color name="hover_button_color">#50FFC107</color>
+    <color name="button_color">#9E9E9E</color>
+    <color name="hover_button_color">#509E9E9E</color>
     <color name="white">#ffffff</color>
 
 </resources>

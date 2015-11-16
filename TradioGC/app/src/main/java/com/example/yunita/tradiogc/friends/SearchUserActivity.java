@@ -93,7 +93,7 @@ public class SearchUserActivity extends AppCompatActivity {
      */
     public void startProfileActivity(String username) {
         Intent intent = new Intent(mContext, ProfileActivity.class);
-        intent.putExtra(ProfileActivity.USERNAME, username);
+        intent.putExtra("profileTarget", username);
         startActivity(intent);
     }
 

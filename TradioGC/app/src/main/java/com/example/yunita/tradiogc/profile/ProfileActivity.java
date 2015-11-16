@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,11 +20,8 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
 public class ProfileActivity extends AppCompatActivity {
-
-    public static String USERNAME;
-    private String targetUsername;
+    private String targetUsername = "";
     private User user;
-//    private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     private UserController userController;
     private FriendsController friendsController;
@@ -33,19 +31,68 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout stranger_panel;
     private LinearLayout friend_panel;
     private ImageButton edit_button;
+    private Button myinventory_button;
+    private Button friendinventory_button;
+
+    private Button addfriend_button;
+
+    private TextView username;
+    private TextView location;
+    private TextView email;
+    private TextView phone;
+
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
-            TextView userName = (TextView) findViewById(R.id.profileName);
-            TextView location = (TextView) findViewById(R.id.profileLocation);
-            TextView email = (TextView) findViewById(R.id.profileEmail);
-            TextView phone = (TextView) findViewById(R.id.profilePhone);
-
-            userName.setText(user.getUsername());
+            username.setText(user.getUsername());
             location.setText(user.getLocation());
             email.setText(user.getEmail());
             phone.setText(user.getPhone());
         }
     };
+
+    public TextView getUsername() {
+        return username;
+    }
+
+    public TextView getLocation() {
+        return location;
+    }
+
+    public TextView getEmail() {
+        return email;
+    }
+
+    public TextView getPhone() {
+        return phone;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Runnable getDoUpdateGUIDetails() {
+        return doUpdateGUIDetails;
+    }
+
+    public ImageButton getEdit_button() {
+        return edit_button;
+    }
+
+    public Button getAddfriend_button() {
+        return addfriend_button;
+    }
+
+    public Button getFriendinventory_button() {
+        return friendinventory_button;
+    }
+
+    public Button getMyinventory_button() {
+        return myinventory_button;
+    }
+
+    public Context getContext() {
+        return context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +104,16 @@ public class ProfileActivity extends AppCompatActivity {
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
+
         edit_button = (ImageButton) findViewById(R.id.edit_button);
+        myinventory_button = (Button) findViewById(R.id.my_inventory_button);
+        friendinventory_button = (Button) findViewById(R.id.friend_inventory_btn);
+        addfriend_button = (Button) findViewById(R.id.add_friend_btn);
+
+        username = (TextView) findViewById(R.id.profileName);
+        location = (TextView) findViewById(R.id.profileLocation);
+        email = (TextView) findViewById(R.id.profileEmail);
+        phone = (TextView) findViewById(R.id.profilePhone);
     }
 
     /**
@@ -76,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (intent != null) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                targetUsername = extras.getString(USERNAME);
+                targetUsername = extras.getString("profileTarget");
                 setTitle(targetUsername + "'s Profile");
                 Thread thread = new GetThread(targetUsername);
                 thread.start();
@@ -84,21 +140,23 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // Checks to see if we are getting a username from the intent
-        if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
+        if (LoginActivity.USERLOGIN != null) {
+            if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
 
-            Friends friends = LoginActivity.USERLOGIN.getFriends();
+                Friends friends = LoginActivity.USERLOGIN.getFriends();
 
-            // If the username is in the user's friend list, show friend profile view
-            if (friends.contains(targetUsername)) {
-                myprofile_panel.setVisibility(View.GONE);
-                edit_button.setVisibility(View.GONE);
-                friend_panel.setVisibility(View.VISIBLE);
+                // If the username is in the user's friend list, show friend profile view
+                if (friends.contains(targetUsername)) {
+                    myprofile_panel.setVisibility(View.GONE);
+                    edit_button.setVisibility(View.GONE);
+                    friend_panel.setVisibility(View.VISIBLE);
 
-                // If not, then show the stranger's profile view
-            } else {
-                myprofile_panel.setVisibility(View.GONE);
-                edit_button.setVisibility(View.GONE);
-                stranger_panel.setVisibility(View.VISIBLE);
+                    // If not, then show the stranger's profile view
+                } else {
+                    myprofile_panel.setVisibility(View.GONE);
+                    edit_button.setVisibility(View.GONE);
+                    stranger_panel.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

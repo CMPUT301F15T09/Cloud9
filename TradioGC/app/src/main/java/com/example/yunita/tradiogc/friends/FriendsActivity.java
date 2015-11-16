@@ -107,7 +107,7 @@ public class FriendsActivity extends AppCompatActivity {
      */
     public void viewFriendProfile(String username) {
         Intent intent = new Intent(context, ProfileActivity.class);
-        intent.putExtra(ProfileActivity.USERNAME, username);
+        intent.putExtra("profileTarget", username);
         startActivity(intent);
     }
 

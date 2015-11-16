@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.Collections;
 
 public class UserController {
     private static final String TAG = "UserController";
@@ -191,7 +192,10 @@ public class UserController {
         Users result = new Users();
         Users allUsers = getAllUsers(null);
         for (User user : allUsers) {
-            if (user.getUsername().toLowerCase().contains(searchString.toLowerCase())) {
+
+            if (user.getUsername().toLowerCase().contains(searchString.toLowerCase()) &&
+                    !user.getUsername().equals(LoginActivity.USERLOGIN.getUsername()) &&
+                    !LoginActivity.USERLOGIN.getFriends().contains(user.getUsername())) {
                 result.add(user);
             }
         }

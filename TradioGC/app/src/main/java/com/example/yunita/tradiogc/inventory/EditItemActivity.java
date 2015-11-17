@@ -1,19 +1,30 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 
 public class EditItemActivity extends AppCompatActivity {
@@ -30,6 +41,12 @@ public class EditItemActivity extends AppCompatActivity {
     private Item item;
     private Button add;
     private Button save;
+
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private Uri imageFileUri;
+    private ImageView tempPhoto;
+    private String imageFilePath;
+    private Bitmap thumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +67,8 @@ public class EditItemActivity extends AppCompatActivity {
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         add = (Button) findViewById(R.id.add_item_button);
         save = (Button) findViewById(R.id.save_item_button);
+        tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+
     }
 
     /**
@@ -110,6 +129,12 @@ public class EditItemActivity extends AppCompatActivity {
             int quantity = Integer.parseInt(quantityEdit.getText().toString());
             int quality = qualityChoice.getSelectedItemPosition();
 
+            String photo = "";
+            if(thumbnail != null) {
+                photo = encodeImage(thumbnail);
+                System.out.println(thumbnail.getByteCount());
+            }
+
             item.setName(name);
             item.setDesc(description);
             item.setVisibility(visibility);
@@ -117,9 +142,57 @@ public class EditItemActivity extends AppCompatActivity {
             item.setCategory(category);
             item.setQuantity(quantity);
             item.setQuality(quality);
+            item.setPhotos(photo);
 
             inventoryController.updateItem(item);
             finish();
         }
+    }
+
+    public void takeAPhoto(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+        File folderF = new File(folder);
+        if (!folderF.exists()) {
+            folderF.mkdir();
+        }
+
+        imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        File imageFile = new File(imageFilePath);
+        imageFileUri = Uri.fromFile(imageFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bitmap temp = BitmapFactory.decodeFile(imageFileUri.getPath());
+                double tHeight = temp.getHeight() * 0.2;
+                double tWidth = temp.getWidth()* 0.2;
+
+                thumbnail = Bitmap.createScaledBitmap(temp, (int)tWidth, (int)tHeight, true);
+                tempPhoto.setImageBitmap(thumbnail);
+            } else {
+                thumbnail = null;
+            }
+        }
+    }
+
+    public void cancelImage(View view){
+        File file = new File(imageFilePath);
+        if(file.exists()) {
+            file.delete();
+        }
+        tempPhoto.setImageResource(R.mipmap.ic_launcher);
+    }
+
+    public String encodeImage(Bitmap photo){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 }

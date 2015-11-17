@@ -1,8 +1,9 @@
 package com.example.yunita.tradiogc.inventory;
 
 import com.example.yunita.tradiogc.photo.Photos;
-
+import java.text.DecimalFormat;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 public class Item implements Serializable {
@@ -36,6 +37,13 @@ public class Item implements Serializable {
     public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality, String photos) {
         this.category = category;
         this.name = name;
+
+        double newPrice = price*100;
+        int rounded = (int) newPrice;
+        newPrice = (double) rounded;
+        price = (newPrice/100);
+
+        this.price = price;
         this.price = price;
         this.desc = desc;
         this.visibility = visibility;
@@ -97,6 +105,10 @@ public class Item implements Serializable {
      * @param price this item's new price
      */
     public void setPrice(double price) {
+        double newPrice = price*100;
+        int rounded = (int) newPrice;
+        newPrice = (double) rounded;
+        price = (newPrice/100);
         this.price = price;
     }
 

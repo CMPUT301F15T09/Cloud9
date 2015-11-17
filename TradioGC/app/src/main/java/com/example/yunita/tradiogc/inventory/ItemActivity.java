@@ -115,6 +115,7 @@ public class ItemActivity extends AppCompatActivity {
         // Checks to see if we are getting a username from the intent
         if (owner.equals("friend")) {
             edit_button.setVisibility(View.GONE);
+            friend_panel.setVisibility(View.VISIBLE);
         }
 
         runOnUiThread(doUpdateGUIDetails);
@@ -153,6 +154,15 @@ public class ItemActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+    // (C) 2011 user432209
+
+    /**
+     * Decodes the encoded string into an image and returns it.
+     *
+     * @param encoded encoded image in string format.
+     * @return Bitmap.
+     */
     public Bitmap decodeImage(String encoded){
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

@@ -27,9 +27,11 @@ You can find our documentation in[our wiki](https://github.com/CMPUT301F15T09/Cl
 
 ## Contributions
 - user1338795, http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+- user432209, http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
 - Designmodo, https://www.iconfinder.com/designmodo
 - Joshua Campbell, https://github.com/joshua2ua/AndroidElasticSearch
 - The Android Open Source Project, http://developer.android.com/training/index.html
+
 
 ## License
 TradioGC is licensed under Apache License Version 2.0.

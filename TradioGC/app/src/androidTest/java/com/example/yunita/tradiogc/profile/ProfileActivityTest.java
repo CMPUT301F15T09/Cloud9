@@ -1,6 +1,5 @@
 package com.example.yunita.tradiogc.profile;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
@@ -14,9 +13,7 @@ import com.example.yunita.tradiogc.inventory.MyInventoryActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 
-/**
- * Created by Amber on 15/11/15.
- */
+
 public class ProfileActivityTest extends ActivityInstrumentationTestCase2 {
     private ProfileActivity profileActivity;
 

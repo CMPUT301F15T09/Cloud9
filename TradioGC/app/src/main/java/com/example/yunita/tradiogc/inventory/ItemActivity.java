@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,7 @@ Comments for 09/11/2015 update:
 */
 public class ItemActivity extends AppCompatActivity {
 
+    private InventoryController inventoryController;
     private Item item;
     private Context context = this;
     private Categories categories;
@@ -47,6 +50,7 @@ public class ItemActivity extends AppCompatActivity {
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
     // Not sure if that's how we want to start a trade with an item?
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
+
 
 
     private Runnable doUpdateGUIDetails = new Runnable() {
@@ -89,6 +93,7 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        inventoryController = new InventoryController(context);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
@@ -115,6 +120,25 @@ public class ItemActivity extends AppCompatActivity {
         // Checks to see if we are getting a username from the intent
         if (owner.equals("friend")) {
             edit_button.setVisibility(View.GONE);
+            friend_panel.setVisibility(View.VISIBLE);
+            Button clone = (Button) findViewById(R.id.cloneButton);
+            clone.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    String name = item.getName();
+                    int category = item.getCategory();
+                    double price = item.getPrice();
+                    String description = item.getDesc();
+                    Boolean visibility = item.getVisibility();
+                    int quantity = item.getQuantity();
+                    int quality = item.getQuality();
+                    String photo = item.getPhotos();
+
+                    Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
+                    inventoryController.addItem(newItem);
+
+                    finish();
+                }
+            });
         }
 
         runOnUiThread(doUpdateGUIDetails);

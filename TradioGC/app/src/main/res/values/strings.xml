@@ -57,6 +57,7 @@
     <string name="Inventory_title_text">Inventory</string>
     <string name="action_settings">Settings</string>
 
+    <string name="clone">Clone</string>
     <string name="browse_title"><![CDATA[Videos by Your Company]]></string>
     <string name="related_movies">Related Videos</string>
     <string name="vertical_grid_title"><![CDATA[Vertical Video Grid]]></string>

@@ -19,7 +19,8 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
 
-public class MarketActivity extends AppCompatActivity {
+public class
+        MarketActivity extends AppCompatActivity {
 
     private Context context = this;
     private Friends friends;

@@ -156,7 +156,8 @@ public class ItemSearchActivity extends AppCompatActivity {
      */
     public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra("item", searchItem.getoItem());
+        intent.putExtra("item", searchItem.getoItem()); // pass item
+        intent.putExtra("owner_name", searchItem.getOwnerName()); // pass item's owner's name
         intent.putExtra("owner", "friend");
         intent.putExtra("index", position);
 

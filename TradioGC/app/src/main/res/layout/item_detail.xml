@@ -164,8 +164,22 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="Create Trade" />
+            android:text="Create Trade"
+            android:onClick="makeTrade"/>
+
+        <Button
+            style = "?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/clone"
+            android:id="@+id/cloneButton"
+            android:layout_gravity="right"
+            android:onClick="cloneItem" />
 
     </LinearLayout>
+
+
 
 </LinearLayout>

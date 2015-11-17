@@ -3,50 +3,41 @@
     android:id="@+id/trade_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/trade_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/trade"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="35sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/yours_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/yours"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ownerItemPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_launcher"/>
 
-    <ExpandableListView
-        android:id="@+id/yours_expandable_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal" />
+        <TextView
+            android:id="@+id/ownerItemInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOGE"/>
 
-    <Button
-        android:id="@+id/yours_edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/edit" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/theirs_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:text="@string/theirs"
+        android:text="My Offer"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Items offered:" />
 
     <ExpandableListView
         android:id="@+id/theirs_expandable_list_view"
@@ -54,19 +45,28 @@
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/edit_theirs_button"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/edit" />
+        android:text="My inventory:" />
+
+    <ExpandableListView
+        android:id="@+id/theirs_expandable_list_view2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/offer_button"
+        android:id="@+id/add_item_to_trade_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="70dp"
-        android:text="@string/make_offer" />
+        android:text="Add Item" />
+
+    <Button
+        android:id="@+id/cancel_trade_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Cancel Trade" />
 </LinearLayout>

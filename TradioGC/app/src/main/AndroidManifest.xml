@@ -81,6 +81,8 @@
             android:name=".photo.PhotoActivity"
             android:label="TEST" >
         </activity>
+        <activity android:name=".trade.TradeActivity"
+            android:label="@string/trade" />
     </application>
 
 </manifest>

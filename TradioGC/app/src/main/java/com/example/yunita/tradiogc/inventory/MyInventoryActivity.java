@@ -97,6 +97,7 @@ public class MyInventoryActivity extends AppCompatActivity {
                 category = position - 1;
                 searchItem(category, query);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -160,8 +161,9 @@ public class MyInventoryActivity extends AppCompatActivity {
     /**
      * Called when the user changes the category selection or edittext.
      * This method is used to browse items by query and category.
+     *
      * @param category the category choosed
-     * @param query input of part of item name
+     * @param query    input of part of item name
      */
     public void searchItem(int category, String query) {
         inventory.clear();

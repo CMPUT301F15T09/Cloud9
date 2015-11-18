@@ -19,8 +19,7 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
 
-public class
-        MarketActivity extends AppCompatActivity {
+public class MarketActivity extends AppCompatActivity {
 
     private Context context = this;
     private Friends friends;
@@ -78,7 +77,7 @@ public class
     }
 
     /**
-     *  Updates user login, and gets all users from webserver.
+     * Updates user login, and gets all users from webserver.
      */
     @Override
     protected void onResume() {
@@ -140,7 +139,8 @@ public class
      */
     public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra("item", searchItem.getoItem());
+        intent.putExtra("item", searchItem.getoItem()); // pass item
+        intent.putExtra("owner_name", searchItem.getOwnerName()); // pass item's owner's name
         intent.putExtra("owner", "friend");
         intent.putExtra("index", position);
 

@@ -18,24 +18,6 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
-/*
-Comments for 09/11/2015 update:
--The layout for viewing an item is mostly done as well as some coding on this activity.
--Modifications were made in MyInventoryActivity to start this activity
--Unfortunately, I'm a bit stuck on finding an effective way to send the item information from the
- MyInventoryActivity to this activity so it doesn't work yet. We could possibly wait until we finish
- the code for searching for an item to get the item information for this page...? Or I'm just
- missing a really obvious option for getting it to work ||OTL
--Since we haven't added photos to the item class yet, I haven't done much with the ImageView on this
- part and on the layout
--Since we haven't implemented trades, the Trade button does not do anything on this page. Or..
- how do we plan to start/add items to a trade? From the inventory list page or the item detail page?
--According to US01.01.01, item must have "a name, quantity, quality, category, if I want to share it
- with others, and comments". So.. technically our item should have quantity and quality as well..?
--The location for the edit item button is subject to change
--A lot of stuff on this class is commented out for now since I'm not sure about some parts
--A few more comments found on: ItemActivity (scattered), MyInventoryActivity(viewItemDetails)
-*/
 public class ItemActivity extends AppCompatActivity {
 
     private InventoryController inventoryController;
@@ -47,10 +29,7 @@ public class ItemActivity extends AppCompatActivity {
     private int index;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
-    // Not sure if that's how we want to start a trade with an item?
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
-
-
 
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
@@ -63,15 +42,10 @@ public class ItemActivity extends AppCompatActivity {
             TextView quality = (TextView) findViewById(R.id.itemQuality);
 
             ImageView itemImage = (ImageView) findViewById(R.id.itemImage);
-            if(!item.getPhotos().equals("")){
+            if (!item.getPhotos().equals("")) {
                 itemImage.setImageBitmap(decodeImage(item.getPhotos()));
             }
 
-
-            // Hasn't been tested yet
-            // Need to check if the item has a photo
-            // If no photo, we need to set the visibility of itemImage to "gone"
-            //photo.setImage... waiting for photo to be implemented
             name.setText(item.getName());
             category.setText(categories.getCategories().get(item.getCategory()));
             price.setText("$" + Double.toString(item.getPrice()));
@@ -167,7 +141,7 @@ public class ItemActivity extends AppCompatActivity {
      * @param encoded encoded image in string format.
      * @return Bitmap.
      */
-    public Bitmap decodeImage(String encoded){
+    public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
@@ -179,7 +153,7 @@ public class ItemActivity extends AppCompatActivity {
      *
      * @param view "Clone" button
      */
-    public void cloneItem(View view){
+    public void cloneItem(View view) {
         String name = item.getName();
         int category = item.getCategory();
         double price = item.getPrice();
@@ -201,16 +175,15 @@ public class ItemActivity extends AppCompatActivity {
      *
      * @param view "Create Trade" button
      */
-    public void makeTrade(View view){
-        // ISSUE HERE!
+    public void makeTrade(View view) {
         Intent searchItemIntent = getIntent();
-        String ownerName = searchItemIntent.getExtras().getString("itemOwner");
+        String ownerName = searchItemIntent.getExtras().getString("owner_name");
         Item itemForTrade = (Item) searchItemIntent.getExtras().getSerializable("item");
 
         // call another intent
         Intent intent = new Intent(context, TradeActivity.class);
-        intent.putExtra("ownerName", ownerName);
-        intent.putExtra("itemForTrade", itemForTrade);
+        intent.putExtra("owner_name", ownerName);
+        intent.putExtra("item_for_trade", itemForTrade);
         startActivity(intent);
     }
 

@@ -11,6 +11,25 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
+    // 02.01.01
+    public void testSearchUsername() {
+        // we have 2 users: ann and john
+        User ann = new User();
+        ann.setUsername("ann");
+        User john = new User();
+        john.setUsername("john");
+
+        // ann adds john to her friendlist
+        Friends ann_friendlist = ann.getFriends();
+        ann_friendlist.add(john.getUsername());
+        // then, automatically john adds anna to his friendlist
+        Friends john_friendlist = john.getFriends();
+        john_friendlist.add(ann.getUsername());
+
+        assertTrue(ann_friendlist.contains("john"));
+    }
+
+    // 02.02.01
     public void testAddFriend() {
         // we have 2 users: ann and john
         User ann = new User();
@@ -31,6 +50,7 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+    // 02.03.01
     public void testRemoveFriend() {
         // we have 2 users: ann and john
         User ann = new User();
@@ -54,7 +74,22 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertFalse(john_friendlist.contains(ann.getUsername()));
     }
 
-    public void testViewFriendProfile() {
+    // 02.04.01
+    public void testViewPersonalProfile(){
+        User me = new User();
+        me.setUsername("nathan");
+        me.setLocation("Edmonton");
+        me.setEmail("nathan@yahoo.com");
+        me.setPhone("7809998881");
+
+        assertTrue(me.getUsername().equals("nathan"));
+        assertTrue(me.getLocation().equals("Edmonton"));
+        assertTrue(me.getEmail().equals("nathan@yahoo.com"));
+        assertTrue(me.getPhone().equals("7809998881"));
+    }
+
+    // 02.05.01
+    public void testViewOtherProfile() {
         // we have 2 users: ann and john
         User ann = new User();
         ann.setUsername("ann");
@@ -79,23 +114,6 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertTrue(friend_profile.getEmail().equals("john@yahoo.com"));
         assertTrue(friend_profile.getPhone().equals("7803332221"));
 
-    }
-
-    public void testSearchUsername() {
-        // we have 2 users: ann and john
-        User ann = new User();
-        ann.setUsername("ann");
-        User john = new User();
-        john.setUsername("john");
-
-        // ann adds john to her friendlist
-        Friends ann_friendlist = ann.getFriends();
-        ann_friendlist.add(john.getUsername());
-        // then, automatically john adds anna to his friendlist
-        Friends john_friendlist = john.getFriends();
-        john_friendlist.add(ann.getUsername());
-
-        assertTrue(ann_friendlist.contains("john"));
     }
 
 }

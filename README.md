@@ -1,12 +1,9 @@
-## Update (12/11)
-- Fixed search user bug (elastic search size limit)
-- Market is under implementation
-- Issue!
-
-## TODO
-- Starting offline behaviour (save/load file)
-- Finishing search friends' inventories
-- Starting trade (planning for implementation)
+## Update (17/11)
+- Working on offline behaviour / connection handler (save/load file)
+- Working on trade (planning for implementation)
+- Use cases need to be updated (numbering and extra requirements)
+- Class and UC diagram need to be updated
+- Demo part 4 should be updated
 - Finding a bug!
 - Keep updating bug under issue.
 
@@ -23,7 +20,7 @@ A trading gift-card application
 Here is the [demo](https://github.com/CMPUT301F15T09/Cloud9/blob/yunita/docs/demo/tradiogc_demo_project4.mp4) for project 4
 
 ## Documentation
-You can find our documentation in[our wiki](https://github.com/CMPUT301F15T09/Cloud9/wiki)
+You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/Cloud9/wiki)
 
 ## Contributions
 - user1338795, http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
@@ -31,6 +28,7 @@ You can find our documentation in[our wiki](https://github.com/CMPUT301F15T09/Cl
 - Designmodo, https://www.iconfinder.com/designmodo
 - Joshua Campbell, https://github.com/joshua2ua/AndroidElasticSearch
 - The Android Open Source Project, http://developer.android.com/training/index.html
+- Abram Hindle, https://github.com/abramhindle/BogoPicGen
 
 
 ## License

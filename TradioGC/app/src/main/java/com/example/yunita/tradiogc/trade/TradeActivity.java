@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Item;
 
-public class TradeActivity extends AppCompatActivity{
+public class TradeActivity extends AppCompatActivity {
 
     private Context context = this;
 
-    private TextView ownerItemInformation;
+    private TextView tradeWith;
+    private TextView ownerItemName;
+    private TextView ownerItemPrice;
+    private TextView ownerItemDescription;
     private ImageView ownerItemPhoto;
 
     private Item ownerItem;
@@ -29,21 +32,32 @@ public class TradeActivity extends AppCompatActivity{
         setContentView(R.layout.trade_display);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        ownerItemInformation = (TextView) findViewById(R.id.ownerItemInformation);
+        tradeWith = (TextView) findViewById(R.id.trade_with);
+        ownerItemName = (TextView) findViewById(R.id.ownerItemName);
+        ownerItemPrice = (TextView) findViewById(R.id.ownerItemPrice);
+        ownerItemDescription = (TextView) findViewById(R.id.ownerItemDescription);
         ownerItemPhoto = (ImageView) findViewById(R.id.ownerItemPhoto);
 
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
         Intent ItemSearchIntent = getIntent();
-        ownerItem = (Item) ItemSearchIntent.getExtras().getSerializable("item");
-        ownerName = ItemSearchIntent.getExtras().getString("owner_item");
+        ownerItem = (Item) ItemSearchIntent.getExtras().getSerializable("item_for_trade");
+        ownerName = ItemSearchIntent.getExtras().getString("owner_name");
 
+        // set trade with
+        tradeWith.setText("Trade with " + ownerName);
+
+        // set item photo and information
         Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());
         ownerItemPhoto.setImageBitmap(itemPhoto);
+        ownerItemName.setText(ownerItem.getName());
+        ownerItemPrice.setText(Double.toString(ownerItem.getPrice()));
+        ownerItemDescription.setText(ownerItem.getDesc());
+
     }
 
 
@@ -56,7 +70,7 @@ public class TradeActivity extends AppCompatActivity{
      * @param encoded encoded image in string format.
      * @return Bitmap.
      */
-    public Bitmap decodeImage(String encoded){
+    public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;

@@ -33,7 +33,7 @@ public class FriendsController {
      */
     public void addFriend(String friendname) {
         LoginActivity.USERLOGIN.getFriends().add(friendname);
-        Collections.sort(LoginActivity.USERLOGIN.getFriends(),String.CASE_INSENSITIVE_ORDER);
+        Collections.sort(LoginActivity.USERLOGIN.getFriends(), String.CASE_INSENSITIVE_ORDER);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }

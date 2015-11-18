@@ -1,5 +1,6 @@
 package com.example.yunita.tradiogc;
 
+import android.app.Notification;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +12,9 @@ import android.widget.TextView;
 
 import com.example.yunita.tradiogc.friends.FriendsActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.market.MarketActivity;
 import com.example.yunita.tradiogc.photo.PhotoActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
-import com.example.yunita.tradiogc.market.MarketActivity;
 
 public class MainActivity extends TabActivity {
 
@@ -35,7 +36,7 @@ public class MainActivity extends TabActivity {
         TabHost tabHost = this.getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
-        Class activityArray[] = {PhotoActivity.class, FriendsActivity.class,
+        Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
                 MarketActivity.class, ProfileActivity.class};
         for (int i = 0; i < 4; i++) {
             intent = new Intent().setClass(this, activityArray[i]);

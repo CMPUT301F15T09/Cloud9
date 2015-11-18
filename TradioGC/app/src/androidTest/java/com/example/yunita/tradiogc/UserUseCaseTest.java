@@ -11,6 +11,7 @@ public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
+    // UC 1
     public void testCreateAccount(){
         User ann = new User();
         ann.setUsername("ann");
@@ -24,6 +25,7 @@ public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertTrue(users.contains(ann));
     }
 
+    // UC 2
     public void testLogin(){
         User ann = new User();
         ann.setUsername("ann");

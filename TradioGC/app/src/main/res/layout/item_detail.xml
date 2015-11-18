@@ -135,7 +135,6 @@
         <TextView
             android:id="@+id/itemDescriptionHeader"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:ems="6"
             android:text="Description " />
@@ -165,6 +164,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
             android:text="Create Trade"
+            android:background="@drawable/custom_roundrect_button"
             android:onClick="makeTrade"/>
 
         <Button
@@ -176,6 +176,7 @@
             android:text="@string/clone"
             android:id="@+id/cloneButton"
             android:layout_gravity="right"
+            android:background="@drawable/custom_roundrect_button"
             android:onClick="cloneItem" />
 
     </LinearLayout>

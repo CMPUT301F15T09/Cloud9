@@ -14,7 +14,6 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -25,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class AddItemActivity extends AppCompatActivity {
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private InventoryController inventoryController;
     private Context mContext = this;
     private EditText nameEdit;
@@ -34,8 +34,6 @@ public class AddItemActivity extends AppCompatActivity {
     private RadioButton privateChoice;
     private Spinner categoriesChoice;
     private Spinner qualityChoice;
-
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri imageFileUri;
     private ImageView tempPhoto;
     private String imageFilePath;
@@ -105,7 +103,7 @@ public class AddItemActivity extends AppCompatActivity {
             int quantity = Integer.parseInt(quantityEdit.getText().toString());
             int quality = qualityChoice.getSelectedItemPosition();
             String photo = "";
-            if(thumbnail != null) {
+            if (thumbnail != null) {
                 photo = encodeImage(thumbnail);
                 System.out.println(thumbnail.getByteCount());
             }
@@ -117,9 +115,13 @@ public class AddItemActivity extends AppCompatActivity {
         }
     }
 
+    // taken from https://github.com/abramhindle/BogoPicGen
+    // (C) 2015 Abram Hindle modified by Cloud9
+
     /**
+     * Triggers camera activity and saves the photo into /tmp folder in sdcard.
      *
-     * @param view
+     * @param view "Upload Photo" button.
      */
     public void takeAPhoto(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -137,14 +139,23 @@ public class AddItemActivity extends AppCompatActivity {
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
+    /**
+     * Called when an activity you launched exits, giving you the requestCode
+     * you started it with, the resultCode it returned, and any additional data from it.
+     *
+     * @param requestCode request code for the sender that will be associated
+     *                    with the result data when it is returned
+     * @param resultCode the integer result code returned by the child activity
+     * @param data an intent, which can return result data to the caller
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap temp = BitmapFactory.decodeFile(imageFileUri.getPath());
                 double tHeight = temp.getHeight() * 0.2;
-                double tWidth = temp.getWidth()* 0.2;
+                double tWidth = temp.getWidth() * 0.2;
 
-                thumbnail = Bitmap.createScaledBitmap(temp, (int)tWidth, (int)tHeight, true);
+                thumbnail = Bitmap.createScaledBitmap(temp, (int) tWidth, (int) tHeight, true);
                 tempPhoto.setImageBitmap(thumbnail);
             } else {
                 thumbnail = null;
@@ -152,15 +163,31 @@ public class AddItemActivity extends AppCompatActivity {
         }
     }
 
-    public void cancelImage(View view){
-        File file = new File(imageFilePath);
-        if(file.exists()) {
-            file.delete();
+    /**
+     * Cancels uploading the photo.
+     *
+     * @param view "Cancel Image" button.
+     */
+    public void cancelImage(View view) {
+        if(imageFilePath != null){
+            File file = new File(imageFilePath);
+            if (file.exists()) {
+                file.delete();
+            }
+            tempPhoto.setImageResource(R.mipmap.ic_launcher);
         }
-        tempPhoto.setImageResource(R.mipmap.ic_launcher);
     }
 
-    public String encodeImage(Bitmap photo){
+    // taken from http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android
+    // (C) 2015 Roman Truba modified by Cloud9
+
+    /**
+     * Encodes the photo into a string and returns it.
+     *
+     * @param photo photo taken from camera.
+     * @return String.
+     */
+    public String encodeImage(Bitmap photo) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.JPEG, 10, baos);
         byte[] imageBytes = baos.toByteArray();

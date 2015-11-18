@@ -40,7 +40,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private int categorySelection = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +109,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
                 category = position - 1;
                 searchItem(category, query);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -170,7 +170,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         intent.putExtra("item", item);
         // mark this as "friends" page
         intent.putExtra("owner", "friend");
-        intent.putExtra("index",position);
+        intent.putExtra("index", position);
 
         startActivity(intent);
     }
@@ -178,8 +178,9 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     /**
      * Called when the user changes the category selection or edittext.
      * This method is used to browse items by query and category.
+     *
      * @param category the category choosed
-     * @param query input of part of item name
+     * @param query    input of part of item name
      */
     public void searchItem(int category, String query) {
         inventory.clear();

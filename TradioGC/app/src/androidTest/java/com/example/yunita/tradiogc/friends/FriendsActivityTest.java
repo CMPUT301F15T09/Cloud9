@@ -41,6 +41,7 @@ public class FriendsActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // check if it opens the SearchUserActivity
         // Copy from https://developer.android.com/training/activity-testing/activity-functional-testing.html
         // Validate that ReceiverActivity is started
         SearchUserActivity receiverActivity = (SearchUserActivity)
@@ -89,6 +90,7 @@ public class FriendsActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // check if it opens the ProfileActivity
         // Copy from https://developer.android.com/training/activity-testing/activity-functional-testing.html
         // Validate that ReceiverActivity is started
         ProfileActivity receiverActivity = (ProfileActivity)

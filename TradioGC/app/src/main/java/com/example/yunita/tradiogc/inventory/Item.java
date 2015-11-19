@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 
 public class Item implements Serializable {
-    private String name;
-    private int category;
-    private double price;
-    private String desc;
-    private Boolean visibility;
-    private int quantity;
-    private int quality;
+    private String name = "";
+    private int category = 0;
+    private double price = 0;
+    private String desc = "";
+    private Boolean visibility = true;
+    private int quantity = 1;
+    private int quality = 0;
 
     /**
      * Class constructor.

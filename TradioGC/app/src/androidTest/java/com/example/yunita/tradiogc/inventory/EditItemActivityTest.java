@@ -4,6 +4,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.login.LoginActivity;
 
@@ -18,36 +20,49 @@ public class EditItemActivityTest extends ActivityInstrumentationTestCase2 {
     /**
      * test for editting an item
      */
-    public void testAddItem() {
+    public void testEditItem() {
         LoginActivity.USERLOGIN.setUsername("test");
 
         // start an EditItemActivity
         editItemActivity = (EditItemActivity) getActivity();
 
-        // edit the info and click add
+        // edit the info and click save button
         editItemActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 EditText nameEdit = editItemActivity.getNameEdit();
-                nameEdit.setText("test");
+                nameEdit.setText("edittest");
                 EditText priceEdit = editItemActivity.getPriceEdit();
-                priceEdit.setText("10");
+                priceEdit.setText("5");
                 EditText descriptionEdit = editItemActivity.getDescriptionEdit();
-                descriptionEdit.setText("test");
-                //RadioButton privateChoice = editItemActivity.getPrivateChoice();
-                //Spinner categoriesChoice = addItemActivity.getCategoriesChoice();
-                //Spinner qualityChoice = addItemActivity.getQualityChoice();
-                Button save = EditItemActivity.getSave();
-                View v 
+                descriptionEdit.setText("edittest");
+                EditText quantity = editItemActivity.getQuantityEdit();
+                quantity.setText("5");
+                Spinner categoriesChoice = editItemActivity.getCategoriesChoice();
+                categoriesChoice.setSelection(1);
+                Spinner qualityChoice = editItemActivity.getQualityChoice();
+                qualityChoice.setSelection(1);
+                RadioButton privateChoice = editItemActivity.getPrivateChoice();
+                privateChoice.setChecked(true);
+                Button save = editItemActivity.getSave();
                 save.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
 
+        // check the item info
         assertTrue(LoginActivity.USERLOGIN.getInventory().get(0) != null);
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getName(), "test");
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getPrice(), 10.0);
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getDesc(), "test");
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getName(), "edittest");
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getPrice(), 5.0);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getDesc(), "edittest");
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getCategory(),1);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuality(),1);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuantity(),5);
+        assertFalse(LoginActivity.USERLOGIN.getInventory().get(0).getVisibility());
+
+        // delete the item
+        InventoryController inventoryController = new InventoryController(editItemActivity.getApplicationContext());
+        inventoryController.removeExistingItem(LoginActivity.USERLOGIN.getInventory().get(0));
     }
 
 }

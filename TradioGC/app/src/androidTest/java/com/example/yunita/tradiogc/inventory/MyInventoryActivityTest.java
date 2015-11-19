@@ -5,7 +5,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.yunita.tradiogc.login.LoginActivity;
@@ -21,7 +20,7 @@ public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for adding an item
+     * test for adding an item and removing it
      */
     public void testAddItem() {
         LoginActivity.USERLOGIN.setUsername("test");
@@ -69,12 +68,14 @@ public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // delete the item
+        // start a new MyInventoryActivity
+        myInventoryActivity = (MyInventoryActivity) getActivity();
+
+        // long click on the item to remove it
         myInventoryActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                EditText query = myInventoryActivity.getQuery_et();
-                //while (myInventoryActivity.getItemList().getChildCount() == 0);
+                while (myInventoryActivity.getItemList().getChildCount() == 0);
                 ListView itemList = myInventoryActivity.getItemList();
                 View v = itemList.getChildAt(0);
                 v.performLongClick();
@@ -82,13 +83,10 @@ public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-
-
-
-
+        // check if the inventory is empty
+        assertTrue(LoginActivity.USERLOGIN.getInventory().isEmpty());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
-
     }
 }

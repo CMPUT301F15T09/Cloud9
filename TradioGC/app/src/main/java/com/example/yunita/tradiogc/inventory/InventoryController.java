@@ -55,23 +55,27 @@ public class InventoryController {
      * @param item item
      */
     public void updateItem(Item item) {
-        Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
-        updateUserThread.start();
-        synchronized (updateUserThread) {
-            try {
-                updateUserThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
-            getUserLoginThread.start();
-            synchronized (getUserLoginThread) {
+        if (LoginActivity.USERLOGIN.getInventory().contains(item)) {
+            Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+            updateUserThread.start();
+            synchronized (updateUserThread) {
                 try {
-                    getUserLoginThread.wait();
+                    updateUserThread.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+                getUserLoginThread.start();
+                synchronized (getUserLoginThread) {
+                    try {
+                        getUserLoginThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        } else {
+            addItem(item);
         }
     }
 

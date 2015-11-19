@@ -21,6 +21,39 @@ public class EditItemActivity extends AppCompatActivity {
     private Context mContext = this;
     private EditText nameEdit;
     private EditText priceEdit;
+
+    public EditText getNameEdit() {
+        return nameEdit;
+    }
+
+    public EditText getPriceEdit() {
+        return priceEdit;
+    }
+
+    public EditText getDescriptionEdit() {
+        return descriptionEdit;
+    }
+
+    public RadioButton getPrivateChoice() {
+        return privateChoice;
+    }
+
+    public Spinner getCategoriesChoice() {
+        return categoriesChoice;
+    }
+
+    public EditText getQuantityEdit() {
+        return quantityEdit;
+    }
+
+    public Spinner getQualityChoice() {
+        return qualityChoice;
+    }
+
+    public Button getSave() {
+        return save;
+    }
+
     private EditText descriptionEdit;
     private RadioGroup radioVisibility;
     private RadioButton privateChoice;
@@ -39,6 +72,8 @@ public class EditItemActivity extends AppCompatActivity {
 
         if (getIntent().getExtras()!=null) {
             item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
+        } else {
+            item = new Item();
         }
 
 

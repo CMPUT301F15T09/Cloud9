@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.user.UserController;
 
 public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
     private AddItemActivity addItemActivity;
@@ -41,9 +42,14 @@ public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // check the item info
         assertTrue(LoginActivity.USERLOGIN.getInventory().get(0) != null);
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getName(), "test");
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getPrice(), 10.0);
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getDesc(), "test");
+
+        // clear the test data
+        InventoryController inventoryController = new InventoryController(addItemActivity.getApplicationContext());
+        inventoryController.removeExistingItem(LoginActivity.USERLOGIN.getInventory().get(0));
     }
 }

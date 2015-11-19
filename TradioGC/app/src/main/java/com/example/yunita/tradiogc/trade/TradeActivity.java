@@ -4,14 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class TradeActivity extends AppCompatActivity {
 
@@ -23,6 +28,10 @@ public class TradeActivity extends AppCompatActivity {
     private TextView ownerItemDescription;
     private ImageView ownerItemPhoto;
 
+    private ListView borrowerInventoryListView;
+    private ArrayAdapter<Item> borrowerInventoryArrayAdapter;
+    private Inventory borrowerInventory = LoginActivity.USERLOGIN.getInventory();
+
     private Item ownerItem;
     private String ownerName;
 
@@ -32,6 +41,7 @@ public class TradeActivity extends AppCompatActivity {
         setContentView(R.layout.trade_display);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        borrowerInventoryListView = (ListView) findViewById(R.id.trade_inventory_list_view);
         tradeWith = (TextView) findViewById(R.id.trade_with);
         ownerItemName = (TextView) findViewById(R.id.ownerItemName);
         ownerItemPrice = (TextView) findViewById(R.id.ownerItemPrice);
@@ -44,12 +54,16 @@ public class TradeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        borrowerInventoryArrayAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, borrowerInventory);
+        borrowerInventoryListView.setAdapter(borrowerInventoryArrayAdapter);
+
         Intent ItemSearchIntent = getIntent();
         ownerItem = (Item) ItemSearchIntent.getExtras().getSerializable("item_for_trade");
         ownerName = ItemSearchIntent.getExtras().getString("owner_name");
 
         // set trade with
         tradeWith.setText("Trade with " + ownerName);
+        tradeWith.setTypeface(null, Typeface.BOLD);
 
         // set item photo and information
         Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());

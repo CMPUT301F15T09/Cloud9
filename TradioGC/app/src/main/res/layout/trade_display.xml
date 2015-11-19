@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/trade_with"
@@ -18,7 +24,6 @@
         android:layout_height="wrap_content"
         android:background="@color/primary_background"
         android:orientation="horizontal"
-        android:layout_weight="1"
         android:padding="8dp">
 
         <ImageView
@@ -62,7 +67,6 @@
         android:id="@+id/borrower_offer_trade_panel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -73,28 +77,30 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:background="@color/primary_background"
             android:text="Items offered:" />
 
         <ListView
             android:id="@+id/my_offer_list_view"
             android:layout_width="fill_parent"
-            android:layout_height="0dp">
+            android:layout_height="100dp"
+            android:layout_weight="16">
 
         </ListView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:background="@color/primary_background"
             android:text="My Inventory:" />
 
         <ListView
             android:id="@+id/trade_inventory_list_view"
             android:layout_width="fill_parent"
-            android:layout_height="0dp">
+            android:layout_height="200dp"
+            android:layout_weight="16">
 
         </ListView>
     </LinearLayout>
@@ -103,7 +109,6 @@
         android:id="@+id/borrower_trade_panel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical">
 
         <Button
@@ -127,3 +132,4 @@
     </LinearLayout>
 
 </LinearLayout>
+    </ScrollView>

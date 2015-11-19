@@ -38,19 +38,12 @@ public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(phone_et.getText().toString(), "");
         assertEquals(email_et.getText().toString(), "");
 
-        // edit user info
+        // edit user info and save it
         editProfileActivity.runOnUiThread(new Runnable() {
             public void run() {
                 location_et.setText("LocationTest");
                 email_et.setText("EmailTest");
                 phone_et.setText("phoneTest");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-
-        // save the edit
-        editProfileActivity.runOnUiThread(new Runnable() {
-            public void run() {
                 Button save = editProfileActivity.getSave();
                 save.performClick();
             }

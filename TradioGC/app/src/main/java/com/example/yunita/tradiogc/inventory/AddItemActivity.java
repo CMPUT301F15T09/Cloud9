@@ -6,15 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class AddItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
     private Context mContext = this;
+
     private EditText nameEdit;
     private EditText priceEdit;
     private EditText quantityEdit;
@@ -22,7 +28,23 @@ public class AddItemActivity extends AppCompatActivity {
     private RadioButton privateChoice;
     private Spinner categoriesChoice;
     private Spinner qualityChoice;
+    private Button add;
 
+    public EditText getNameEdit() {
+        return nameEdit;
+    }
+
+    public EditText getPriceEdit() {
+        return priceEdit;
+    }
+
+    public EditText getDescriptionEdit() {
+        return descriptionEdit;
+    }
+
+    public Button getAdd() {
+        return add;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +59,7 @@ public class AddItemActivity extends AppCompatActivity {
         descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
+        add = (Button) findViewById(R.id.add_item_button);
     }
 
     /**
@@ -67,6 +90,7 @@ public class AddItemActivity extends AppCompatActivity {
         String name = nameEdit.getText().toString();
         String price_str = priceEdit.getText().toString();
         String description = descriptionEdit.getText().toString();
+
 
         if (TextUtils.isEmpty(name)) {
             nameEdit.setError("Name cannot be empty.");

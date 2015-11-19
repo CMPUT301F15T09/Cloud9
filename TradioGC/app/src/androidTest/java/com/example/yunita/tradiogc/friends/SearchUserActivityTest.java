@@ -20,39 +20,24 @@ public class SearchUserActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for searching user
+     * test for listing users
      */
-    public void testEditText() {
+    public void testUserList() {
         // starts SearchUserActivity
         searchUserActivity = (SearchUserActivity) getActivity();
 
-        final EditText search = searchUserActivity.getQuery_et();
 
-        // edit the text
-        searchUserActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                search.setText("test");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-
-        // check the edit text
-        assertTrue(search.getText().toString().contains("test"));
-    }
-
-    public void testUserList() {
-
-
-        /*
         // set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(ProfileActivity.class.getName(), null, false);
 
         // click the first item
-        friendsActivity.runOnUiThread(new Runnable() {
+        searchUserActivity.runOnUiThread(new Runnable() {
             public void run() {
-                View v = friendList.getChildAt(0);
-                friendList.performItemClick(v, 0, v.getId());
+                while (searchUserActivity.getUserList().getChildCount() == 0);
+                ListView userList = searchUserActivity.getUserList();
+                View v = userList.getChildAt(0);
+                userList.performItemClick(v, 0, v.getId());
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -71,7 +56,5 @@ public class SearchUserActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(receiverActivityMonitor);
         //end of test: make sure the edit activity is closed
         receiverActivity.finish();
-        */
     }
-
 }

@@ -27,7 +27,7 @@ public class EditItemActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText quantityEdit;
     private Spinner qualityChoice;
-    private Item item;
+    private Item item = new Item();
     private Button add;
     private Button save;
 
@@ -37,7 +37,9 @@ public class EditItemActivity extends AppCompatActivity {
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
 
-        item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
+        if (getIntent().getExtras()!=null) {
+            item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
+        }
 
 
         radioVisibility = (RadioGroup) findViewById(R.id.radioVisibility);

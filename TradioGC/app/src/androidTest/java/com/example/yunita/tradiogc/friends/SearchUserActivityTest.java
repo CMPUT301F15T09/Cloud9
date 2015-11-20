@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.Users;
 
 
 public class SearchUserActivityTest extends ActivityInstrumentationTestCase2 {
@@ -20,9 +21,10 @@ public class SearchUserActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for listing users
+     * Use Case 11, 15
+     * test for searching users and viewing their profile
      */
-    public void testUserList() {
+    public void testSearchUser() {
         // starts SearchUserActivity
         searchUserActivity = (SearchUserActivity) getActivity();
 
@@ -31,11 +33,26 @@ public class SearchUserActivityTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(ProfileActivity.class.getName(), null, false);
 
-        // click the first item
+
+        // search "test1"
         searchUserActivity.runOnUiThread(new Runnable() {
             public void run() {
-                while (searchUserActivity.getUserList().getChildCount() == 0);
+                Thread searchThread = searchUserActivity.new SearchThread("test1");
+                searchThread.start();
+                synchronized (searchThread) {
+                    try {
+                        searchThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 ListView userList = searchUserActivity.getUserList();
+
+                // check username
+                Users users = searchUserActivity.getUsers();
+                assertTrue(users.get(0).getUsername().contains("test1"));
+
+                // click the first item
                 View v = userList.getChildAt(0);
                 userList.performItemClick(v, 0, v.getId());
             }

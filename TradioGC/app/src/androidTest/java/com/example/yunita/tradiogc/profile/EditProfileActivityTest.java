@@ -18,6 +18,7 @@ public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
+     * Use Case 39
      * test for editing profile
      */
     public void testEditProfile() {

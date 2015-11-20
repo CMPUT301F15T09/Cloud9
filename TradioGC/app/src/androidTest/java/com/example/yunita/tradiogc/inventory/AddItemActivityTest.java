@@ -15,7 +15,8 @@ public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for adding an item
+     * Use Case 4
+     * test for adding an item to inventory
      */
     public void testAddItem() {
         LoginActivity.USERLOGIN.setUsername("test");

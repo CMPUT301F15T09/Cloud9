@@ -18,6 +18,7 @@ public class EditItemActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
+     * Use Case 5, 9, 10
      * test for editting an item
      */
     public void testEditItem() {

@@ -21,12 +21,14 @@ public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for adding an item, viewing the detail of item, and removing it
+     * Use Case 6, 7, 8
+     * test for (adding an item) viewing inventory, viewing item detail,
+     * and removing an item
      */
     public void testMyInventory() {
         LoginActivity.USERLOGIN.setUsername("test");
 
-        // test adding
+        // add a new item
         // start a MyInventoryActivity
         myInventoryActivity = (MyInventoryActivity) getActivity();
 

@@ -41,10 +41,6 @@ public class SearchUserActivity extends AppCompatActivity {
         return query_et;
     }
 
-    public boolean isClickable() {
-        return clickable;
-    }
-
     public Users getUsers() {
         return users;
     }

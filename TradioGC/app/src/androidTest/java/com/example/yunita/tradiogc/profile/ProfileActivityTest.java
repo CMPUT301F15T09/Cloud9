@@ -22,7 +22,8 @@ public class ProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for correctness of user info shown
+     * Use Case 14
+     * test for profile
      */
     public void testProfile() {
         // starts ProfileActivity

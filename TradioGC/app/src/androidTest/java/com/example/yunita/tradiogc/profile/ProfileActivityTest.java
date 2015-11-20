@@ -22,7 +22,7 @@ public class ProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * Use Case 14
+     * Use Case 14, 15
      * test for profile
      */
     public void testProfile() {
@@ -53,6 +53,7 @@ public class ProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
+     * Use Case 39
      * test for edit button
      */
     public void testEditButton() {
@@ -128,6 +129,7 @@ public class ProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
+     * Use Case 16
      * test for friend inventory button
      */
     public void testFriendInventoryButton() {
@@ -163,6 +165,7 @@ public class ProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
+     * Use Case 12
      * test for add friend button
      */
     public void testAddFriendButton() {

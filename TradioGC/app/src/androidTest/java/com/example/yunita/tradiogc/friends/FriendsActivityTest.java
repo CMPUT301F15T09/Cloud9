@@ -61,13 +61,15 @@ public class FriendsActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * test for friends list view
+     * Use Case 13, 15
+     * test for opening friends' profile and deleting friend
      */
-    public void testFriendsListView() {
+    public void testFriendsList() {
         // set a login user
         LoginActivity.USERLOGIN = new User();
+        LoginActivity.USERLOGIN.setUsername("test");
         Friends friends = LoginActivity.USERLOGIN.getFriends();
-        friends.add("test");
+        friends.add("test1");
 
         // starts FriendsActivity
         friendsActivity = (FriendsActivity) getActivity();
@@ -75,13 +77,13 @@ public class FriendsActivityTest extends ActivityInstrumentationTestCase2 {
         // check the first item in list view
         final ListView friendList = friendsActivity.getFriendList();
         String friend = (String) friendList.getItemAtPosition(0);
-        assertEquals(friend, "test");
+        assertEquals(friend, "test1");
 
         // set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(ProfileActivity.class.getName(), null, false);
 
-        // click the first item
+        // click the first friend
         friendsActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View v = friendList.getChildAt(0);
@@ -105,6 +107,19 @@ public class FriendsActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(receiverActivityMonitor);
         //end of test: make sure the edit activity is closed
         receiverActivity.finish();
+
+        // long click the first friend
+        friendsActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                View v = friendList.getChildAt(0);
+                v.performLongClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // check friendlist
+        assertTrue(LoginActivity.USERLOGIN.getFriends().isEmpty());
+
 
         LoginActivity.USERLOGIN = null;
     }

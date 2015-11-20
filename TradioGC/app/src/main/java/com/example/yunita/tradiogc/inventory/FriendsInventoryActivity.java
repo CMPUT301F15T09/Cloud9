@@ -30,7 +30,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private Inventory inventory = new Inventory();
     private UserController userController;
 
-    private String friendname = "testfriend"; // for test
+    private String friendname = "testfriend"; // for test. Do not change it
     private User friend;
     private ArrayAdapter<Item> inventoryViewAdapter;
 
@@ -43,6 +43,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
     public ListView getItem_list() {
         return item_list;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     @Override

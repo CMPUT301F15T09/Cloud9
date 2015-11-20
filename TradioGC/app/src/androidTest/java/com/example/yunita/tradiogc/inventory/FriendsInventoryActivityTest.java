@@ -46,4 +46,27 @@ public class FriendsInventoryActivityTest extends ActivityInstrumentationTestCas
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
     }
+
+    /**
+     * Use Case 17, 18
+     * test for browsing items by query/category
+     */
+    public void testSearchItem() {
+        // start a FriendsInventoryActivity
+        friendsInventoryActivity = (FriendsInventoryActivity) getActivity();
+
+        // click on the first item
+        friendsInventoryActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                friendsInventoryActivity.searchItem(1, "item");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue(friendsInventoryActivity.getItem_list().getChildCount() == 1);
+        Item item = friendsInventoryActivity.getInventory().get(0);
+        assertTrue(item.getName().contains("item"));
+        assertEquals(item.getCategory(),1);
+    }
 }

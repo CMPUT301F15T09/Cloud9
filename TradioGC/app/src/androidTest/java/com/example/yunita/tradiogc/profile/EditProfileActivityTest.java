@@ -8,11 +8,11 @@ import android.widget.TextView;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
-import com.example.yunita.tradiogc.user.Users;
 
 
 public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
     EditProfileActivity editProfileActivity;
+
     public EditProfileActivityTest() {
         super(com.example.yunita.tradiogc.profile.EditProfileActivity.class);
     }

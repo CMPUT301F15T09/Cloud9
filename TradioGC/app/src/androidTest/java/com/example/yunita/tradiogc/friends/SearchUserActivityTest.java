@@ -3,13 +3,9 @@ package com.example.yunita.tradiogc.friends;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
-import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.Users;
 
 

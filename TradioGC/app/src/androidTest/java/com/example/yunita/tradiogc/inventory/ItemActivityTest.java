@@ -9,7 +9,7 @@ public class ItemActivityTest extends ActivityInstrumentationTestCase2 {
         super(com.example.yunita.tradiogc.inventory.ItemActivity.class);
     }
 
-    public void testItemDetail () {
+    public void testItemDetail() {
         Item item = new Item("testitem", 0, 5.0, "test", true, 1, 0);
         // start an ItemActivity
         itemActivity = (ItemActivity) getActivity();

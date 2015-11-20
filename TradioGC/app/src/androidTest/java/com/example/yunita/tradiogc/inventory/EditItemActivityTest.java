@@ -1,7 +1,6 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -56,9 +55,9 @@ public class EditItemActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getName(), "edittest");
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getPrice(), 5.0);
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getDesc(), "edittest");
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getCategory(),1);
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuality(),1);
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuantity(),5);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getCategory(), 1);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuality(), 1);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuantity(), 5);
         assertFalse(LoginActivity.USERLOGIN.getInventory().get(0).getVisibility());
 
         // delete the item

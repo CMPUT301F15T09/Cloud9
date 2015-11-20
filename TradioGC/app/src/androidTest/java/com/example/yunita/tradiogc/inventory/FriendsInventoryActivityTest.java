@@ -28,7 +28,7 @@ public class FriendsInventoryActivityTest extends ActivityInstrumentationTestCas
         friendsInventoryActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                while (friendsInventoryActivity.getItem_list().getChildCount() == 0);
+                while (friendsInventoryActivity.getItem_list().getChildCount() == 0) ;
                 ListView itemList = friendsInventoryActivity.getItem_list();
                 View v = itemList.getChildAt(0);
                 itemList.performItemClick(v, 0, v.getId());
@@ -67,6 +67,6 @@ public class FriendsInventoryActivityTest extends ActivityInstrumentationTestCas
         assertTrue(friendsInventoryActivity.getItem_list().getChildCount() == 1);
         Item item = friendsInventoryActivity.getInventory().get(0);
         assertTrue(item.getName().contains("item"));
-        assertEquals(item.getCategory(),1);
+        assertEquals(item.getCategory(), 1);
     }
 }

@@ -5,7 +5,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.user.UserController;
 
 public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
     private AddItemActivity addItemActivity;
@@ -46,8 +45,8 @@ public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getPrice(), 10.0);
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getDesc(), "test");
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getCategory(), 0);
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuality(),0);
-        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuantity(),1);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuality(), 0);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuantity(), 1);
         assertTrue(LoginActivity.USERLOGIN.getInventory().get(0).getVisibility());
 
         // clear the test data

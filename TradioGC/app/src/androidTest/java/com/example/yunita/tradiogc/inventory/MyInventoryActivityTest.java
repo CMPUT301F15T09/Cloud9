@@ -10,7 +10,6 @@ import android.widget.ListView;
 import com.example.yunita.tradiogc.login.LoginActivity;
 
 
-
 public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
     private MyInventoryActivity myInventoryActivity;
     private AddItemActivity addItemActivity;
@@ -93,7 +92,7 @@ public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
             public void run() {
                 myInventoryActivity.setInventory(LoginActivity.USERLOGIN.getInventory());
                 myInventoryActivity.notifyUpdated();
-                while(myInventoryActivity.getItemList().getChildCount() == 0);
+                while (myInventoryActivity.getItemList().getChildCount() == 0) ;
                 ListView itemList = myInventoryActivity.getItemList();
                 View v = itemList.getChildAt(0);
                 itemList.performItemClick(v, 0, v.getId());
@@ -119,7 +118,7 @@ public class MyInventoryActivityTest extends ActivityInstrumentationTestCase2 {
             public void run() {
                 myInventoryActivity.setInventory(LoginActivity.USERLOGIN.getInventory());
                 myInventoryActivity.notifyUpdated();
-                while(myInventoryActivity.getItemList().getChildCount() == 0);
+                while (myInventoryActivity.getItemList().getChildCount() == 0) ;
                 ListView itemList = myInventoryActivity.getItemList();
                 View v = itemList.getChildAt(0);
                 v.performLongClick();

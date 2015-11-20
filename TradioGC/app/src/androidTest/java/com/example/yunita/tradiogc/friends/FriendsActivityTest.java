@@ -19,7 +19,7 @@ public class FriendsActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     *  test for "ADD NEW FRIEND" button
+     * test for "ADD NEW FRIEND" button
      */
     public void testSearchUserButton() {
         // set a login user

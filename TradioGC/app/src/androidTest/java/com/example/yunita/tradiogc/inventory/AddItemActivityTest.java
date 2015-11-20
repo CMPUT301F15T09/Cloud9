@@ -33,9 +33,6 @@ public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
                 priceEdit.setText("10");
                 EditText descriptionEdit = addItemActivity.getDescriptionEdit();
                 descriptionEdit.setText("test");
-                //RadioButton privateChoice = addItemActivity.getPrivateChoice();
-                //Spinner categoriesChoice = addItemActivity.getCategoriesChoice();
-                //Spinner qualityChoice = addItemActivity.getQualityChoice();
                 Button add = addItemActivity.getAdd();
                 add.performClick();
             }
@@ -47,6 +44,10 @@ public class AddItemActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getName(), "test");
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getPrice(), 10.0);
         assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getDesc(), "test");
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getCategory(), 0);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuality(),0);
+        assertEquals(LoginActivity.USERLOGIN.getInventory().get(0).getQuantity(),1);
+        assertTrue(LoginActivity.USERLOGIN.getInventory().get(0).getVisibility());
 
         // clear the test data
         InventoryController inventoryController = new InventoryController(addItemActivity.getApplicationContext());

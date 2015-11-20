@@ -30,7 +30,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private Inventory inventory = new Inventory();
     private UserController userController;
 
-    private String friendname = "ann";
+    private String friendname = "testfriend"; // for test
     private User friend;
     private ArrayAdapter<Item> inventoryViewAdapter;
 
@@ -40,6 +40,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private String query = "";
     private int categorySelection = 0;
     private boolean clickable = true;
+
+    public ListView getItem_list() {
+        return item_list;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

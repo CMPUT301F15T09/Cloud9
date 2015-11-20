@@ -87,6 +87,12 @@ public class EditItemActivity extends AppCompatActivity {
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         add = (Button) findViewById(R.id.add_item_button);
         save = (Button) findViewById(R.id.save_item_button);
+
+
+
+        add.setVisibility(View.GONE);
+        save.setVisibility(View.VISIBLE);
+
     }
 
     /**
@@ -102,9 +108,6 @@ public class EditItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
-
-        add.setVisibility(View.GONE);
-        save.setVisibility(View.VISIBLE);
 
 
         if (!item.getVisibility()) {

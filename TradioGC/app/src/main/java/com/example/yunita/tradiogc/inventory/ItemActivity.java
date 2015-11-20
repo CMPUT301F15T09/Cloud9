@@ -59,15 +59,17 @@ public class ItemActivity extends AppCompatActivity {
             // Need to check if the item has a photo
             // If no photo, we need to set the visibility of itemImage to "gone"
             //photo.setImage... waiting for photo to be implemented
-            name.setText(item.getName());
-            category.setText(categories.getCategories().get(item.getCategory()));
-            price.setText("$" + Double.toString(item.getPrice()));
-            description.setText(item.getDesc());
-            quantity.setText(Integer.toString(item.getQuantity()));
-            if (item.getQuality() == 0) {
-                quality.setText("New");
-            } else {
-                quality.setText("Used");
+            if (item != null) {
+                name.setText(item.getName());
+                category.setText(categories.getCategories().get(item.getCategory()));
+                price.setText("$" + Double.toString(item.getPrice()));
+                description.setText(item.getDesc());
+                quantity.setText(Integer.toString(item.getQuantity()));
+                if (item.getQuality() == 0) {
+                    quality.setText("New");
+                } else {
+                    quality.setText("Used");
+                }
             }
 
         }
@@ -95,16 +97,18 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         categories = new Categories();
 
-        owner = intent.getExtras().getString("owner");
-        index = intent.getExtras().getInt("index");
-        if (owner.equals("owner")) {
-            item = LoginActivity.USERLOGIN.getInventory().get(index);
-        } else {
-            item = (Item) intent.getSerializableExtra("item");
-        }
-        // Checks to see if we are getting a username from the intent
-        if (owner.equals("friend")) {
-            edit_button.setVisibility(View.GONE);
+        if (intent.getExtras() != null) {
+            owner = intent.getExtras().getString("owner");
+            index = intent.getExtras().getInt("index");
+            if (owner.equals("owner")) {
+                item = LoginActivity.USERLOGIN.getInventory().get(index);
+            } else {
+                item = (Item) intent.getSerializableExtra("item");
+            }
+            // Checks to see if we are getting a username from the intent
+            if (owner.equals("friend")) {
+                edit_button.setVisibility(View.GONE);
+            }
         }
 
         runOnUiThread(doUpdateGUIDetails);

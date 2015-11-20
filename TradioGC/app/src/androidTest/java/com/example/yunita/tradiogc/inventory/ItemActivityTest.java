@@ -9,4 +9,7 @@ public class ItemActivityTest extends ActivityInstrumentationTestCase2 {
         super(com.example.yunita.tradiogc.inventory.ItemActivity.class);
     }
 
+    public void testItemDetail () {
+        
+    }
 }

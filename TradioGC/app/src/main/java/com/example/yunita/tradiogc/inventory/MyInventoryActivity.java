@@ -48,8 +48,8 @@ public class MyInventoryActivity extends AppCompatActivity {
         return itemList;
     }
 
-    public EditText getQuery_et() {
-        return query_et;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     @Override

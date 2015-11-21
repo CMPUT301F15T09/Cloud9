@@ -34,7 +34,7 @@
             android:label="@string/market" >
         </activity>
         <activity
-            android:name=".NotificationActivity"
+            android:name=".notification.NotificationActivity"
             android:label="@string/notification" >
         </activity>
         <activity

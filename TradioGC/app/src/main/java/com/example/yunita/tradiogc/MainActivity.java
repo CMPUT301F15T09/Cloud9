@@ -1,6 +1,5 @@
 package com.example.yunita.tradiogc;
 
-import android.app.Notification;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.example.yunita.tradiogc.friends.FriendsActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.market.MarketActivity;
-import com.example.yunita.tradiogc.photo.PhotoActivity;
+import com.example.yunita.tradiogc.notification.NotificationActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class MainActivity extends TabActivity {

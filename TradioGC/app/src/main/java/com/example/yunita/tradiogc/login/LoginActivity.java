@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Inventory;
+import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -202,6 +203,7 @@ public class LoginActivity extends Activity {
                         newUser.setEmail(email.toLowerCase());
                         newUser.setPhone(phone);
                         newUser.setInventory(new Inventory());
+                        newUser.setTrades(new Trades());
 
                         USERLOGIN = new User();
                         USERLOGIN.setUsername(username);
@@ -209,6 +211,7 @@ public class LoginActivity extends Activity {
                         USERLOGIN.setEmail(email.toLowerCase());
                         USERLOGIN.setPhone(phone);
                         USERLOGIN.setInventory(new Inventory());
+                        USERLOGIN.setTrades(new Trades());
 
                         // Execute the thread
                         Thread thread2 = loginController.new SignUpThread(newUser);

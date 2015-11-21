@@ -15,10 +15,10 @@ public class Trade {
 
     }
 
-    public Trade(String owner, String borrower, Item ownerItem) {
+    public Trade(String owner, Item ownerItem, Inventory borrowerItems) {
         this.owner = owner;
-        this.borrower = borrower;
         this.ownerItem = ownerItem;
+        this.borrowerItems = borrowerItems;
     }
 
     public Trade(String owner, String borrower, Item ownerItem, Inventory borrowerItems) {
@@ -58,5 +58,15 @@ public class Trade {
 
     public void setBorrowerItems(Inventory borrowerItems) {
         this.borrowerItems = borrowerItems;
+    }
+
+    @Override
+    public String toString(){
+        String str = "";
+        str += "Borrower: " + borrower + "\n";
+        str += "Owner: " + owner + "/n";
+        str += "Trade: " + ownerItem + "\n";
+        str += "Offer: " + borrowerItems + "\n";
+        return str;
     }
 }

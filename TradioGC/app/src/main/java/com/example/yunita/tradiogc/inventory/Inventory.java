@@ -28,6 +28,23 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
     }
 
     /**
+     * Class constructor.
+     */
+    public Inventory(){
+
+    }
+
+    /**
+     * Class constructor that clones static inventory,
+     * and creates new reference.
+     *
+     * @param temp userlogin inventory.
+     */
+    public Inventory(Inventory temp){
+        this.addAll(temp);
+    }
+
+    /**
      * Gets the user's list of public items.
      *
      * @return Inventory inventory that only contains public items

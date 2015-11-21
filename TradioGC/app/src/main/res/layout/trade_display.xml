@@ -118,6 +118,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:background="@drawable/custom_roundrect_button"
+            android:onClick="offerTrade"
             android:text="Offer Trade" />
 
         <Button

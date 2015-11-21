@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,17 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout stranger_panel;
     private LinearLayout friend_panel;
     private ImageButton edit_button;
+    private Button myinventory_button;
+    private Button friendinventory_button;
+
+    private Button addfriend_button;
+
+    private TextView username;
+    private TextView location;
+    private TextView email;
+    private TextView phone;
+
+
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             TextView userName = (TextView) findViewById(R.id.profileName);
@@ -47,6 +59,50 @@ public class ProfileActivity extends AppCompatActivity {
         }
     };
 
+    public TextView getUsername() {
+        return username;
+    }
+
+    public TextView getLocation() {
+        return location;
+    }
+
+    public TextView getEmail() {
+        return email;
+    }
+
+    public TextView getPhone() {
+        return phone;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Runnable getDoUpdateGUIDetails() {
+        return doUpdateGUIDetails;
+    }
+
+    public ImageButton getEdit_button() {
+        return edit_button;
+    }
+
+    public Button getAddfriend_button() {
+        return addfriend_button;
+    }
+
+    public Button getFriendinventory_button() {
+        return friendinventory_button;
+    }
+
+    public Button getMyinventory_button() {
+        return myinventory_button;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +113,16 @@ public class ProfileActivity extends AppCompatActivity {
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
+
         edit_button = (ImageButton) findViewById(R.id.edit_button);
+        myinventory_button = (Button) findViewById(R.id.my_inventory_button);
+        friendinventory_button = (Button) findViewById(R.id.friend_inventory_btn);
+        addfriend_button = (Button) findViewById(R.id.add_friend_btn);
+
+        username = (TextView) findViewById(R.id.profileName);
+        location = (TextView) findViewById(R.id.profileLocation);
+        email = (TextView) findViewById(R.id.profileEmail);
+        phone = (TextView) findViewById(R.id.profilePhone);
     }
 
     /**

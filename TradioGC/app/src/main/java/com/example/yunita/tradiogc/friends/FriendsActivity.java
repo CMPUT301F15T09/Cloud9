@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,12 +24,21 @@ public class FriendsActivity extends AppCompatActivity {
     private String friendname;
     private FriendsController friendsController;
     private ArrayAdapter<String> friendsViewAdapter;
+    private Button search_user_button;
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             friendsViewAdapter.remove(friendname);
             friendsViewAdapter.notifyDataSetChanged();
         }
     };
+
+    public Button getSearch_user_button() {
+        return search_user_button;
+    }
+
+    public ListView getFriendList() {
+        return friendList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,7 @@ public class FriendsActivity extends AppCompatActivity {
         friendsController = new FriendsController(context);
         friendList = (ListView) findViewById(R.id.friend_list_view);
         friends.addAll(LoginActivity.USERLOGIN.getFriends());
+        search_user_button = (Button) findViewById(R.id.search_user);
         System.out.println("friends: " + friends.size());
     }
 

@@ -1,17 +1,21 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.login;
 
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.Users;
 
-public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
+public class LoginTestCase extends ActivityInstrumentationTestCase2 {
 
-    public UserUseCaseTest() {
+    public LoginTestCase() {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
-    // UC 1
+    /**
+     * Use Case 1
+     * 11.01.01
+     * Test for creating a new user account.
+     */
     public void testCreateAccount(){
         User ann = new User();
         ann.setUsername("ann");
@@ -25,7 +29,11 @@ public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertTrue(users.contains(ann));
     }
 
-    // UC 2
+    /**
+     * Use Case 2
+     * 11.02.01
+     * Test for logging into a user account.
+     */
     public void testLogin(){
         User ann = new User();
         ann.setUsername("ann");

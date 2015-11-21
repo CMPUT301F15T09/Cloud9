@@ -39,6 +39,13 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private String query = "";
     private int categorySelection = 0;
 
+    public ListView getItem_list() {
+        return item_list;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

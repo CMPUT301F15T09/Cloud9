@@ -30,16 +30,58 @@ public class ItemActivity extends AppCompatActivity {
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
+    private TextView name;
+    private TextView category;
+    private TextView price;
+    private TextView description;
+    private TextView quantity;
+    private TextView quality;
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public TextView getName() {
+        return name;
+    }
+
+    public TextView getCategory() {
+        return category;
+    }
+
+    public TextView getPrice() {
+        return price;
+    }
+
+    public TextView getDescription() {
+        return description;
+    }
+
+    public TextView getQuantity() {
+        return quantity;
+    }
+
+    public TextView getQuality() {
+        return quality;
+    }
+
+    public ImageButton getEdit_button() {
+        return edit_button;
+    }
+
+    public Runnable getDoUpdateGUIDetails() {
+        return doUpdateGUIDetails;
+    }
 
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             //ImageView photo = (ImageView) findViewById(R.id.itemImage);
-            TextView name = (TextView) findViewById(R.id.itemName);
-            TextView category = (TextView) findViewById(R.id.itemCategory);
-            TextView price = (TextView) findViewById(R.id.itemPrice);
-            TextView description = (TextView) findViewById(R.id.itemDescription);
-            TextView quantity = (TextView) findViewById(R.id.itemQuantity);
-            TextView quality = (TextView) findViewById(R.id.itemQuality);
+            name = (TextView) findViewById(R.id.itemName);
+            category = (TextView) findViewById(R.id.itemCategory);
+            price = (TextView) findViewById(R.id.itemPrice);
+            description = (TextView) findViewById(R.id.itemDescription);
+            quantity = (TextView) findViewById(R.id.itemQuantity);
+            quality = (TextView) findViewById(R.id.itemQuality);
 
             ImageView itemImage = (ImageView) findViewById(R.id.itemImage);
             if (!item.getPhotos().equals("")) {

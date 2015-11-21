@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,19 +16,43 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText location_et;
     private EditText email_et;
     private EditText phone_et;
-    private TextView userName;
-
+    private TextView username;
+    private Button save;
     private Context context = this;
 
+    public EditText getPhone_et() {
+        return phone_et;
+    }
+
+    public EditText getLocation_et() {
+        return location_et;
+    }
+
+    public EditText getEmail_et() {
+        return email_et;
+    }
+
+    public TextView getUsername() {
+        return username;
+    }
+
+    public Button getSave() {
+        return save;
+    }
+
+    public Context getContext() {
+        return context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile);
-        userName = (TextView) findViewById(R.id.profileName);
+        username = (TextView) findViewById(R.id.profileName);
         location_et = (EditText) findViewById(R.id.location_et);
         email_et = (EditText) findViewById(R.id.email_et);
         phone_et = (EditText) findViewById(R.id.phone_et);
+        save = (Button) findViewById(R.id.save_profile_button);
     }
 
     /**
@@ -36,7 +61,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        userName.setText(LoginActivity.USERLOGIN.getUsername());
+        username.setText(LoginActivity.USERLOGIN.getUsername());
         location_et.setText(LoginActivity.USERLOGIN.getLocation());
         location_et.setSelection(LoginActivity.USERLOGIN.getLocation().length());
         email_et.setText(LoginActivity.USERLOGIN.getEmail());

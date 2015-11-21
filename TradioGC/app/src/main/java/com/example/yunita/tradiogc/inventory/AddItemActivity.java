@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -38,6 +39,23 @@ public class AddItemActivity extends AppCompatActivity {
     private ImageView tempPhoto;
     private String imageFilePath;
     private Bitmap thumbnail;
+    private Button add;
+
+    public EditText getNameEdit() {
+        return nameEdit;
+    }
+
+    public EditText getPriceEdit() {
+        return priceEdit;
+    }
+
+    public EditText getDescriptionEdit() {
+        return descriptionEdit;
+    }
+
+    public Button getAdd() {
+        return add;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +71,7 @@ public class AddItemActivity extends AppCompatActivity {
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+        add = (Button) findViewById(R.id.add_item_button);
     }
 
     /**

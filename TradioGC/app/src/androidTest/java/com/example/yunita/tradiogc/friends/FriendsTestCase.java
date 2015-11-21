@@ -1,80 +1,85 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.friends;
 
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.UserController;
+import com.example.yunita.tradiogc.user.Users;
 
-public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
+public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
 
-    public FriendsUseCaseTest() {
+    public FriendsTestCase() {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
+    public Context context;
 
-    // 02.01.01
+    /**
+     * Use Case 10
+     * 02.01.01
+     * Test for searching a friend's username.
+     */
     public void testSearchUsername() {
-        // we have 2 users: ann and john
+        // We have 2 users: ann and john
         User ann = new User();
         ann.setUsername("ann");
-        User john = new User();
-        john.setUsername("john");
 
-        // ann adds john to her friendlist
-        Friends ann_friendlist = ann.getFriends();
-        ann_friendlist.add(john.getUsername());
-        // then, automatically john adds anna to his friendlist
-        Friends john_friendlist = john.getFriends();
-        john_friendlist.add(ann.getUsername());
+        UserController search = new UserController(context);
+        Users username = search.searchUsers(ann.getUsername());
 
-        assertTrue(ann_friendlist.contains("john"));
+        assertTrue(username.contains(ann));
     }
 
-    // 02.02.01
+    /**
+     * Use Case 11
+     * 02.02.01
+     * Test for adding a friend to a user's friend list.
+     */
     public void testAddFriend() {
-        // we have 2 users: ann and john
+        // We have 2 users: ann and john
         User ann = new User();
         ann.setUsername("ann");
         User john = new User();
         john.setUsername("john");
 
-        // ann adds john to her friendlist
+        // ann adds john to her friend list
         Friends ann_friendlist = ann.getFriends();
         ann_friendlist.add(john.getUsername());
-        // then, automatically john adds anna to his friendlist
-        Friends john_friendlist = john.getFriends();
-        john_friendlist.add(ann.getUsername());
 
-        // Assert that both users have each other on their friend lists
+        // Assert that ann has john on her friend list
         assertTrue(ann_friendlist.contains(john.getUsername()));
-        assertTrue(john_friendlist.contains(ann.getUsername()));
 
     }
 
-    // 02.03.01
+    /**
+     * Use Case 12
+     * 02.03.01
+     * Test for removing a friend from a user's friend list.
+     */
     public void testRemoveFriend() {
-        // we have 2 users: ann and john
+        // We have 2 users: ann and john
         User ann = new User();
         ann.setUsername("ann");
         User john = new User();
         john.setUsername("john");
 
-        // ann adds john to her friendlist
+        // ann adds john to her friend list
         Friends ann_friendlist = ann.getFriends();
         ann_friendlist.add(john.getUsername());
-        // then, automatically john adds anna to his friendlist
-        Friends john_friendlist = john.getFriends();
-        john_friendlist.add(ann.getUsername());
 
-        // ann removes john from her friendlist
+        // ann removes john from her friend list
         ann_friendlist.remove(john.getUsername());
-        john_friendlist.remove(ann.getUsername());
 
-        // Assert that both users doen't have each other on their friend lists
+        // Assert that ann does not have john on her friend list
         assertFalse(ann_friendlist.contains(john.getUsername()));
-        assertFalse(john_friendlist.contains(ann.getUsername()));
     }
 
-    // 02.04.01
+    /**
+     * Use Case 13
+     * 02.04.01
+     * Test for viewing a user's personal profile.
+     */
     public void testViewPersonalProfile(){
         User me = new User();
         me.setUsername("nathan");
@@ -88,9 +93,13 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertTrue(me.getPhone().equals("7809998881"));
     }
 
-    // 02.05.01
+    /**
+     * Use Case 14
+     * 02.05.01
+     * Test for viewing another user's profile.
+     */
     public void testViewOtherProfile() {
-        // we have 2 users: ann and john
+        // We have 2 users: ann and john
         User ann = new User();
         ann.setUsername("ann");
         User john = new User();
@@ -99,15 +108,14 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         john.setEmail("john@yahoo.com");
         john.setPhone("7803332221");
 
-        // ann adds john to her friendlist
+        // ann adds john to her friend list
         Friends ann_friendlist = ann.getFriends();
         ann_friendlist.add(john.getUsername());
-        // then, automatically john adds anna to his friendlist
-        Friends john_friendlist = john.getFriends();
-        john_friendlist.add(ann.getUsername());
 
-        // check whether john is ann's friend now
+        // Check that john is in ann's friend list
         assertTrue(ann_friendlist.get(0).equals(john.getUsername()));
+
+        // Assert that the friend profile is john's
         User friend_profile = john;
         assertTrue(friend_profile.getUsername().equals("john"));
         assertTrue(friend_profile.getLocation().equals("edmonton"));

@@ -24,10 +24,22 @@ public class SearchUserActivity extends AppCompatActivity {
     private ListView userList;
     private ArrayAdapter<User> usersViewAdapter;
     private UserController userController;
-    private EditText editText1;
+    private EditText query_et;
     private Context mContext = this;
     private boolean clickable = true;
     private String query = "";
+
+    public ListView getUserList() {
+        return userList;
+    }
+
+    public EditText getQuery_et() {
+        return query_et;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
 
 
     @Override
@@ -36,7 +48,7 @@ public class SearchUserActivity extends AppCompatActivity {
         setContentView(R.layout.find_friends_search_results);
 
         userList = (ListView) findViewById(R.id.friendsSearchList);
-        editText1 = (EditText) findViewById(R.id.search_by_username_et);
+        query_et = (EditText) findViewById(R.id.search_by_username_et);
     }
 
     /**
@@ -57,7 +69,7 @@ public class SearchUserActivity extends AppCompatActivity {
         userList.setAdapter(usersViewAdapter);
         userController = new UserController(mContext);
 
-        editText1.addTextChangedListener(new DelayedTextWatcher(500) {
+        query_et.addTextChangedListener(new DelayedTextWatcher(500) {
             @Override
             public void afterTextChangedDelayed(Editable s) {
                 query = s.toString();

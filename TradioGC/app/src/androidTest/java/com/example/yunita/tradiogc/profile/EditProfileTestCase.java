@@ -1,16 +1,20 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.profile;
 
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.user.User;
 
-public class ConfigurationUseCaseTest extends ActivityInstrumentationTestCase2 {
+public class EditProfileTestCase extends ActivityInstrumentationTestCase2 {
 
-    public ConfigurationUseCaseTest() {
+    public EditProfileTestCase() {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
-    // 10.02.01
+    /**
+     * Use Case 38
+     * 10.02.01
+     * Test for editing a user's profile.
+     */
     public void testEditProfile(){
         User ann = new User();
         ann.setUsername("ann");
@@ -18,7 +22,7 @@ public class ConfigurationUseCaseTest extends ActivityInstrumentationTestCase2 {
         ann.setPhone("7809998881");
         ann.setEmail("ann@yahoo.com");
 
-        // modify location
+        // Modify the location
         ann.setLocation("calgary");
 
         assertFalse(ann.getLocation().equals("edmonton"));

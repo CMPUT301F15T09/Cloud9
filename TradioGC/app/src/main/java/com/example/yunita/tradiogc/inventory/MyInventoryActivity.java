@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,6 +27,7 @@ public class MyInventoryActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText query_et;
     private ListView itemList;
+    private Button addItem;
 
     private Inventory inventory = new Inventory();
     private ArrayAdapter<Item> inventoryViewAdapter;
@@ -37,6 +39,18 @@ public class MyInventoryActivity extends AppCompatActivity {
     private String query = "";
     private int categorySelection = 0;
 
+    public Button getAddItem() {
+        return addItem;
+    }
+
+    public ListView getItemList() {
+        return itemList;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +61,7 @@ public class MyInventoryActivity extends AppCompatActivity {
         itemList = (ListView) findViewById(R.id.inventory_list_view);
         categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
         query_et = (EditText) findViewById(R.id.query_et);
+        addItem = (Button) findViewById(R.id.add_item_button);
     }
 
 

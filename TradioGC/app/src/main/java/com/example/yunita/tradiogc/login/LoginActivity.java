@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.MainActivity;
@@ -32,7 +34,37 @@ public class LoginActivity extends Activity {
     private EditText location_et;
     private EditText phone_et;
     private EditText email_et;
+    private TextView create_account;
+    private Button login;
+    private Button signup;
 
+    public TextView getCreate_account() {
+        return create_account;
+    }
+
+    public EditText getPhone_et() {
+        return phone_et;
+    }
+
+    public EditText getEmail_et() {
+        return email_et;
+    }
+
+    public EditText getLocation_et() {
+        return location_et;
+    }
+
+    public EditText getUsername_et() {
+        return username_et;
+    }
+
+    public Button getLogin() {
+        return login;
+    }
+
+    public Button getSignup() {
+        return signup;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +78,13 @@ public class LoginActivity extends Activity {
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
 
+        create_account = (TextView) findViewById(R.id.create_account);
         username_et = (EditText) findViewById(R.id.usernameEditText);
         location_et = (EditText) findViewById(R.id.locationEditText);
         phone_et = (EditText) findViewById(R.id.phoneEditText);
         email_et = (EditText) findViewById(R.id.emailEditText);
+        login = (Button) findViewById(R.id.loginButton);
+        signup = (Button) findViewById(R.id.signUpButton);
 
         if (STATUS) {
             goToMain();

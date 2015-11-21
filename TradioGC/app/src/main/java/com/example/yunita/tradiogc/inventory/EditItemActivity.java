@@ -47,6 +47,38 @@ public class EditItemActivity extends AppCompatActivity {
     private String imageFilePath;
     private Bitmap thumbnail;
 
+    public EditText getNameEdit() {
+        return nameEdit;
+    }
+
+    public EditText getPriceEdit() {
+        return priceEdit;
+    }
+
+    public EditText getDescriptionEdit() {
+        return descriptionEdit;
+    }
+
+    public RadioButton getPrivateChoice() {
+        return privateChoice;
+    }
+
+    public Spinner getCategoriesChoice() {
+        return categoriesChoice;
+    }
+
+    public EditText getQuantityEdit() {
+        return quantityEdit;
+    }
+
+    public Spinner getQualityChoice() {
+        return qualityChoice;
+    }
+
+    public Button getSave() {
+        return save;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

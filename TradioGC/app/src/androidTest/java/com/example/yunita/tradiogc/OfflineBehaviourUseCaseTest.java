@@ -8,17 +8,29 @@ public class OfflineBehaviourUseCaseTest extends ActivityInstrumentationTestCase
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
-    // 09.01.01
+    /**
+     * Use Case 35
+     * 09.01.01
+     * Test for making a new inventory item while offline.
+     */
     public void testMakeInventoryItemsOffline(){
 
     }
 
-    // 09.02.01
+    /**
+     * Use Case 36
+     * 09.02.01
+     * Test for making a new trade while offline.
+     */
     public void testMakeTradeOffline(){
 
     }
 
-    // 09.03.01
+    /**
+     * Use Case 37
+     * 09.03.01
+     * Test for browsing a user's friend's inventory while offline.
+     */
     public void testBrowseFriendInventoryOffline(){
 
     }

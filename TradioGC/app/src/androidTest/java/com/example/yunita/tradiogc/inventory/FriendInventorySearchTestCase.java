@@ -1,4 +1,4 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.inventory;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -7,13 +7,17 @@ import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.market.SearchInventory;
 import com.example.yunita.tradiogc.market.SearchItem;
 
-public class BrowseSearchUseCaseTest extends ActivityInstrumentationTestCase2 {
+public class FriendInventorySearchTestCase extends ActivityInstrumentationTestCase2 {
 
-    public BrowseSearchUseCaseTest() {
+    public FriendInventorySearchTestCase() {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
-    // 03.01.01, 03.02.01
+    /**
+     * Use Case 15
+     * 03.01.01, 03.02.01
+     * Test for searching a friend's inventory and only displaying public items.
+     */
     public void testSearchFriendInventory() {
         Inventory friendInventory = new Inventory();
         Item item1 = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
@@ -24,7 +28,11 @@ public class BrowseSearchUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertFalse(friendInventory.contains(item2));
     }
 
-    // 03.01.02, 03.02.01
+    /**
+     * Use Case 16
+     * 03.01.02, 03.02.01
+     * Test for browsing an friend's inventory by category.
+     */
     public void testBrowseInventoryByCategory() {
         // SearchInventory contains owner name and owner item
         SearchInventory market = new SearchInventory();
@@ -41,7 +49,11 @@ public class BrowseSearchUseCaseTest extends ActivityInstrumentationTestCase2 {
         assertEquals(searchByCategory.size(), 1);
     }
 
-    // 03.01.03, 03.02.01
+    /**
+     * Use Case 17
+     * 03.01.03, 03.02.01
+     * Test for browsing an friend's inventory by text query.
+     */
     public void testBrowseInventoryByTextQuery() {
         // SearchInventory contains owner name and owner item
         SearchInventory market = new SearchInventory();

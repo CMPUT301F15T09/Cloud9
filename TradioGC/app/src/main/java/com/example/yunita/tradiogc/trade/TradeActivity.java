@@ -45,8 +45,8 @@ public class TradeActivity extends AppCompatActivity {
     private String ownerName;
     private User owner;
     private User borrower = LoginActivity.USERLOGIN;
-    private OfferedTrade offeredTrade;
-    private PendingTrade pendingTrade;
+    private Trade offeredTrade;
+    private Trade pendingTrade;
 
     private UserController userController;
 
@@ -132,12 +132,18 @@ public class TradeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param view "offer trade" button.
+     */
     public void offerTrade(View view){
         // owner has offered trade
-        offeredTrade = new OfferedTrade(ownerName, borrower.getUsername(),ownerItem, borrowerOffer);
+        offeredTrade = new Trade(ownerName, borrower.getUsername(),ownerItem, borrowerOffer);
+        offeredTrade.setStatus("offered");
 
         // borrower has pending trade
-        pendingTrade = new PendingTrade(ownerName, borrower.getUsername(), ownerItem, borrowerOffer);
+        pendingTrade = new Trade(ownerName, borrower.getUsername(), ownerItem, borrowerOffer);
+        pendingTrade.setStatus("pending");
 
         // save the pending trade in borrower trades
         SavePendingTradeThread savePendingTradeThread = new SavePendingTradeThread(borrower.getUsername());

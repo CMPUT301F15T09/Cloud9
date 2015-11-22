@@ -178,14 +178,7 @@ public class UserController {
         // Removes the user's name and any friends from the search result
 
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
-            if (LoginActivity.USERLOGIN != null) {
-                if (!hit.get_id().equals(LoginActivity.USERLOGIN.getUsername()) &&
-                        !friends.contains(hit.get_id())) {
-                    result.add(hit.getSource());
-                }
-            } else {
-                result.add(hit.getSource());
-            }
+            result.add(hit.getSource());
         }
 
         return result;

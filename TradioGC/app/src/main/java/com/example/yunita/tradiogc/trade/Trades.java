@@ -18,7 +18,7 @@ public class Trades extends ArrayList<Trade> {
     public Trades getOfferedTrade(){
         Trades offeredTrades = new Trades();
         for(Trade t : this){
-            if(t instanceof OfferedTrade){
+            if(t.getStatus().equals("offered")){
                 offeredTrades.add(t);
             }
         }
@@ -28,11 +28,32 @@ public class Trades extends ArrayList<Trade> {
     public Trades getAcceptedTrade(){
         Trades acceptedTrades = new Trades();
         for(Trade t : this){
-            if(t instanceof AcceptedTrade){
+            if(t.getStatus().equals("accepted")){
                 acceptedTrades.add(t);
             }
         }
         return acceptedTrades;
     }
+
+    public Trades getPendingTrade(){
+        Trades pendingTrades = new Trades();
+        for(Trade t : this){
+            if(t.getStatus().equals("pending")){
+                pendingTrades.add(t);
+            }
+        }
+        return pendingTrades;
+    }
+
+    public Trades getCompletedTrade(){
+        Trades completedTrades = new Trades();
+        for(Trade t : this){
+            if(t.getStatus().equals("completed")){
+                completedTrades.add(t);
+            }
+        }
+        return completedTrades;
+    }
+
 
 }

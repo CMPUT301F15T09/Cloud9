@@ -4,7 +4,6 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
-import com.example.yunita.tradiogc.trade.OfferedTrade;
 import com.example.yunita.tradiogc.trade.Trade;
 import com.example.yunita.tradiogc.trade.Trades;
 
@@ -120,22 +119,6 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
      * Test for browsing trades that were offered to the user.
      */
     public void testBrowseTradesOfferedToMe(){
-
-    }
-
-    // extra test
-    public void testShowOfferedTrade(){
-        Item item1 = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
-        Item item2 = new Item("Bestbuy", 0, 50.00, "chapters gc", true, 1, 0, "image");
-        Inventory inv = new Inventory();
-        inv.add(item1);
-        inv.add(item2);
-
-        Trade t1 = new OfferedTrade("john", "ann", item1, inv);
-        Trades trades = new Trades();
-        trades.add(t1);
-
-        assertEquals(trades.getOfferedTrade().size(), 1);
 
     }
 

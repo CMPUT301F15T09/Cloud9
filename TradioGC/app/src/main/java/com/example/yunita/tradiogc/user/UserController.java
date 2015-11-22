@@ -7,6 +7,7 @@ import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.data.SearchHit;
 import com.example.yunita.tradiogc.data.SearchResponse;
 import com.example.yunita.tradiogc.data.SimpleSearchCommand;
+import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -32,6 +33,7 @@ public class UserController {
     private WebServer webServer = new WebServer();
     private Users users = new Users();
     private Context context;
+    private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     /**
      * Class constructor specifying this controller class is a subclass of Context.
@@ -173,9 +175,17 @@ public class UserController {
             throw new RuntimeException(e);
         }
 
+        // Removes the user's name and any friends from the search result
 
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
-            result.add(hit.getSource());
+            if (LoginActivity.USERLOGIN != null) {
+                if (!hit.get_id().equals(LoginActivity.USERLOGIN.getUsername()) &&
+                        !friends.contains(hit.get_id())) {
+                    result.add(hit.getSource());
+                }
+            } else {
+                result.add(hit.getSource());
+            }
         }
 
         return result;

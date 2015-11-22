@@ -160,6 +160,9 @@ public class LoginActivity extends Activity {
                     goToMain();
                 }
             }
+        } else {
+            Toast toast = Toast.makeText(mContext, "Please enter a username.", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -179,7 +182,7 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (username.equals("")) {
-            Toast toast = Toast.makeText(mContext, "Username cannot be empty.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(mContext, "Please enter a username.", Toast.LENGTH_SHORT);
             toast.show();
         } else {
             Thread thread = userController.new GetUserLoginThread(username);

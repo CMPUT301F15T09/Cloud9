@@ -28,6 +28,7 @@ import java.io.InputStream;
 
 public class AddItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int SELECT_PHOTO = 200;
     private InventoryController inventoryController;
     private Context mContext = this;
     private EditText nameEdit;
@@ -42,8 +43,6 @@ public class AddItemActivity extends AppCompatActivity {
     private String imageFilePath;
     private Bitmap thumbnail;
     private Button add;
-    private int SELECT_PHOTO = 1;
-
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -196,14 +195,13 @@ public class AddItemActivity extends AppCompatActivity {
         if (resultCode == SELECT_PHOTO) {
             if (resultCode == RESULT_OK) {
                 try {
-                    final Uri imageUri = data.getData();
-                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
+                    Uri imageUri = data.getData();
+                    InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                     double tHeight = selectedImage.getHeight() * 0.2;
                     double tWidth = selectedImage.getWidth() * 0.2;
-                    thumbnail = Bitmap.createScaledBitmap(selectedImage, (int) tWidth, (int) tHeight, true);
 
+                    thumbnail = Bitmap.createScaledBitmap(selectedImage, (int) tWidth, (int) tHeight, true);
                     tempPhoto.setImageBitmap(thumbnail);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();

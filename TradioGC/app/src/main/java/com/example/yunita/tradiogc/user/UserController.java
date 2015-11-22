@@ -118,7 +118,7 @@ public class UserController {
      *
      * @param field search string.
      */
-    public Users getAllUsers(String field) {
+    public Users getAllUsers(String field, String origin) {
         Users result = new Users();
 
 
@@ -175,15 +175,15 @@ public class UserController {
             throw new RuntimeException(e);
         }
 
-        // Removes the user's name and any friends from the search result
-
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
-            if (LoginActivity.USERLOGIN != null) {
+            if (origin.equals("userSearch")) {
+                // Removes the user's name and any friends from the search result
                 if (!hit.get_id().equals(LoginActivity.USERLOGIN.getUsername()) &&
                         !friends.contains(hit.get_id())) {
                     result.add(hit.getSource());
                 }
             } else {
+                // Returns all results
                 result.add(hit.getSource());
             }
         }
@@ -197,9 +197,9 @@ public class UserController {
      * @param searchString search string.
      * @return Users.
      */
-    public Users searchUsers(String searchString) {
+    public Users searchUsers(String searchString, String origin) {
         Users result = new Users();
-        Users allUsers = getAllUsers(null);
+        Users allUsers = getAllUsers(null, origin);
         for (User user : allUsers) {
             if (user.getUsername().toLowerCase().contains(searchString.toLowerCase())) {
                 result.add(user);

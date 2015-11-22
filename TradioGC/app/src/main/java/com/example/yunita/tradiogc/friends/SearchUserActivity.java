@@ -143,7 +143,7 @@ public class SearchUserActivity extends AppCompatActivity {
         @Override
         public void run() {
             users.clear();
-            users.addAll(userController.searchUsers(search));
+            users.addAll(userController.searchUsers(search, "userSearch"));
             System.out.println("search users: " + users.size());
             notifyUpdated();
             clickable = true;

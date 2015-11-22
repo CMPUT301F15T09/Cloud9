@@ -135,6 +135,10 @@ public class TradeActivity extends AppCompatActivity {
     public void offerTrade(View view){
         // owner has offered trade
         offeredTrade = new OfferedTrade(ownerName, borrower.getUsername(),ownerItem, borrowerOffer);
+        System.out.println(ownerName);
+        System.out.println(borrower.getUsername());
+        System.out.println(ownerItem);
+        System.out.println(borrowerOffer);
 
         // borrower has pending trade
         pendingTrade = new PendingTrade(ownerName, borrower.getUsername(), ownerItem, borrowerOffer);
@@ -182,6 +186,7 @@ public class TradeActivity extends AppCompatActivity {
         public void run() {
             owner = userController.getUser(username);
             owner.getTrades().add(offeredTrade);
+            System.out.println(offeredTrade.getClass());
             // notify owner
             Thread updateTradeThread = userController.new UpdateUserThread(owner);
             updateTradeThread.start();

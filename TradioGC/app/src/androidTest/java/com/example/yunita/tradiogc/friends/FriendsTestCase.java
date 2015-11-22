@@ -26,7 +26,7 @@ public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
         doge.setUsername("doge");
 
         UserController search = new UserController(context);
-        Users username = search.searchUsers(doge.getUsername());
+        Users username = search.searchUsers(doge.getUsername(), "test");
 
         assertEquals(username.size(),1);
     }

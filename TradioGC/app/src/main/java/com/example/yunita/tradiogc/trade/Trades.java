@@ -23,6 +23,7 @@ public class Trades extends ArrayList<Trade> {
                 offeredTrades.add(t);
             }
         }
+        
         return offeredTrades;
     }
 

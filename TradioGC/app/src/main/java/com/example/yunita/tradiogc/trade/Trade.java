@@ -10,9 +10,10 @@ public class Trade {
     private String borrower;
     private Item ownerItem;
     private Inventory borrowerItems;
+    private String status;
 
     public Trade(){
-
+        status = "";
     }
 
     public Trade(String owner, Item ownerItem, Inventory borrowerItems) {
@@ -60,13 +61,30 @@ public class Trade {
         this.borrowerItems = borrowerItems;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        // offered, pending, accepted,(declined?), completed
+        this.status = status;
+    }
+
     @Override
     public String toString(){
         String str = "";
-        str += "Borrower: " + borrower + "\n";
-        str += "Owner: " + owner + "/n";
-        str += "Trade: " + ownerItem + "\n";
-        str += "Offer: " + borrowerItems + "\n";
+        if(status.equals("offered")){
+            str += borrower + " offered a trade for " + ownerItem.getName();
+        } else if (status.equals("completed")){
+            // print informative message
+        } else if (status.equals("accepted")){
+            // print informative message
+        } else if(status.equals("pending")) {
+            // print informative message
+        } else {
+            // default format for Trade
+        }
         return str;
     }
+
 }

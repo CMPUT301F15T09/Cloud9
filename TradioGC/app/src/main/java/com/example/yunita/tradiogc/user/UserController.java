@@ -186,6 +186,7 @@ public class UserController {
                 // Returns all results
                 result.add(hit.getSource());
             }
+            result.add(hit.getSource());
         }
 
         return result;

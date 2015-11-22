@@ -1,9 +1,9 @@
 package com.example.yunita.tradiogc;
 
 public class WebServer {
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/test/";
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/test2/";
     // specify the limit size of elastic search (its default = 10)
-    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/test/_search?size=1000000";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/test2/_search?size=1000000";
 
     /**
      * Class constructor.

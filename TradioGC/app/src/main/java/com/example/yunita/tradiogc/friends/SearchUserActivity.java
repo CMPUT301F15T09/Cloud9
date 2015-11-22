@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
@@ -142,7 +144,6 @@ public class SearchUserActivity extends AppCompatActivity {
         public void run() {
             users.clear();
             users.addAll(userController.searchUsers(search));
-
             System.out.println("search users: " + users.size());
             notifyUpdated();
             clickable = true;

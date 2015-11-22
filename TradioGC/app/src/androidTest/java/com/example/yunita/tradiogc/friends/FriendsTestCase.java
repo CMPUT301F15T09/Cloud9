@@ -22,13 +22,13 @@ public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
      */
     public void testSearchUsername() {
         // We have 2 users: ann and john
-        User ann = new User();
-        ann.setUsername("ann");
+        User doge = new User();
+        doge.setUsername("doge");
 
         UserController search = new UserController(context);
-        Users username = search.searchUsers(ann.getUsername());
+        Users username = search.searchUsers(doge.getUsername());
 
-        assertTrue(username.contains(ann));
+        assertEquals(username.size(),1);
     }
 
     /**

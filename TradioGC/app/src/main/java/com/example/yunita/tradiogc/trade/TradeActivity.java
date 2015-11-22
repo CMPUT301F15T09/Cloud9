@@ -44,7 +44,9 @@ public class TradeActivity extends AppCompatActivity {
     private Item ownerItem;
     private String ownerName;
     private User owner;
-    private Trade offeredTrade;
+    private User borrower = LoginActivity.USERLOGIN;
+    private OfferedTrade offeredTrade;
+    private PendingTrade pendingTrade;
 
     private UserController userController;
 
@@ -62,7 +64,7 @@ public class TradeActivity extends AppCompatActivity {
         ownerItemDescription = (TextView) findViewById(R.id.ownerItemDescription);
         ownerItemPhoto = (ImageView) findViewById(R.id.ownerItemPhoto);
 
-       userController = new UserController(context);
+        userController = new UserController(context);
 
     }
 
@@ -72,10 +74,10 @@ public class TradeActivity extends AppCompatActivity {
 
         borrowerInventory = new Inventory(LoginActivity.USERLOGIN.getInventory());
 
-        borrowerInventoryArrayAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, borrowerInventory);
+        borrowerInventoryArrayAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, borrowerInventory);
         borrowerInventoryListView.setAdapter(borrowerInventoryArrayAdapter);
 
-        borrowerOfferArrayAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, borrowerOffer);
+        borrowerOfferArrayAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, borrowerOffer);
         borrowerOfferListView.setAdapter(borrowerOfferArrayAdapter);
 
         Intent ItemSearchIntent = getIntent();
@@ -131,12 +133,15 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     public void offerTrade(View view){
-        offeredTrade = new Trade();
+        // owner has offered trade
+        offeredTrade = new OfferedTrade(ownerName, borrower.getUsername(),ownerItem, borrowerOffer);
 
-        offeredTrade.setBorrower(LoginActivity.USERLOGIN.getUsername());
-        offeredTrade.setOwner(ownerName);
-        offeredTrade.setBorrowerItems(borrowerOffer);
-        offeredTrade.setOwnerItem(ownerItem);
+        // borrower has pending trade
+        pendingTrade = new PendingTrade(ownerName, borrower.getUsername(), ownerItem, borrowerOffer);
+
+        // save the pending trade in borrower trades
+        SavePendingTradeThread savePendingTradeThread = new SavePendingTradeThread(borrower.getUsername());
+        savePendingTradeThread.start();
 
         // send notification to owner
         sendOwnerNotifThread sendOwnerNotifThread = new sendOwnerNotifThread(ownerName);
@@ -163,6 +168,9 @@ public class TradeActivity extends AppCompatActivity {
         return decodedByte;
     }
 
+    /**
+     * for owner
+     */
     class sendOwnerNotifThread extends Thread {
         private String username;
 
@@ -176,6 +184,25 @@ public class TradeActivity extends AppCompatActivity {
             owner.getTrades().add(offeredTrade);
             // notify owner
             Thread updateTradeThread = userController.new UpdateUserThread(owner);
+            updateTradeThread.start();
+        }
+    }
+
+    /**
+     * for borrower
+     */
+    class SavePendingTradeThread extends Thread {
+        private String username;
+
+        public SavePendingTradeThread(String username) {
+            this.username = username;
+        }
+
+        @Override
+        public void run() {
+            borrower.getTrades().add(pendingTrade);
+            // notify owner
+            Thread updateTradeThread = userController.new UpdateUserThread(borrower);
             updateTradeThread.start();
         }
     }

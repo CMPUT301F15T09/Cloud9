@@ -10,14 +10,21 @@ import android.widget.ListView;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
+import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.trade.OfferedTrade;
 import com.example.yunita.tradiogc.trade.Trade;
 import com.example.yunita.tradiogc.trade.Trades;
+import com.example.yunita.tradiogc.user.User;
+
+import java.util.ArrayList;
 
 public class NotificationActivity extends AppCompatActivity {
 
     private ListView notificationListView;
     private ArrayAdapter<Trade> notificationArrayAdapter;
     private Trades tradesNotif;
+
+    private User owner = LoginActivity.USERLOGIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,14 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        Trades temp = new Trades(owner.getTrades());
+        tradesNotif = temp.getOfferedTrade();
+
+        System.out.println("================> " + tradesNotif.size());
+
+        notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, tradesNotif);
+        notificationListView.setAdapter(notificationArrayAdapter);
+
     }
 
 

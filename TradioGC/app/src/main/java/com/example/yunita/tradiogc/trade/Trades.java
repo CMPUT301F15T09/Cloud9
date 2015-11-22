@@ -15,10 +15,10 @@ public class Trades extends ArrayList<Trade> {
         this.addAll(t);
     }
 
-    public Trades getOfferedTrade(String ownerName){
+    public Trades getOfferedTrade(){
         Trades offeredTrades = new Trades();
         for(Trade t : this){
-            if(t instanceof OfferedTrade && t.getOwner().equals(ownerName)){
+            if(t instanceof OfferedTrade){
                 offeredTrades.add(t);
             }
         }

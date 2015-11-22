@@ -172,7 +172,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="2dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="2dp"
             android:text="@string/clone"
             android:id="@+id/cloneButton"
             android:layout_gravity="right"

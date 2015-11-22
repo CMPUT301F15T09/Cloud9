@@ -1,6 +1,7 @@
 package com.example.yunita.tradiogc.inventory;
 
 import java.io.Serializable;
+import java.util.Random;
 
 
 public class Item implements Serializable {
@@ -12,6 +13,7 @@ public class Item implements Serializable {
     private int quantity;
     private int quality;
     private String photos;
+    private int id;
 
     /**
      * Class constructor.
@@ -32,6 +34,9 @@ public class Item implements Serializable {
      * @param quality    contains an integer that describes the item's quality; 0 is new and 1 is used
      */
     public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality, String photos) {
+        Random random = new Random();
+        this.id = random.nextInt(999999999);
+
         this.category = category;
         this.name = name;
 
@@ -47,6 +52,24 @@ public class Item implements Serializable {
         this.quality = quality;
         this.quantity = quantity;
         this.photos = photos;
+    }
+
+    /**
+     * Gets the id of this item.
+     *
+     * @return id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Changes the id of this item.
+     *
+     * @param id new item's id.
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

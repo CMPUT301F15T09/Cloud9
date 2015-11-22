@@ -156,7 +156,10 @@ public class EditItemActivity extends AppCompatActivity {
             if (privateChoice.isChecked()) {
                 visibility = false;
             }
-            int quantity = Integer.parseInt(quantityEdit.getText().toString());
+            int quantity = 1;
+            if (Integer.parseInt(quantityEdit.getText().toString()) > 0){
+                quantity = Integer.parseInt(quantityEdit.getText().toString());
+            }
             int quality = qualityChoice.getSelectedItemPosition();
 
             String photo = "";

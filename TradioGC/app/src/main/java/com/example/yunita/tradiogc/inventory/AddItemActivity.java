@@ -40,6 +40,7 @@ public class AddItemActivity extends AppCompatActivity {
     private String imageFilePath;
     private Bitmap thumbnail;
     private Button add;
+    private Boolean usePhoto;
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -130,9 +131,14 @@ public class AddItemActivity extends AppCompatActivity {
                 System.out.println(thumbnail.getByteCount());
             }
 
-            Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
-            inventoryController.addItem(newItem);
-
+            if (usePhoto) {
+                Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
+                inventoryController.addItem(newItem);
+            }
+            else{
+                Item newItem = new Item(name, category, price, description, visibility, quantity, quality, "");
+                inventoryController.addItem(newItem);
+            }
             finish();
         }
     }
@@ -146,6 +152,7 @@ public class AddItemActivity extends AppCompatActivity {
      * @param view "Upload Photo" button.
      */
     public void takeAPhoto(View view) {
+        usePhoto = true;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
@@ -191,6 +198,7 @@ public class AddItemActivity extends AppCompatActivity {
      * @param view "Cancel Image" button.
      */
     public void cancelImage(View view) {
+        usePhoto = false;
         if(imageFilePath != null){
             File file = new File(imageFilePath);
             if (file.exists()) {

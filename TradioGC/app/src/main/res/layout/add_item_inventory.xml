@@ -163,6 +163,30 @@
         </LinearLayout>
 
         <!-- save / add item button -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/DeleteAItem"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Item"
+                android:onClick="delItem"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/DeleteAPhoto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Photo"
+                android:onClick="delPhoto"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/add_item_button"
             android:layout_width="fill_parent"

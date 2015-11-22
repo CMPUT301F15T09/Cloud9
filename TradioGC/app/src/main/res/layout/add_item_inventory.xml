@@ -148,7 +148,7 @@
                 android:id="@+id/TakeAPhoto"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Photo"
+                android:text="Take Photo"
                 android:onClick="takeAPhoto"
                 android:layout_weight="1"/>
 
@@ -157,6 +157,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Select Photo"
+                android:onClick="selectAPhoto"
                 android:layout_weight="1"/>
 
             <Button

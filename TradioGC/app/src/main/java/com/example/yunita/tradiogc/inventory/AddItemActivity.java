@@ -23,6 +23,8 @@ import com.example.yunita.tradiogc.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class AddItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -40,6 +42,8 @@ public class AddItemActivity extends AppCompatActivity {
     private String imageFilePath;
     private Bitmap thumbnail;
     private Button add;
+    private int SELECT_PHOTO = 1;
+
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -161,6 +165,12 @@ public class AddItemActivity extends AppCompatActivity {
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
+    public void selectAPhoto(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, SELECT_PHOTO);
+    }
+
     /**
      * Called when an activity you launched exits, giving you the requestCode
      * you started it with, the resultCode it returned, and any additional data from it.
@@ -181,6 +191,23 @@ public class AddItemActivity extends AppCompatActivity {
                 tempPhoto.setImageBitmap(thumbnail);
             } else {
                 thumbnail = null;
+            }
+        }
+        if (resultCode == SELECT_PHOTO) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    final Uri imageUri = data.getData();
+                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                    double tHeight = selectedImage.getHeight() * 0.2;
+                    double tWidth = selectedImage.getWidth() * 0.2;
+                    thumbnail = Bitmap.createScaledBitmap(selectedImage, (int) tWidth, (int) tHeight, true);
+
+                    tempPhoto.setImageBitmap(thumbnail);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

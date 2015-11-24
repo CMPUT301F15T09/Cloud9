@@ -29,7 +29,8 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
     private Inventory inventory = new Inventory();
     private UserController userController;
-    private String friendname;
+
+    private String friendname = "testfriend"; // for test. Do not change it
     private User friend;
     private ArrayAdapter<Item> inventoryViewAdapter;
 
@@ -38,6 +39,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private int category = -1;
     private String query = "";
     private int categorySelection = 0;
+    private boolean clickable = true;
 
     public ListView getItem_list() {
         return item_list;
@@ -71,7 +73,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         Intent intent = getIntent();
         if (intent != null) {
             Bundle extras = intent.getExtras();
@@ -79,6 +80,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
                 friendname = extras.getString("friend_uname");
             }
         }
+
 
         ArrayList<String> categories = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories_array)));
         categories.add(0, "--Category--");
@@ -92,29 +94,21 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         item_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = inventory.get(position);
-                viewItemDetails(item, friend.getInventory().indexOf(item));
+                if (clickable) {
+                    Item item = inventory.get(position);
+                    viewItemDetails(item, friend.getInventory().indexOf(item));
+                }
             }
         });
-
-
-        Thread refreshUserThread = new RefreshUserThread(friendname);
-        refreshUserThread.start();
-        synchronized (refreshUserThread) {
-            try {
-                refreshUserThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
 
         categoriesChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categorySelection = position;
                 category = position - 1;
-                searchItem(category, query);
+                if (friend!=null) {
+                    searchItem(category, query);
+                }
             }
 
             @Override
@@ -137,13 +131,15 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Thread refreshUserThread = new RefreshUserThread(friendname);
-        refreshUserThread.start();
-        synchronized (refreshUserThread) {
-            try {
-                refreshUserThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (!friendname.equals("")) {
+            Thread refreshUserThread = new RefreshUserThread(friendname);
+            refreshUserThread.start();
+            synchronized (refreshUserThread) {
+                try {
+                    refreshUserThread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         categoriesChoice.setSelection(categorySelection);
@@ -198,6 +194,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         }
         notifyUpdated();
+        clickable = true;
     }
 
     /**
@@ -240,6 +237,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             synchronized (this) {
+                clickable = false;
                 if (lastWaitTask != null) {
                     lastWaitTask.cancel(true);
                 }

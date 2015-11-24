@@ -19,7 +19,13 @@ public class Item implements Serializable {
      * Class constructor.
      */
     public Item() {
-
+        name = "";
+        category = 0;
+        price = 0;
+        desc = "";
+        visibility = true;
+        quantity = 1;
+        quality = 0;
     }
 
     /**

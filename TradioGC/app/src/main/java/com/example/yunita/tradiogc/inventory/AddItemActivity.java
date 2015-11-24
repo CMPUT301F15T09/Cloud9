@@ -28,6 +28,7 @@ public class AddItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private InventoryController inventoryController;
     private Context mContext = this;
+
     private EditText nameEdit;
     private EditText priceEdit;
     private EditText quantityEdit;
@@ -103,15 +104,13 @@ public class AddItemActivity extends AppCompatActivity {
         String price_str = priceEdit.getText().toString();
         String description = descriptionEdit.getText().toString();
 
+
         if (TextUtils.isEmpty(name)) {
             nameEdit.setError("Name cannot be empty.");
-            return;
         } else if (TextUtils.isEmpty(priceEdit.getText().toString())) {
             priceEdit.setError("Price cannot be empty.");
-            return;
         } else if (TextUtils.isEmpty(description)) {
             descriptionEdit.setError("Description cannot be empty.");
-            return;
         } else {
             double price = Double.parseDouble(price_str);
             int category = categoriesChoice.getSelectedItemPosition();

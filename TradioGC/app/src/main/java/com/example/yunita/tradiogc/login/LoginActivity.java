@@ -39,6 +39,7 @@ public class LoginActivity extends Activity {
     private Button login;
     private Button signup;
 
+
     public TextView getCreate_account() {
         return create_account;
     }
@@ -182,8 +183,13 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (username.equals("")) {
-            Toast toast = Toast.makeText(mContext, "Please enter a username.", Toast.LENGTH_SHORT);
-            toast.show();
+            username_et.setError("Username cannot be empty.");
+        } else if (username.contains(" ")) {
+            username_et.setError("Username cannot include empty space.");
+        } else if (email.equals("")) {
+            email_et.setError("Email cannot be empty.");
+        } else if (!email.contains("@")) {
+            email_et.setError("Email must include \"@\"");
         } else {
             Thread thread = userController.new GetUserLoginThread(username);
             thread.start();

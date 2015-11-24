@@ -162,7 +162,7 @@ public class MarketActivity extends AppCompatActivity {
         @Override
         public void run() {
             users.clear();
-            users.addAll(userController.searchUsers(search, "market"));
+            users.addAll(userController.searchUsers(search));
             runOnUiThread(doUpdateGUIDetails);
         }
 

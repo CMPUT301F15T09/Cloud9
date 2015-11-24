@@ -69,8 +69,8 @@ public class TradeDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getExtras() != null) {
-                int index = intent.getExtras().getInt("index_of_trade");
-                trade = LoginActivity.USERLOGIN.getTrades().get(index);
+                int tradeId = intent.getExtras().getInt("trade_id");
+                trade = LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId);
             }
         }
 
@@ -91,7 +91,7 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         // set panel showed
         if (trade.getStatus().equals("offered")) {
-            offeredTradePanel.setVisibility(View.GONE);
+            offeredTradePanel.setVisibility(View.VISIBLE);
         }
     }
 

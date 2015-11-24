@@ -14,6 +14,7 @@ public class Trade {
     private Inventory borrowerItems = new Inventory();
     private String status = ""; //offered, pending, accepted, approved, declined, completed
     private int id;
+    private boolean read = true;
 
 
     public Trade(){
@@ -30,6 +31,8 @@ public class Trade {
         ownerItem = trade.getOwnerItem();
         borrowerItems = trade.getBorrowerItems();
         id = trade.getId();
+        status = trade.getStatus();
+        read = false;
     }
 
     public Trade(String owner, Item ownerItem, Inventory borrowerItems) {
@@ -98,6 +101,14 @@ public class Trade {
         this.status = status;
     }
 
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
     @Override
     public String toString(){
         String str = "";
@@ -112,7 +123,10 @@ public class Trade {
         } else if(status.equals("declined")) {
             // print informative message
         } else if(status.equals("approved")) {
-            // print informative message
+            str += owner + " approved your trade for " + ownerItem.getName();
+        }
+        if (!read) {
+            str = "[New!]" + str;
         }
         return str;
     }

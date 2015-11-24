@@ -26,6 +26,8 @@ public class Item implements Serializable {
         visibility = true;
         quantity = 1;
         quality = 0;
+        Random random = new Random();
+        id = random.nextInt(999999999);
     }
 
     /**
@@ -41,7 +43,7 @@ public class Item implements Serializable {
      */
     public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality, String photos) {
         Random random = new Random();
-        this.id = random.nextInt(999999999);
+        id = random.nextInt(999999999);
 
         this.category = category;
         this.name = name;

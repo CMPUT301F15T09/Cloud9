@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_margin="8dp">
+
+
+
+    <TextView
+        android:id="@+id/trade_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_background"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/ownerItemPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp">
+
+            <TextView
+                android:id="@+id/ownerItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="DOGE" />
+
+            <TextView
+                android:id="@+id/ownerItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="DOGE" />
+
+            <TextView
+                android:id="@+id/ownerItemDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DOGE" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/borrower_offer_trade_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_background"
+            android:text="Items offered:" />
+
+        <ListView
+            android:id="@+id/item_offered_list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/offered_trade_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/accept_trade_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_roundrect_button"
+            android:onClick="accept"
+            android:text="Accpet Trade" />
+
+        <Button
+            android:id="@+id/decline_trade_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_roundrect_button"
+            android:onClick="decline"
+            android:text="Decline Trade" />
+
+    </LinearLayout>
+
+</LinearLayout>

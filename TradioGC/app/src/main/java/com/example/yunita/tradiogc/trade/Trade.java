@@ -4,22 +4,40 @@ package com.example.yunita.tradiogc.trade;
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 
+import java.util.Random;
+
 public class Trade {
 
-    private String owner;
-    private String borrower;
-    private Item ownerItem;
-    private Inventory borrowerItems;
-    private String status;
+    private String owner = "";
+    private String borrower = "";
+    private Item ownerItem = new Item();
+    private Inventory borrowerItems = new Inventory();
+    private String status = ""; //offered, pending, accepted, approved, declined, completed
+    private int id;
+
 
     public Trade(){
-        status = "";
+        Random random = new Random();
+        id = random.nextInt(999999999);
+    }
+
+    /**
+     * copy a trade
+     */
+    public Trade(Trade trade){
+        owner = trade.getOwner();
+        borrower = trade.getBorrower();
+        ownerItem = trade.getOwnerItem();
+        borrowerItems = trade.getBorrowerItems();
+        id = trade.getId();
     }
 
     public Trade(String owner, Item ownerItem, Inventory borrowerItems) {
         this.owner = owner;
         this.ownerItem = ownerItem;
         this.borrowerItems = borrowerItems;
+        Random random = new Random();
+        id = random.nextInt(999999999);
     }
 
     public Trade(String owner, String borrower, Item ownerItem, Inventory borrowerItems) {
@@ -27,6 +45,16 @@ public class Trade {
         this.borrower = borrower;
         this.ownerItem = ownerItem;
         this.borrowerItems = borrowerItems;
+        Random random = new Random();
+        id = random.nextInt(999999999);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getOwner() {
@@ -81,8 +109,10 @@ public class Trade {
             // print informative message
         } else if(status.equals("pending")) {
             // print informative message
-        } else {
-            // default format for Trade
+        } else if(status.equals("declined")) {
+            // print informative message
+        } else if(status.equals("approved")) {
+            // print informative message
         }
         return str;
     }

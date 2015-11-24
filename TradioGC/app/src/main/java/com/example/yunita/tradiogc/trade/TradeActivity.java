@@ -128,6 +128,7 @@ public class TradeActivity extends AppCompatActivity {
 
         // borrower has pending trade
         pendingTrade = new Trade(ownerName, borrower.getUsername(), ownerItem, borrowerOffer);
+        pendingTrade.setId(offeredTrade.getId());
         pendingTrade.setStatus("pending");
 
         // save the pending trade in borrower trades

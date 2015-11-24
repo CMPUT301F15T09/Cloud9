@@ -2,7 +2,6 @@ package com.example.yunita.tradiogc.user;
 
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.inventory.Inventory;
-import com.example.yunita.tradiogc.notification.Notifications;
 import com.example.yunita.tradiogc.trade.Trades;
 
 
@@ -15,6 +14,7 @@ public class User {
     private Friends friends;
     private Inventory inventory;
     private Trades trades;
+    private Trades notifications;
 
     /**
      * Class constructor.
@@ -26,6 +26,9 @@ public class User {
         phone = "";
         friends = new Friends();
         inventory = new Inventory();
+        trades = new Trades();
+        notifications = new Trades();
+
     }
 
     /**
@@ -151,6 +154,14 @@ public class User {
 
     public void setTrades(Trades trades) {
         this.trades = trades;
+    }
+
+    public Trades getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Trades notifications) {
+        this.notifications = notifications;
     }
 
     /**

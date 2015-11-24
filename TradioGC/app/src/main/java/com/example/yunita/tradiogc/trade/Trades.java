@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 public class Trades extends ArrayList<Trade> {
 
-    public Trades(){
-
-    }
+    public Trades(){}
 
     public Trades(Trades t){
         this.addAll(t);
@@ -56,5 +54,12 @@ public class Trades extends ArrayList<Trade> {
         return completedTrades;
     }
 
-
+    public Trade findTradeById(int id) {
+        for (Trade trade: this) {
+            if (trade.getId() == id) {
+                return trade;
+            }
+        }
+        return null;
+    }
 }

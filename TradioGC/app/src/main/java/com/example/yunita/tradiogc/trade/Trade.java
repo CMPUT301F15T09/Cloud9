@@ -126,7 +126,7 @@ public class Trade {
             // print informative message
         }
         if (!read) {
-            str = "[New!]" + str;
+            str = "[ New! ] " + str;
         }
         return str;
     }

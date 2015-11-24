@@ -100,8 +100,8 @@ public class TradeDetailActivity extends AppCompatActivity {
      * @param view "accept trade" button.
      */
     public void accept(View view){
-        trade.setStatus("accepted");
-        Thread replyThread = new ReplyThread("approved");
+        trade.setStatus("current");
+        Thread replyThread = new ReplyThread("accepted");
         replyThread.start();
         finish();
     }

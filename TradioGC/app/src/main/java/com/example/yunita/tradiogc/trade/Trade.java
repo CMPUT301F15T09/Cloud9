@@ -12,7 +12,7 @@ public class Trade {
     private String borrower = "";
     private Item ownerItem = new Item();
     private Inventory borrowerItems = new Inventory();
-    private String status = ""; //offered, pending, accepted, approved, declined, completed
+    private String status = ""; //offered, pending, accepted, current, declined, completed
     private int id;
     private boolean read = true;
 
@@ -117,13 +117,13 @@ public class Trade {
         } else if (status.equals("completed")){
             // print informative message
         } else if (status.equals("accepted")){
-            // print informative message
+            str += owner + " accepted your trade for " + ownerItem.getName();
         } else if(status.equals("pending")) {
             // print informative message
         } else if(status.equals("declined")) {
+            str += owner + " declined your trade for " + ownerItem.getName();
+        } else if(status.equals("current")) {
             // print informative message
-        } else if(status.equals("approved")) {
-            str += owner + " approved your trade for " + ownerItem.getName();
         }
         if (!read) {
             str = "[New!]" + str;

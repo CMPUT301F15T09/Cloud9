@@ -211,7 +211,7 @@ public class EditItemActivity extends AppCompatActivity {
     /**
      * Triggers camera activity and saves the photo into /tmp folder in sdcard.
      *
-     * @param view "Upload Photo" button.
+     * @param encoded String for the photo to be decoded.
      */
     public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
@@ -300,24 +300,10 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     public void delPhoto(View v){
-        String name = item.getName();
-        int category = item.getCategory();
-        double price = item.getPrice();
-        String description = item.getDesc();
-        Boolean visibility = item.getVisibility();
-        int quantity = item.getQuantity();
-        int quality = item.getQuality();
-        int id = item.getId();
-
-        inventoryController.removeExistingItem(item);
-
-        Item newItem = new Item(name, category, price, description, visibility, quantity, quality, "");
-        inventoryController.addItem(newItem);
-        newItem.setId(id);
-
-        Intent intent = new Intent(mContext, ItemActivity.class);
+        item.setPhotos("");
+        inventoryController.updateItem(item);
+        Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);
-
-
+        finish();
     }
 }

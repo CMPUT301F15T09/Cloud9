@@ -42,6 +42,8 @@ public class AddItemActivity extends AppCompatActivity {
     private Bitmap thumbnail;
     private Button add;
     private Boolean usePhoto;
+    private Button delItem;
+    private Button delPhoto;
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -74,6 +76,8 @@ public class AddItemActivity extends AppCompatActivity {
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
         add = (Button) findViewById(R.id.add_item_button);
+        delItem = (Button) findViewById(R.id.DeleteAItem);
+        delPhoto = (Button) findViewById(R.id.DeleteAPhoto);
     }
 
     /**
@@ -90,6 +94,9 @@ public class AddItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
+
+        delItem.setVisibility(View.GONE);
+        delPhoto.setVisibility(View.GONE);
     }
 
     /**

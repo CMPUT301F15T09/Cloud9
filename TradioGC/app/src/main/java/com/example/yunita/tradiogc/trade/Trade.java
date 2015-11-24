@@ -126,7 +126,7 @@ public class Trade {
             str += owner + " approved your trade for " + ownerItem.getName();
         }
         if (!read) {
-            str = "[New!]" + str;
+            str = "[ New! ] " + str;
         }
         return str;
     }

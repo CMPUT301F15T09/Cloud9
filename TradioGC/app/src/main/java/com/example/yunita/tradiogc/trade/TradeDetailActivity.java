@@ -101,6 +101,8 @@ public class TradeDetailActivity extends AppCompatActivity {
      */
     public void accept(View view){
         trade.setStatus("accepted");
+        Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+        updateUserThread.start();
         Thread replyThread = new ReplyThread("approved");
         replyThread.start();
         finish();
@@ -112,6 +114,8 @@ public class TradeDetailActivity extends AppCompatActivity {
      */
     public void decline(View view){
         LoginActivity.USERLOGIN.getTrades().remove(trade);
+        Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+        updateUserThread.start();
         Thread replyThread = new ReplyThread("declined");
         replyThread.start();
         finish();

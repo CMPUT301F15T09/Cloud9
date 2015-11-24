@@ -20,7 +20,12 @@ public class User {
      * Class constructor.
      */
     public User() {
+        username = "";
+        location = "";
+        email = "";
+        phone = "";
         friends = new Friends();
+        inventory = new Inventory();
     }
 
     /**

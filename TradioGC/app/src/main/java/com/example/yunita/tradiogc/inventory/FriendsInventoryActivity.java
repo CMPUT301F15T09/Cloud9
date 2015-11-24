@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.market.SearchInventory;
+import com.example.yunita.tradiogc.market.SearchItem;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -27,24 +29,26 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private EditText query_et;
     private ListView item_list;
 
-    private Inventory inventory = new Inventory();
+    private SearchInventory searchItems = new SearchInventory();
     private UserController userController;
-    private String friendname;
+
+    private String friendname = "testfriend"; // for test. Do not change it
     private User friend;
-    private ArrayAdapter<Item> inventoryViewAdapter;
+    private ArrayAdapter<SearchItem> inventoryViewAdapter;
 
     private Context context = this;
 
     private int category = -1;
     private String query = "";
     private int categorySelection = 0;
+    private boolean clickable = true;
 
     public ListView getItem_list() {
         return item_list;
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public SearchInventory getSearchItems() {
+        return searchItems;
     }
 
     @Override
@@ -71,7 +75,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         Intent intent = getIntent();
         if (intent != null) {
             Bundle extras = intent.getExtras();
@@ -80,41 +83,34 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         }
 
+
         ArrayList<String> categories = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories_array)));
         categories.add(0, "--Category--");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
-        inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
+        inventoryViewAdapter = new ArrayAdapter<SearchItem>(this, R.layout.inventory_list_item, searchItems);
         item_list.setAdapter(inventoryViewAdapter);
 
         item_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = inventory.get(position);
-                viewItemDetails(item, friend.getInventory().indexOf(item));
+                if (clickable) {
+                    SearchItem searchItem = searchItems.get(position);
+                    viewItemDetails(searchItem, friend.getInventory().indexOf(searchItem.getoItem()));
+                }
             }
         });
-
-
-        Thread refreshUserThread = new RefreshUserThread(friendname);
-        refreshUserThread.start();
-        synchronized (refreshUserThread) {
-            try {
-                refreshUserThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
 
         categoriesChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categorySelection = position;
                 category = position - 1;
-                searchItem(category, query);
+                if (friend!=null) {
+                    searchItem(category, query);
+                }
             }
 
             @Override
@@ -137,13 +133,15 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Thread refreshUserThread = new RefreshUserThread(friendname);
-        refreshUserThread.start();
-        synchronized (refreshUserThread) {
-            try {
-                refreshUserThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (!friendname.equals("")) {
+            Thread refreshUserThread = new RefreshUserThread(friendname);
+            refreshUserThread.start();
+            synchronized (refreshUserThread) {
+                try {
+                    refreshUserThread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         categoriesChoice.setSelection(categorySelection);
@@ -169,13 +167,13 @@ public class FriendsInventoryActivity extends AppCompatActivity {
      * pass the item index position, and tell the Item Detail activity
      * to show the Item Detail page from a friend's perspective.
      *
-     * @param item     this item.
+     * @param searchItem this item.
      * @param position this item's index in the inventory.
      */
-    public void viewItemDetails(Item item, int position) {
+    public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra("item", item);
-        // mark this as "friends" page
+        intent.putExtra("item", searchItem.getoItem());
+        intent.putExtra("owner_name", searchItem.getOwnerName()); // pass item's owner's name
         intent.putExtra("owner", "friend");
         intent.putExtra("index", position);
 
@@ -190,14 +188,15 @@ public class FriendsInventoryActivity extends AppCompatActivity {
      * @param query    input of part of item name
      */
     public void searchItem(int category, String query) {
-        inventory.clear();
+        searchItems.clear();
         for (Item item : friend.getInventory().getPublicItems()) {
             if (item.getName().toLowerCase().contains(query.toLowerCase()) &&
                     (item.getCategory() == category || category == -1)) {
-                inventory.add(item);
+                searchItems.add(new SearchItem(friend.getUsername(), item));
             }
         }
         notifyUpdated();
+        clickable = true;
     }
 
     /**
@@ -240,6 +239,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             synchronized (this) {
+                clickable = false;
                 if (lastWaitTask != null) {
                     lastWaitTask.cancel(true);
                 }

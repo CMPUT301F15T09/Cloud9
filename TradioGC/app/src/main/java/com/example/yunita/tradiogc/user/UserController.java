@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.Collections;
 
 public class UserController {
     private static final String TAG = "UserController";
@@ -118,7 +119,7 @@ public class UserController {
      *
      * @param field search string.
      */
-    public Users getAllUsers(String field, String origin) {
+    public Users getAllUsers(String field) {
         Users result = new Users();
 
 
@@ -176,19 +177,29 @@ public class UserController {
         }
 
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
-            if (origin.equals("userSearch")) {
-                // Removes the user's name and any friends from the search result
-                if (!hit.get_id().equals(LoginActivity.USERLOGIN.getUsername()) &&
-                        !friends.contains(hit.get_id())) {
-                    result.add(hit.getSource());
-                }
-            } else {
-                // Returns all results
-                result.add(hit.getSource());
-            }
             result.add(hit.getSource());
         }
 
+        return result;
+    }
+
+    /**
+     * Adds all user who are not login user or friends into user list.
+     *
+     * @param searchString search string.
+     * @return Users.
+     */
+    public Users searchStrangers(String searchString) {
+        Users result = new Users();
+        Users allUsers = getAllUsers(null);
+        for (User user : allUsers) {
+            if (user.getUsername().toLowerCase().contains(searchString.toLowerCase()) &&
+                    !user.getUsername().equals(LoginActivity.USERLOGIN.getUsername()) &&
+                    !LoginActivity.USERLOGIN.getFriends().contains(user.getUsername())) {
+                result.add(user);
+            }
+        }
+        result.notifyObservers();
         return result;
     }
 
@@ -198,9 +209,9 @@ public class UserController {
      * @param searchString search string.
      * @return Users.
      */
-    public Users searchUsers(String searchString, String origin) {
+    public Users searchUsers(String searchString) {
         Users result = new Users();
-        Users allUsers = getAllUsers(null, origin);
+        Users allUsers = getAllUsers(null);
         for (User user : allUsers) {
             if (user.getUsername().toLowerCase().contains(searchString.toLowerCase())) {
                 result.add(user);
@@ -251,6 +262,5 @@ public class UserController {
             }
         }
     }
-
 }
 

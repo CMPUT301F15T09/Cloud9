@@ -19,12 +19,11 @@ import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
 public class ItemActivity extends AppCompatActivity {
-
     private InventoryController inventoryController;
     private Item item;
     private Context context = this;
     private Categories categories;
-    private String perspective;
+    private String perspective = "";
     private UserController userController;
     private int index;
 
@@ -36,6 +35,7 @@ public class ItemActivity extends AppCompatActivity {
     private TextView description;
     private TextView quantity;
     private TextView quality;
+    private ImageView itemImage;
 
     public void setItem(Item item) {
         this.item = item;
@@ -75,28 +75,24 @@ public class ItemActivity extends AppCompatActivity {
 
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
-            //ImageView photo = (ImageView) findViewById(R.id.itemImage);
-            name = (TextView) findViewById(R.id.itemName);
-            category = (TextView) findViewById(R.id.itemCategory);
-            price = (TextView) findViewById(R.id.itemPrice);
-            description = (TextView) findViewById(R.id.itemDescription);
-            quantity = (TextView) findViewById(R.id.itemQuantity);
-            quality = (TextView) findViewById(R.id.itemQuality);
-
-            ImageView itemImage = (ImageView) findViewById(R.id.itemImage);
-            if (!item.getPhotos().equals("")) {
-                itemImage.setImageBitmap(decodeImage(item.getPhotos()));
-            }
-
-            name.setText(item.getName());
-            category.setText(categories.getCategories().get(item.getCategory()));
-            price.setText("$" + Double.toString(item.getPrice()));
-            description.setText(item.getDesc());
-            quantity.setText(Integer.toString(item.getQuantity()));
-            if (item.getQuality() == 0) {
-                quality.setText("New");
-            } else {
-                quality.setText("Used");
+            // Hasn't been tested yet
+            // Need to check if the item has a photo
+            // If no photo, we need to set the visibility of itemImage to "gone"
+            //photo.setImage... waiting for photo to be implemented
+            if (item != null) {
+                name.setText(item.getName());
+                category.setText(categories.getCategories().get(item.getCategory()));
+                price.setText("$" + Double.toString(item.getPrice()));
+                description.setText(item.getDesc());
+                quantity.setText(Integer.toString(item.getQuantity()));
+                if (item.getQuality() == 0) {
+                    quality.setText("New");
+                } else {
+                    quality.setText("Used");
+                }
+                if (!item.getPhotos().equals("")) {
+                    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
+                }
             }
 
         }
@@ -113,6 +109,15 @@ public class ItemActivity extends AppCompatActivity {
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
 
+
+
+        itemImage = (ImageView) findViewById(R.id.itemImage);
+        name = (TextView) findViewById(R.id.itemName);
+        category = (TextView) findViewById(R.id.itemCategory);
+        price = (TextView) findViewById(R.id.itemPrice);
+        description = (TextView) findViewById(R.id.itemDescription);
+        quantity = (TextView) findViewById(R.id.itemQuantity);
+        quality = (TextView) findViewById(R.id.itemQuality);
     }
 
     /**
@@ -125,17 +130,20 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         categories = new Categories();
 
-        perspective = intent.getExtras().getString("owner");
-        index = intent.getExtras().getInt("index");
-        if (perspective.equals("owner")) {
-            item = LoginActivity.USERLOGIN.getInventory().get(index);
-        } else {
-            item = (Item) intent.getSerializableExtra("item");
-        }
-        // Checks to see if we are getting a username from the intent
-        if (perspective.equals("friend")) {
-            edit_button.setVisibility(View.GONE);
-            friend_panel.setVisibility(View.VISIBLE);
+
+        if (intent.getExtras() != null) {
+            perspective = intent.getExtras().getString("owner");
+            index = intent.getExtras().getInt("index");
+            if (perspective.equals("owner")) {
+                item = LoginActivity.USERLOGIN.getInventory().get(index);
+            } else {
+                item = (Item) intent.getSerializableExtra("item");
+            }
+            // Checks to see if we are getting a username from the intent
+            if (perspective.equals("friend")) {
+                edit_button.setVisibility(View.GONE);
+                friend_panel.setVisibility(View.VISIBLE);
+            }
         }
 
         runOnUiThread(doUpdateGUIDetails);
@@ -147,7 +155,7 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (perspective.equals("owner")) {
+        if (perspective!=null && perspective.equals("owner")) {
             Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
             getUserLoginThread.start();
             synchronized (getUserLoginThread) {

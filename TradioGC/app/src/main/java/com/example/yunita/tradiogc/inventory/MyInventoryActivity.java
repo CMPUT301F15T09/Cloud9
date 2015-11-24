@@ -38,6 +38,7 @@ public class MyInventoryActivity extends AppCompatActivity {
     private int category = -1;
     private String query = "";
     private int categorySelection = 0;
+    private boolean clickable = true;
 
     public Button getAddItem() {
         return addItem;
@@ -50,6 +51,7 @@ public class MyInventoryActivity extends AppCompatActivity {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +90,23 @@ public class MyInventoryActivity extends AppCompatActivity {
         itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = inventory.get(position);
-                viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
+                if (clickable) {
+                    Item item = inventory.get(position);
+                    viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
+                }
             }
         });
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Item deletedItem = inventory.get(position);
-                Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
-                deleteThread.start();
-                inventory.remove(deletedItem);
-                Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
-                notifyUpdated();
+                if (clickable) {
+                    Item deletedItem = inventory.get(position);
+                    Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                    deleteThread.start();
+                    inventory.remove(deletedItem);
+                    Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
+                    notifyUpdated();
+                }
                 return true;
             }
         });
@@ -189,6 +195,7 @@ public class MyInventoryActivity extends AppCompatActivity {
             }
         }
         notifyUpdated();
+        clickable = true;
     }
 
     /**
@@ -210,6 +217,7 @@ public class MyInventoryActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             synchronized (this) {
+                clickable = false;
                 if (lastWaitTask != null) {
                     lastWaitTask.cancel(true);
                 }

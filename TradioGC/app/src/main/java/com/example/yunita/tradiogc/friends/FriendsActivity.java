@@ -20,6 +20,8 @@ public class FriendsActivity extends AppCompatActivity {
 
     private Context context = this;
     private Friends friends = new Friends();
+
+
     private ListView friendList;
     private String friendname;
     private FriendsController friendsController;
@@ -51,6 +53,7 @@ public class FriendsActivity extends AppCompatActivity {
         friends.addAll(LoginActivity.USERLOGIN.getFriends());
         search_user_button = (Button) findViewById(R.id.search_user);
         System.out.println("friends: " + friends.size());
+        search_user_button = (Button) findViewById(R.id.search_user);
     }
 
     /**
@@ -118,7 +121,7 @@ public class FriendsActivity extends AppCompatActivity {
      */
     public void viewFriendProfile(String username) {
         Intent intent = new Intent(context, ProfileActivity.class);
-        intent.putExtra(ProfileActivity.USERNAME, username);
+        intent.putExtra("profileTarget", username);
         startActivity(intent);
     }
 

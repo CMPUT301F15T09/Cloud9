@@ -26,9 +26,12 @@ public class SearchUserActivity extends AppCompatActivity {
     private ListView userList;
     private ArrayAdapter<User> usersViewAdapter;
     private UserController userController;
+
     private EditText query_et;
     private Context mContext = this;
-    private boolean clickable = true;
+
+
+    private boolean clickable = false;
     private String query = "";
 
     public ListView getUserList() {
@@ -107,7 +110,7 @@ public class SearchUserActivity extends AppCompatActivity {
      */
     public void startProfileActivity(String username) {
         Intent intent = new Intent(mContext, ProfileActivity.class);
-        intent.putExtra(ProfileActivity.USERNAME, username);
+        intent.putExtra("profileTarget", username);
         startActivity(intent);
         finish();
     }
@@ -142,13 +145,16 @@ public class SearchUserActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            users.clear();
-            users.addAll(userController.searchUsers(search, "userSearch"));
-            System.out.println("search users: " + users.size());
-            notifyUpdated();
-            clickable = true;
-        }
+            synchronized (this) {
+                users.clear();
+                users.addAll(userController.searchStrangers(search));
 
+                System.out.println("search users: " + users.size());
+                notifyUpdated();
+                clickable = true;
+                notify();
+            }
+        }
     }
 
     /**

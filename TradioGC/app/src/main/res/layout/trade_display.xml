@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="none"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:layout_margin="8dp">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
 
 
     <TextView
@@ -66,71 +62,98 @@
     <LinearLayout
         android:id="@+id/borrower_offer_trade_panel"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="My Offer"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_background"
-            android:text="Items offered:" />
+            android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/my_offer_list_view"
-            android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:layout_weight="16">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp">
 
-        </ListView>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_background"
+                    android:text="Items offered:" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary_background"
-            android:text="My Inventory:" />
+                <ListView
+                    android:id="@+id/my_offer_list_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
-        <ListView
-            android:id="@+id/trade_inventory_list_view"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_weight="16">
+                </ListView>
+            </LinearLayout>
 
-        </ListView>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_background"
+                    android:text="My Inventory:" />
+
+                <ListView
+                    android:id="@+id/trade_inventory_list_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/borrower_trade_panel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp">
 
         <Button
             android:id="@+id/offer_trade_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:background="@drawable/custom_roundrect_button"
             android:onClick="offerTrade"
             android:text="Offer Trade" />
 
         <Button
             android:id="@+id/cancel_trade_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:background="@drawable/custom_roundrect_button"
             android:text="Cancel Trade" />
 
     </LinearLayout>
 
 </LinearLayout>
-    </ScrollView>

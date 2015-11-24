@@ -39,7 +39,7 @@ public class EditItemActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText quantityEdit;
     private Spinner qualityChoice;
-    private Item item;
+    private Item item = new Item();
     private Button add;
     private Button save;
     private Uri imageFileUri;
@@ -85,7 +85,11 @@ public class EditItemActivity extends AppCompatActivity {
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
 
-        item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
+        if (getIntent().getExtras()!=null) {
+            item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
+        } else {
+            item = new Item();
+        }
 
 
         radioVisibility = (RadioGroup) findViewById(R.id.radioVisibility);
@@ -99,6 +103,9 @@ public class EditItemActivity extends AppCompatActivity {
         add = (Button) findViewById(R.id.add_item_button);
         save = (Button) findViewById(R.id.save_item_button);
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+
+        add.setVisibility(View.GONE);
+        save.setVisibility(View.VISIBLE);
 
     }
 
@@ -116,8 +123,6 @@ public class EditItemActivity extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
 
-        add.setVisibility(View.GONE);
-        save.setVisibility(View.VISIBLE);
 
         if (!item.getVisibility()) {
             radioVisibility.check(R.id.private_radio_button);

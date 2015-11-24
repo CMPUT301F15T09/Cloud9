@@ -46,6 +46,7 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageView tempPhoto;
     private String imageFilePath;
     private Bitmap thumbnail;
+    private Boolean usePhoto;
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -81,6 +82,7 @@ public class EditItemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        usePhoto = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
@@ -102,7 +104,12 @@ public class EditItemActivity extends AppCompatActivity {
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         add = (Button) findViewById(R.id.add_item_button);
         save = (Button) findViewById(R.id.save_item_button);
+
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+        if (!item.getPhotos().equals("")) {
+            tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
+        }
+
 
         add.setVisibility(View.GONE);
         save.setVisibility(View.VISIBLE);
@@ -133,6 +140,12 @@ public class EditItemActivity extends AppCompatActivity {
         descriptionEdit.setText(item.getDesc());
         qualityChoice.setSelection(item.getQuality());
         quantityEdit.setText(Integer.toString(item.getQuantity()));
+
+        tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+        if (!item.getPhotos().equals("")) {
+            tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
+        }
+
     }
 
     /**
@@ -180,7 +193,12 @@ public class EditItemActivity extends AppCompatActivity {
             item.setCategory(category);
             item.setQuantity(quantity);
             item.setQuality(quality);
-            item.setPhotos(photo);
+            if (!usePhoto){
+                item.setPhotos("");
+            }
+            else{
+                item.setPhotos(photo);
+            }
 
             inventoryController.updateItem(item);
             finish();
@@ -195,7 +213,14 @@ public class EditItemActivity extends AppCompatActivity {
      *
      * @param view "Upload Photo" button.
      */
+    public Bitmap decodeImage(String encoded) {
+        byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
+    }
+
     public void takeAPhoto(View view) {
+        usePhoto = true;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
@@ -241,6 +266,7 @@ public class EditItemActivity extends AppCompatActivity {
      * @param view "Cancel Image" button.
      */
     public void cancelImage(View view) {
+        usePhoto = false;
         if(imageFilePath != null){
             File file = new File(imageFilePath);
             if (file.exists()) {
@@ -265,5 +291,33 @@ public class EditItemActivity extends AppCompatActivity {
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
+    }
+
+    public void delItem(View v){
+        inventoryController.removeExistingItem(item);
+        Intent intent = new Intent(mContext, MyInventoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void delPhoto(View v){
+        String name = item.getName();
+        int category = item.getCategory();
+        double price = item.getPrice();
+        String description = item.getDesc();
+        Boolean visibility = item.getVisibility();
+        int quantity = item.getQuantity();
+        int quality = item.getQuality();
+        int id = item.getId();
+
+        inventoryController.removeExistingItem(item);
+
+        Item newItem = new Item(name, category, price, description, visibility, quantity, quality, "");
+        inventoryController.addItem(newItem);
+        newItem.setId(id);
+
+        Intent intent = new Intent(mContext, ItemActivity.class);
+        startActivity(intent);
+
+
     }
 }

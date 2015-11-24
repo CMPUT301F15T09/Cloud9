@@ -142,6 +142,7 @@ public class ItemActivity extends AppCompatActivity {
             // Checks to see if we are getting a username from the intent
             if (perspective.equals("friend")) {
                 edit_button.setVisibility(View.GONE);
+                friend_panel.setVisibility(View.VISIBLE);
             }
         }
 

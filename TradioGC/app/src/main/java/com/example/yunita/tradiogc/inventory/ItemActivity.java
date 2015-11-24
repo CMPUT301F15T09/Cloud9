@@ -18,6 +18,8 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
+import java.util.ArrayList;
+
 public class ItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
     private Item item;
@@ -90,8 +92,8 @@ public class ItemActivity extends AppCompatActivity {
                 } else {
                     quality.setText("Used");
                 }
-                if (!item.getPhotos().equals("")) {
-                    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
+                if (!item.isPhotos()) {
+                    itemImage.setImageBitmap(decodeImage(item.getPhoto(0)));
                 }
             }
 
@@ -211,9 +213,9 @@ public class ItemActivity extends AppCompatActivity {
         Boolean visibility = item.getVisibility();
         int quantity = item.getQuantity();
         int quality = item.getQuality();
-        String photo = item.getPhotos();
+        ArrayList<String> photos = item.getPhotos();
 
-        Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
+        Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photos);
         inventoryController.addItem(newItem);
 
         finish();

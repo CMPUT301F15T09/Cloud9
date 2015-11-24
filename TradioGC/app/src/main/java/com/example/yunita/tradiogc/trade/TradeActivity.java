@@ -89,7 +89,7 @@ public class TradeActivity extends AppCompatActivity {
         tradeWith.setTypeface(null, Typeface.BOLD);
 
         // set item photo and information
-        Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());
+        Bitmap itemPhoto = decodeImage(ownerItem.getPhoto(0));
         ownerItemPhoto.setImageBitmap(itemPhoto);
         ownerItemName.setText(ownerItem.getName());
         ownerItemPrice.setText(Double.toString(ownerItem.getPrice()));

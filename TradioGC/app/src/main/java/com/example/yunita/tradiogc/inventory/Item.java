@@ -1,6 +1,7 @@
 package com.example.yunita.tradiogc.inventory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -12,7 +13,7 @@ public class Item implements Serializable {
     private Boolean visibility;
     private int quantity;
     private int quality;
-    private String photos;
+    private ArrayList<String> photos;
     private int id;
 
     /**
@@ -39,7 +40,7 @@ public class Item implements Serializable {
      * @param quantity   contains an integer 1..* for the amount that the owner has of the item
      * @param quality    contains an integer that describes the item's quality; 0 is new and 1 is used
      */
-    public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality, String photos) {
+    public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality, ArrayList<String> photos) {
         Random random = new Random();
         this.id = random.nextInt(999999999);
 
@@ -217,7 +218,7 @@ public class Item implements Serializable {
      *
      * @return Photos
      */
-    public String getPhotos() {
+    public ArrayList<String> getPhotos() {
         return photos;
     }
 
@@ -226,7 +227,7 @@ public class Item implements Serializable {
      *
      * @param photos new photos.
      */
-    public void setPhotos(String photos) {
+    public void setPhotos(ArrayList<String> photos) {
         this.photos = photos;
     }
 
@@ -236,6 +237,36 @@ public class Item implements Serializable {
      *
      * @return String:  item's name with its price in a new line
      */
+    public void addPhoto(String photo){
+        if (photos.get(0).equals("")){
+            photos.set(0,photo);
+        }
+        else{
+            photos.add(photo);
+        }
+    }
+
+    public String getPhoto(int Index){
+        return photos.get(Index);
+    }
+
+    public Boolean isPhotos () {
+        if (photos.size() == 1) {
+            if (photos.get(0).equals("")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void removePhoto(int Index){
+        photos.remove(Index);
+        if (photos.isEmpty()) {
+            photos.add("");
+        }
+    }
+
+
     @Override
     public String toString() {
         return this.name + "\n$" + this.price;

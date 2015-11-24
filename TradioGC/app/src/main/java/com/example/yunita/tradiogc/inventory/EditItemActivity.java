@@ -106,8 +106,8 @@ public class EditItemActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.save_item_button);
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
-        if (!item.getPhotos().equals("")) {
-            tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
+        if (item.isPhotos()); {
+            tempPhoto.setImageBitmap(decodeImage(item.getPhoto(0)));
         }
 
 
@@ -116,7 +116,7 @@ public class EditItemActivity extends AppCompatActivity {
 
     }
 
-    /**
+    /**D
      * Sets the view with the current item information.
      */
     @Override
@@ -142,8 +142,8 @@ public class EditItemActivity extends AppCompatActivity {
         quantityEdit.setText(Integer.toString(item.getQuantity()));
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
-        if (!item.getPhotos().equals("")) {
-            tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
+        if (item.isPhotos()) {
+            tempPhoto.setImageBitmap(decodeImage(item.getPhoto(0)));
         }
 
     }
@@ -195,7 +195,7 @@ public class EditItemActivity extends AppCompatActivity {
             item.setQuality(quality);
             if (thumbnail != null) {
                 if (usePhoto) {
-                    item.setPhotos(photo);
+                    item.addPhoto(photo);
                 }
             }
 
@@ -300,7 +300,7 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     public void delPhoto(View v){
-        item.setPhotos("");
+        item.removePhoto(0);
         inventoryController.updateItem(item);
         Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);

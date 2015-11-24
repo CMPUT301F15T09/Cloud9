@@ -23,6 +23,7 @@ import com.example.yunita.tradiogc.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 public class AddItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -138,11 +139,16 @@ public class AddItemActivity extends AppCompatActivity {
             }
 
             if (usePhoto) {
-                Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
+                ArrayList <String> newPhotos = new ArrayList<>();
+                newPhotos.add(photo);
+                Item newItem = new Item(name, category, price, description, visibility, quantity, quality, newPhotos);
                 inventoryController.addItem(newItem);
             }
+
             else{
-                Item newItem = new Item(name, category, price, description, visibility, quantity, quality, "");
+                ArrayList<String> newPhotos = new ArrayList<>();
+                newPhotos.add("");
+                Item newItem = new Item(name, category, price, description, visibility, quantity, quality, newPhotos);
                 inventoryController.addItem(newItem);
             }
             finish();

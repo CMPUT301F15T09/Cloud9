@@ -30,7 +30,7 @@ public class NotificationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         notificationListView = (ListView) findViewById(R.id.notification_list_view);
-        notificationController = new NotificationController();
+        notificationController = new NotificationController(this);
     }
 
     @Override
@@ -44,14 +44,15 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Trade trade = tradesNotif.get(position);
-                int index = LoginActivity.USERLOGIN.getTrades().indexOf(trade);
-
+                int tradeId = trade.getId();
+                trade.setRead(true);
                 // call another intent
                 Intent intent = new Intent(context, TradeDetailActivity.class);
-                intent.putExtra("index_of_trade", index);
+                intent.putExtra("trade_id", tradeId);
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -61,8 +62,7 @@ public class NotificationActivity extends AppCompatActivity {
         notificationController.updateNotification();
 
         tradesNotif.clear();
-        tradesNotif.addAll(LoginActivity.USERLOGIN.getTrades().getOfferedTrade());
-        tradesNotif.addAll(LoginActivity.USERLOGIN.getTrades().getAcceptedTrade());
+        tradesNotif.addAll(LoginActivity.USERLOGIN.getNotifications());
 
         notificationArrayAdapter.notifyDataSetChanged();
     }

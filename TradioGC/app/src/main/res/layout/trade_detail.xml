@@ -92,7 +92,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:paddingTop="10dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/accept_trade_button"

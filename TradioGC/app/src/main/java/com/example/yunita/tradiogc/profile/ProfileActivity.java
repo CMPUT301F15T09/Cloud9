@@ -16,6 +16,7 @@ import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.inventory.FriendsInventoryActivity;
 import com.example.yunita.tradiogc.inventory.MyInventoryActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.record.RecordActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -200,13 +201,24 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user presses the "Pencil" icon in on their Profile page.
+     * Called when the user presses the "Pencil" icon in their Profile page.
      * <p>This method is used to send the user to Edit Profile page.
      *
      * @param view "Pencil" icon
      */
     public void editProfile(View view) {
         Intent intent = new Intent(context, EditProfileActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Called when the user presses the "Trade Record" button in their Profile page.
+     * <p>This method is used to send the user to Trade Record page.
+     *
+     * @param view "Trade Record" button,
+     */
+    public void goToRecord(View view){
+        Intent intent = new Intent(context, RecordActivity.class);
         startActivity(intent);
     }
 

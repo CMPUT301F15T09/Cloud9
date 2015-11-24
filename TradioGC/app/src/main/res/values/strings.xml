@@ -119,6 +119,9 @@
     <string name="title_activity_item">Item Detail</string>
     <string name="title_activity_friends_inventory">Friends Inventory</string>
     <string name="title_activity_item_search">Search Item</string>
+    <string name="title_activity_current">Current Trades</string>
+
+    <string name="hello_world">Hello world!</string>
 
 
 

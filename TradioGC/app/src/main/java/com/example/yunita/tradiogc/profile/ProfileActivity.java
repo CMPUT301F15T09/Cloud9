@@ -33,7 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton edit_button;
     private Button myinventory_button;
     private Button friendinventory_button;
-    private Button removefriend_button;
 
     private Button addfriend_button;
 
@@ -186,6 +185,11 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(context, FriendsInventoryActivity.class);
         intent.putExtra("friend_uname", targetUsername);
         startActivity(intent);
+    }
+
+    public void delFriend(View view) {
+        friendsController.deleteFriend(targetUsername);
+        finish();
     }
 
     /**

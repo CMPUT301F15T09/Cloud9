@@ -9,6 +9,7 @@ public class Friends extends ArrayList<String> implements Observable {
 
     private static final long serialVersionUID = 3199561696102797345L;
     private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
+    private FriendsController friendsController;
 
     @Override
     public void addObserver(Observer o) {

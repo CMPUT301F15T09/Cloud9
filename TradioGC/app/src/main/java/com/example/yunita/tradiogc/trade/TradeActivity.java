@@ -94,38 +94,23 @@ public class TradeActivity extends AppCompatActivity {
         ownerItemName.setText(ownerItem.getName());
         ownerItemPrice.setText(Double.toString(ownerItem.getPrice()));
         ownerItemDescription.setText(ownerItem.getDesc());
-
-        // taken from http://stackoverflow.com/questions/6210895/listview-inside-scrollview-is-not-scrolling-on-android
-        // (C) 2014 Moisés Olmedo, bwest
-        // this is to handle list view inside scroll view
-        borrowerInventoryListView.setOnTouchListener(new ListView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-
-                // Handle ListView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
-
+        
         borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = borrowerInventory.get(position);
                 borrowerInventory.remove(item);
                 borrowerOffer.add(item);
+                borrowerInventoryArrayAdapter.notifyDataSetChanged();
+                borrowerOfferArrayAdapter.notifyDataSetChanged();
+            }
+        });
+        borrowerOfferListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Item item = borrowerOffer.get(position);
+                borrowerOffer.remove(item);
+                borrowerInventory.add(item);
                 borrowerInventoryArrayAdapter.notifyDataSetChanged();
                 borrowerOfferArrayAdapter.notifyDataSetChanged();
             }

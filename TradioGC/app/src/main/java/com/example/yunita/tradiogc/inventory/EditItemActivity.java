@@ -160,6 +160,7 @@ public class EditItemActivity extends AppCompatActivity {
         String name = nameEdit.getText().toString();
         String price_str = priceEdit.getText().toString();
         String description = descriptionEdit.getText().toString();
+        String photo = "";
 
         if (TextUtils.isEmpty(name)) {
             nameEdit.setError("Name cannot be empty.");
@@ -180,7 +181,6 @@ public class EditItemActivity extends AppCompatActivity {
             }
             int quality = qualityChoice.getSelectedItemPosition();
 
-            String photo = "";
             if (thumbnail != null) {
                 photo = encodeImage(thumbnail);
                 System.out.println(thumbnail.getByteCount());
@@ -193,11 +193,10 @@ public class EditItemActivity extends AppCompatActivity {
             item.setCategory(category);
             item.setQuantity(quantity);
             item.setQuality(quality);
-            if (!usePhoto){
-                item.setPhotos("");
-            }
-            else{
-                item.setPhotos(photo);
+            if (thumbnail != null) {
+                if (usePhoto) {
+                    item.setPhotos(photo);
+                }
             }
 
             inventoryController.updateItem(item);
@@ -297,6 +296,7 @@ public class EditItemActivity extends AppCompatActivity {
         inventoryController.removeExistingItem(item);
         Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void delPhoto(View v){

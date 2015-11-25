@@ -14,7 +14,7 @@ public class Trades extends ArrayList<Trade> {
         this.addAll(t);
     }
 
-    public Trades getOfferedTrade(){
+    public Trades getOfferedTrades(){
         Trades offeredTrades = new Trades();
         for(Trade t : this){
             if(t.getStatus().equals("offered")){
@@ -24,7 +24,7 @@ public class Trades extends ArrayList<Trade> {
         return offeredTrades;
     }
 
-    public Trades getAcceptedTrade(){
+    public Trades getAcceptedTrades(){
         Trades acceptedTrades = new Trades();
         for(Trade t : this){
             if(t.getStatus().equals("accepted")){
@@ -34,7 +34,7 @@ public class Trades extends ArrayList<Trade> {
         return acceptedTrades;
     }
 
-    public Trades getPendingTrade(){
+    public Trades getPendingTrades(){
         Trades pendingTrades = new Trades();
         for(Trade t : this){
             if(t.getStatus().equals("pending")){
@@ -44,7 +44,7 @@ public class Trades extends ArrayList<Trade> {
         return pendingTrades;
     }
 
-    public Trades getCompletedTrade(){
+    public Trades getCompletedTrades(){
         Trades completedTrades = new Trades();
         for(Trade t : this){
             if(t.getStatus().equals("completed")){
@@ -52,6 +52,16 @@ public class Trades extends ArrayList<Trade> {
             }
         }
         return completedTrades;
+    }
+
+    public Trades getCurrentTrades(){
+        Trades currentTrades = new Trades();
+        for(Trade t : this){
+            if(t.getStatus().equals("offered") || t.getStatus().equals("pending") || t.getStatus().equals("accepted")){
+                currentTrades.add(t);
+            }
+        }
+        return currentTrades;
     }
 
     public Trade findTradeById(int id) {

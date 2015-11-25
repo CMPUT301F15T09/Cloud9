@@ -1,36 +1,29 @@
+// tab layout taken from https://guides.codepath.com/android/google-play-style-tabs-using-tablayout
+// (C) 2015 CodePath modified by Cloud 9
+
 package com.example.yunita.tradiogc.record;
 
-import android.content.Context;
-import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.profile.EditProfileActivity;
 
 public class RecordActivity extends AppCompatActivity{
-
-    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trades);
+        setContentView(R.layout.record_activity);
 
-    }
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new RecordFragmentPagerAdapter(getSupportFragmentManager(),
+                RecordActivity.this));
 
-    // current trade: pending/offered or accepted
-
-    /**
-     *
-     * @param view
-     */
-    public void goToCurrent(View view){
-        Intent intent = new Intent(context, CurrentActivity.class);
-        startActivity(intent);
-
-        finish();
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 }

@@ -82,10 +82,6 @@
             android:label="TEST" >
         </activity>
         <activity
-            android:name=".record.RecordActivity"
-            android:label="Record" >
-        </activity>
-        <activity
             android:name=".trade.TradeActivity"
             android:label="@string/trade" />
         <activity
@@ -94,6 +90,10 @@
         <activity
             android:name=".record.CurrentActivity"
             android:label="@string/title_activity_current" >
+        </activity>
+        <activity
+            android:name=".record.RecordActivity"
+            android:label="@string/title_activity_record" >
         </activity>
     </application>
 

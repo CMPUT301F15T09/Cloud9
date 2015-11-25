@@ -10,7 +10,7 @@ public class Notifications extends ArrayList<Notification> {
     public Notifications() {}
 
     public void addNotification(Trade trade) {
-        this.add(new Notification(trade));
+        this.add(0, new Notification(trade));
     }
 
     public Notification findNotificationById(int id) {

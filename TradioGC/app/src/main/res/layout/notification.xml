@@ -1,26 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+    android:layout_margin="@dimen/activity_vertical_margin">
 
-    <ListView
-        android:id="@+id/notification_list_view"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/notification_list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/update_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:maxWidth="40dp"
+            android:onClick="update"
+            android:scaleType="centerInside"
+            android:src="@drawable/update_button"
+            android:layout_gravity="right"
+            android:contentDescription="update notification" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <ImageButton
-        android:id="@+id/update_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:background="#00000000"
-        android:maxWidth="40dp"
-        android:onClick="update"
-        android:scaleType="centerInside"
-        android:src="@drawable/update_button"
-        android:layout_gravity="right"
-        android:contentDescription="update notification" />
-
-
-</LinearLayout>
+        android:layout_height="fill_parent"
+        android:visibility="gone"/>
+</RelativeLayout>

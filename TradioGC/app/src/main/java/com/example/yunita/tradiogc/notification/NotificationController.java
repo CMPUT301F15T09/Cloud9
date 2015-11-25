@@ -17,6 +17,17 @@ public class NotificationController {
     }
 
     public void updateNotification() {
+        Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+        getUserLoginThread.start();
+
+        synchronized (getUserLoginThread) {
+            try {
+                getUserLoginThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         for (Trade trade: LoginActivity.USERLOGIN.getTrades()) {
             // add new offered trade into notification
             if (trade.getStatus().equals("offered") ) {
@@ -38,6 +49,7 @@ public class NotificationController {
                 }
             }
         }
+
         updateToWebServer();
     }
 

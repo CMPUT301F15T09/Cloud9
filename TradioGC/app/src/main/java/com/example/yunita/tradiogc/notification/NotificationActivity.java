@@ -83,4 +83,8 @@ public class NotificationActivity extends AppCompatActivity {
 
         notificationArrayAdapter.notifyDataSetChanged();
     }
+
+    public void update(View view) {
+        onResume();
+    }
 }

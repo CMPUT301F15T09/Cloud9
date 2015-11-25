@@ -3,6 +3,7 @@ package com.example.yunita.tradiogc.trade;
 
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 import java.util.Random;
 
@@ -99,6 +100,7 @@ public class Trade {
     @Override
     public String toString(){
         String str = "";
+        /*
         if(status.equals("offered")){
             str += borrower + " offered a trade for " + ownerItem.getName();
         } else if (status.equals("completed")){
@@ -109,6 +111,13 @@ public class Trade {
             str += "Trade for " + ownerItem + " is pending.";
         } else if(status.equals("declined")) {
             str += owner + " declined your trade for " + ownerItem.getName();
+        }
+        */
+        if (LoginActivity.USERLOGIN.getUsername().equals(owner)) {
+            str += "Trade with " + borrower + "\n" + ownerItem.getName() + "\nStatus:" + status;
+        } else {
+            str += "Trade with " + owner + "\n" + ownerItem.getName() + "\nStatus: " + status;
+
         }
         return str;
     }

@@ -44,9 +44,6 @@ public class Notification  {
                 case "offered":
                     str += trade.getBorrower() + " offered a trade for " + trade.getOwnerItem().getName();
                     break;
-                case "completed":
-                    // print informative message
-                    break;
                 case "accepted": // the counter trade offered by owner is accepted
                     str += trade.getBorrower() + " accepted your counter trade for " + trade.getOwnerItem().getName();
                     break;
@@ -56,7 +53,7 @@ public class Notification  {
                 case "declined": // the counter trade offered by owner is declined
                     str += trade.getBorrower() + " declined your counter trade for " + trade.getOwnerItem().getName();
                     break;
-                case "current":
+                case "completed":
                     // print informative message
                     break;
             }

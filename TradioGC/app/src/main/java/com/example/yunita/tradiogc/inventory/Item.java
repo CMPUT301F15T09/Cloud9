@@ -240,7 +240,7 @@ public class Item implements Serializable {
      */
     @Override
     public String toString() {
-        return this.name + "\n$" + this.price;
+        return this.name + "\n$" + this.price + " x " + this.quantity;
     }
 
 }

@@ -85,6 +85,8 @@
             android:label="@string/trade" />
         <activity android:name=".trade.TradeDetailActivity"
             android:label="@string/trade_detail" />
+        <activity android:name=".trade.CounterTradeActivity"
+            android:label="@string/counter_trade" />
     </application>
 
 </manifest>

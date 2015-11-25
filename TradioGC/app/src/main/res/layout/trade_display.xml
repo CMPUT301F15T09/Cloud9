@@ -6,15 +6,33 @@
     android:layout_margin="8dp">
 
 
-
-    <TextView
-        android:id="@+id/trade_with"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:orientation="horizontal"
+        android:layout_marginRight="8dp">
+        <TextView
+            android:id="@+id/trade_with"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Trade With Doge"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custom_round_button"
+            android:onClick="cancelTrade"
+            android:text="x"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="visible" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -110,7 +128,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/primary_background"
-                    android:text="My Inventory:" />
+                    android:text="Borrower's Inventory:" />
 
                 <ListView
                     android:id="@+id/trade_inventory_list_view"

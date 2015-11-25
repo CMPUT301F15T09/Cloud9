@@ -46,6 +46,7 @@ public class NotificationController {
             else if (trade.getStatus().equals("declined") ) {
                 if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
                     LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
+                    trade.setStatus("canceled");
                 }
             }
         }

@@ -29,6 +29,7 @@ You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/C
 - Joshua Campbell, https://github.com/joshua2ua/AndroidElasticSearch
 - The Android Open Source Project, http://developer.android.com/training/index.html
 - Abram Hindle, https://github.com/abramhindle/BogoPicGen
+- Linkware, http://icons8.com 
 
 
 ## License

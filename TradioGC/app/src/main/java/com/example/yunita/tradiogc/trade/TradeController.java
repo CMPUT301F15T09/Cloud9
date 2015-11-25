@@ -3,7 +3,6 @@ package com.example.yunita.tradiogc.trade;
 import android.content.Context;
 
 import com.example.yunita.tradiogc.WebServer;
-import com.example.yunita.tradiogc.user.Users;
 import com.google.gson.Gson;
 
 public class TradeController {

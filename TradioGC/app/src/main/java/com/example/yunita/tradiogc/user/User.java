@@ -2,7 +2,6 @@ package com.example.yunita.tradiogc.user;
 
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.inventory.Inventory;
-import com.example.yunita.tradiogc.notification.Notification;
 import com.example.yunita.tradiogc.notification.Notifications;
 import com.example.yunita.tradiogc.trade.Trades;
 

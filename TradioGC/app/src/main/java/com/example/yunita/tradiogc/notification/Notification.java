@@ -1,8 +1,6 @@
 package com.example.yunita.tradiogc.notification;
 
 
-import com.example.yunita.tradiogc.inventory.Inventory;
-import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.trade.Trade;
 
 public class Notification  {

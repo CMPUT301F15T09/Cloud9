@@ -56,5 +56,13 @@ public class NotificationController {
     public void updateToWebServer() {
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

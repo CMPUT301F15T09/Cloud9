@@ -1,9 +1,5 @@
 package com.example.yunita.tradiogc.trade;
 
-import com.example.yunita.tradiogc.inventory.Item;
-import com.example.yunita.tradiogc.login.LoginActivity;
-
-import java.security.acl.Owner;
 import java.util.ArrayList;
 
 public class Trades extends ArrayList<Trade> {

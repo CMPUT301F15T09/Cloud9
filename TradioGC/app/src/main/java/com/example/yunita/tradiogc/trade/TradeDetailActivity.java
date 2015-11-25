@@ -137,6 +137,8 @@ public class TradeDetailActivity extends AppCompatActivity {
         updateUserThread.start();
         Thread replyThread = new ReplyThread("declined");
         replyThread.start();
+
+
         finish();
     }
 

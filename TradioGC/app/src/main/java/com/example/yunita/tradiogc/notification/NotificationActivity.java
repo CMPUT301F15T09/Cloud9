@@ -48,6 +48,7 @@ public class NotificationActivity extends AppCompatActivity {
                 Notification notification = notifications.get(position);
                 int tradeId = notification.getTrade().getId();
                 notification.setRead(true);
+                notificationController.updateToWebServer();
                 // call another intent
                 Intent intent = new Intent(context, TradeDetailActivity.class);
                 intent.putExtra("trade_id", tradeId);
@@ -82,7 +83,7 @@ public class NotificationActivity extends AppCompatActivity {
         notificationController.updateNotification();
         notifications.addAll(LoginActivity.USERLOGIN.getNotifications());
         notificationArrayAdapter.notifyDataSetChanged();
-        
+
         progressBar.setVisibility(View.GONE);
     }
 

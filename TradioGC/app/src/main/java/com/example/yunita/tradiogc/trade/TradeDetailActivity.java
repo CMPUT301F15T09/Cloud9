@@ -1,11 +1,13 @@
 package com.example.yunita.tradiogc.trade;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.notification.Notification;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -32,6 +35,8 @@ public class TradeDetailActivity extends AppCompatActivity {
     private ImageView ownerItemPhoto;
     private ListView itemsOfferedList;
     private LinearLayout offeredTradePanel;
+    private TextView status;
+
 
 
     private ArrayAdapter<Item> itemsOfferedArrayAdapter;
@@ -39,6 +44,7 @@ public class TradeDetailActivity extends AppCompatActivity {
     private UserController userController;
     private Context context = this;
     private Trade trade = new Trade();
+    private boolean declined = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,8 @@ public class TradeDetailActivity extends AppCompatActivity {
         ownerItemDescription = (TextView) findViewById(R.id.ownerItemDescription);
         ownerItemPhoto = (ImageView) findViewById(R.id.ownerItemPhoto);
         offeredTradePanel = (LinearLayout) findViewById(R.id.offered_trade_panel);
+        status = (TextView) findViewById(R.id.status);
+
 
         userController = new UserController(context);
     }
@@ -71,6 +79,10 @@ public class TradeDetailActivity extends AppCompatActivity {
             if (intent.getExtras() != null) {
                 int tradeId = intent.getExtras().getInt("trade_id");
                 trade = LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId);
+                if (trade == null) {
+                    trade = LoginActivity.USERLOGIN.getNotifications().findNotificationById(tradeId).getTrade();
+                    declined = true;
+                }
             }
         }
 
@@ -86,12 +98,20 @@ public class TradeDetailActivity extends AppCompatActivity {
         ownerItemPrice.setText(Double.toString(trade.getOwnerItem().getPrice()));
         ownerItemDescription.setText(trade.getOwnerItem().getDesc());
 
+        // set trade status
+        status.setText(trade.getStatus().toUpperCase());
+        if (declined) {
+            status.setText("DECLINED");
+        }
+
         // set items offered
         itemsOffered.addAll(trade.getBorrowerItems());
 
         // set panel showed
         if (trade.getStatus().equals("offered")) {
-            offeredTradePanel.setVisibility(View.VISIBLE);
+            if (!declined) {
+                offeredTradePanel.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -100,10 +120,11 @@ public class TradeDetailActivity extends AppCompatActivity {
      * @param view "accept trade" button.
      */
     public void accept(View view){
-        trade.setStatus("accepted");
+        trade.setStatus("current");
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
-        Thread replyThread = new ReplyThread("approved");
+
+        Thread replyThread = new ReplyThread("accepted");
         replyThread.start();
         finish();
     }
@@ -118,7 +139,33 @@ public class TradeDetailActivity extends AppCompatActivity {
         updateUserThread.start();
         Thread replyThread = new ReplyThread("declined");
         replyThread.start();
-        finish();
+
+        //create a dialog asking for counter trade
+        AlertDialog builder  = new AlertDialog.Builder(this).create();
+        builder.setMessage("Do you want to offer a counter trade?");
+        builder.setButton(AlertDialog.BUTTON_NEGATIVE, "YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                // call another intent
+                Intent intent = new Intent(context, TradeActivity.class);
+                intent.putExtra("owner_name", trade.getOwner());
+                intent.putExtra("item_for_trade", trade.getOwnerItem());
+                int result = 0;
+
+                startActivityForResult(intent, result);
+                finish();
+
+            }
+        });
+        builder.setButton(AlertDialog.BUTTON_POSITIVE, "NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+
+            }
+        });
+        builder.show();
     }
 
     // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview

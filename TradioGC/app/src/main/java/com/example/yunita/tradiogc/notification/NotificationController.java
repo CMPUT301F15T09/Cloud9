@@ -17,14 +17,39 @@ public class NotificationController {
     }
 
     public void updateNotification() {
+        Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+        getUserLoginThread.start();
+
+        synchronized (getUserLoginThread) {
+            try {
+                getUserLoginThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         for (Trade trade: LoginActivity.USERLOGIN.getTrades()) {
-            if (trade.getStatus().equals("offered")
-                    || trade.getStatus().equals("approved")) {
-                if (LoginActivity.USERLOGIN.getNotifications().findTradeById(trade.getId()) == null) {
-                    LoginActivity.USERLOGIN.getNotifications().add(new Trade(trade));
+            // add new offered trade into notification
+            if (trade.getStatus().equals("offered") ) {
+                if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
+                    LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
+                }
+            }
+            // add new accepted trade into notification and change the status to "current"
+            else if (trade.getStatus().equals("accepted")) {
+                if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
+                    LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
+                    trade.setStatus("current");
+                }
+            }
+            // add new declined trade into notification
+            else if (trade.getStatus().equals("declined") ) {
+                if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
+                    LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
                 }
             }
         }
+
         updateToWebServer();
     }
 

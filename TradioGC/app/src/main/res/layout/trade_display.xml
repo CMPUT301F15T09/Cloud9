@@ -89,7 +89,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/primary_background"
-                    android:text="Items offered:" />
+                    android:text="Offering items:" />
 
                 <ListView
                     android:id="@+id/my_offer_list_view"

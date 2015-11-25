@@ -38,6 +38,9 @@ You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/C
 - The Android Open Source Project, http://developer.android.com/training/index.html
 - Abram Hindle, https://github.com/abramhindle/BogoPicGen
 - CodePath, https://guides.codepath.com/android/google-play-style-tabs-using-tablayout
+- Linkware, http://icons8.com 
+
+>>>>>>> shuming
 
 ## License
 TradioGC is licensed under Apache License Version 2.0.

@@ -152,8 +152,6 @@ public class EditItemActivity extends AppCompatActivity {
             nameEdit.setError("Name cannot be empty.");
         } else if (TextUtils.isEmpty(priceEdit.getText().toString())) {
             priceEdit.setError("Price cannot be empty.");
-        } else if (TextUtils.isEmpty(description)) {
-            descriptionEdit.setError("Description cannot be empty.");
         } else {
             double price = Double.parseDouble(price_str);
             int category = categoriesChoice.getSelectedItemPosition();

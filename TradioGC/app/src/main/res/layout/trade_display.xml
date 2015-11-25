@@ -134,8 +134,7 @@
         <Button
             android:id="@+id/offer_trade_button"
             style="?android:attr/buttonStyleSmall"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
+            android:layout_margin="8dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -146,8 +145,7 @@
         <Button
             android:id="@+id/cancel_trade_button"
             style="?android:attr/buttonStyleSmall"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
+            android:layout_margin="8dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

@@ -97,20 +97,18 @@
         <Button
             android:id="@+id/accept_trade_button"
             style="?android:attr/buttonStyleSmall"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
+            android:layout_margin="8dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/custom_roundrect_button"
             android:onClick="accept"
-            android:text="Accpet Trade" />
+            android:text="Accept Trade" />
 
         <Button
             android:id="@+id/decline_trade_button"
             style="?android:attr/buttonStyleSmall"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
+            android:layout_margin="8dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

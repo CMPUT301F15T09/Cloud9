@@ -12,8 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.inventory.Inventory;
-import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.Trade;
 import com.example.yunita.tradiogc.trade.Trades;
@@ -45,7 +43,7 @@ public class RecordPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_page, container, false);
+        View view = inflater.inflate(R.layout.record_fragment_page, container, false);
         listView = (ListView) view;
 
         switch (mPage){

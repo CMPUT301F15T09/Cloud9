@@ -1,11 +1,13 @@
 package com.example.yunita.tradiogc.trade;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MotionEvent;
@@ -138,8 +140,32 @@ public class TradeDetailActivity extends AppCompatActivity {
         Thread replyThread = new ReplyThread("declined");
         replyThread.start();
 
+        //create a dialog asking for counter trade
+        AlertDialog builder  = new AlertDialog.Builder(this).create();
+        builder.setMessage("Do you want to offer a counter trade?");
+        builder.setButton(AlertDialog.BUTTON_NEGATIVE, "YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
 
-        finish();
+                // call another intent
+                Intent intent = new Intent(context, TradeActivity.class);
+                intent.putExtra("owner_name", trade.getOwner());
+                intent.putExtra("item_for_trade", trade.getOwnerItem());
+                int result = 0;
+
+                startActivityForResult(intent, result);
+                finish();
+
+            }
+        });
+        builder.setButton(AlertDialog.BUTTON_POSITIVE, "NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+
+            }
+        });
+        builder.show();
     }
 
     // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview

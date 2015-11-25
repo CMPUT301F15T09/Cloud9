@@ -49,6 +49,7 @@ public class NotificationActivity extends AppCompatActivity {
                 int tradeId = notification.getTrade().getId();
                 notification.setRead(true);
                 notificationController.updateToWebServer();
+
                 // call another intent
                 Intent intent = new Intent(context, TradeDetailActivity.class);
                 intent.putExtra("trade_id", tradeId);

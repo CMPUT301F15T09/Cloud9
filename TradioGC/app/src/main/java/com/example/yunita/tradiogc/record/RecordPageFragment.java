@@ -24,6 +24,8 @@ public class RecordPageFragment extends Fragment {
     private int mPage;
     private ListView listView;
     private ArrayAdapter<Trade> currentTradesArrayAdapter;
+    private ArrayAdapter<Trade> pastTradesArrayAdapter;
+    private ArrayAdapter<Trade> completedTradesArrayAdapter;
     private Trades temp = LoginActivity.USERLOGIN.getTrades() ;
 
     public static RecordPageFragment newInstance(int page) {
@@ -46,19 +48,47 @@ public class RecordPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_page, container, false);
         listView = (ListView) view;
 
-        Trades currentTrades = new Trades(temp);
-        currentTrades = currentTrades.getCurrentTrades();
-
         switch (mPage){
             case 1:// current = pending, offered, accepted
-                currentTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, currentTrades);
-                listView.setAdapter(currentTradesArrayAdapter);
+                setCurrentTradesView();
                 break;
-            case 2: //
+            case 2: // completed
+                setPastTradesView();
                 break;
-            case 3: //
+            case 3: // past = accepted, declined
                 break;
         }
         return view;
     }
+
+    /**
+     * Sets the current trades view.
+     */
+    public void setCurrentTradesView(){
+        Trades currentTrades = new Trades(temp);
+        currentTrades = currentTrades.getCurrentTrades();
+        currentTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, currentTrades);
+        listView.setAdapter(currentTradesArrayAdapter);
+    }
+
+    /**
+     * Sets the past trades view.
+     */
+    public void setPastTradesView(){
+        Trades pastTrades = new Trades(temp);
+        pastTrades = pastTrades.getPastTrades();
+        pastTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, pastTrades);
+        listView.setAdapter(pastTradesArrayAdapter);
+    }
+
+    /**
+     * Sets the completed trades view.
+     */
+    public void setCompletedTradesView(){
+        Trades completedTrades = new Trades(temp);
+        completedTrades = completedTrades.getPastTrades();
+        completedTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, completedTrades);
+        listView.setAdapter(completedTradesArrayAdapter);
+    }
+
 }

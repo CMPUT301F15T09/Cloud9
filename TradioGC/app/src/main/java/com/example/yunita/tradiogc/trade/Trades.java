@@ -44,6 +44,11 @@ public class Trades extends ArrayList<Trade> {
         return pendingTrades;
     }
 
+    /**
+     * Gets the list of completed trades.
+     *
+     * @return Trades
+     */
     public Trades getCompletedTrades(){
         Trades completedTrades = new Trades();
         for(Trade t : this){
@@ -54,6 +59,11 @@ public class Trades extends ArrayList<Trade> {
         return completedTrades;
     }
 
+    /**
+     * Gets the list of offered, pending, and accepted trades.
+     *
+     * @return Trades
+     */
     public Trades getCurrentTrades(){
         Trades currentTrades = new Trades();
         for(Trade t : this){
@@ -62,6 +72,21 @@ public class Trades extends ArrayList<Trade> {
             }
         }
         return currentTrades;
+    }
+
+    /**
+     * Gets the list of accepted and declined trades.
+     *
+     * @return Trades
+     */
+    public Trades getPastTrades(){
+        Trades pastTrades = new Trades();
+        for(Trade t : this){
+            if(t.getStatus().equals("accepted") || t.getStatus().equals("declined")){
+                pastTrades.add(t);
+            }
+        }
+        return pastTrades;
     }
 
     public Trade findTradeById(int id) {

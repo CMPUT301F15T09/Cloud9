@@ -17,16 +17,33 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
         this.context = context;
     }
 
+    /**
+     * Gets the number of the page.
+     *
+     * @return Integer
+     */
     @Override
     public int getCount() {
         return PAGE_COUNT;
     }
 
+    /**
+     * Gets the next tab.
+     *
+     * @param position tab index
+     * @return RecordPageFragment
+     */
     @Override
     public Fragment getItem(int position) {
         return RecordPageFragment.newInstance(position + 1);
     }
 
+    /**
+     * Gets the title of the current tab.
+     *
+     * @param position tab index
+     * @return CharSequence
+     */
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position

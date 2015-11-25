@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
@@ -16,7 +15,6 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.TradeDetailActivity;
 
 public class NotificationActivity extends AppCompatActivity {
-    private ProgressBar progressBar;
     private ListView notificationListView;
 
     private ArrayAdapter<Notification> notificationArrayAdapter;
@@ -31,7 +29,7 @@ public class NotificationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         notificationListView = (ListView) findViewById(R.id.notification_list_view);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
         notificationController = new NotificationController(this);
     }
 
@@ -78,14 +76,11 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.VISIBLE);
 
         notifications.clear();
         notificationController.updateNotification();
         notifications.addAll(LoginActivity.USERLOGIN.getNotifications());
         notificationArrayAdapter.notifyDataSetChanged();
-
-        progressBar.setVisibility(View.GONE);
     }
 
     public void update(View view) {

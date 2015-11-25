@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +21,6 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.notification.Notification;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -36,8 +33,6 @@ public class TradeDetailActivity extends AppCompatActivity {
     private ListView itemsOfferedList;
     private LinearLayout offeredTradePanel;
     private TextView status;
-
-
 
     private ArrayAdapter<Item> itemsOfferedArrayAdapter;
     private Inventory itemsOffered = new Inventory();
@@ -61,7 +56,6 @@ public class TradeDetailActivity extends AppCompatActivity {
         ownerItemPhoto = (ImageView) findViewById(R.id.ownerItemPhoto);
         offeredTradePanel = (LinearLayout) findViewById(R.id.offered_trade_panel);
         status = (TextView) findViewById(R.id.status);
-
 
         userController = new UserController(context);
     }
@@ -123,6 +117,14 @@ public class TradeDetailActivity extends AppCompatActivity {
         trade.setStatus("current");
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         Thread replyThread = new ReplyThread("accepted");
         replyThread.start();

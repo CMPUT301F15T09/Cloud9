@@ -71,6 +71,6 @@ public class SearchItem implements Serializable {
      */
     @Override
     public String toString() {
-        return oItem.getName() + "\nPrice: $" + oItem.getPrice() + "\nOwner: " + ownerName;
+        return oItem.getName() + "\nPrice: $" + oItem.getPrice() + " x " + oItem.getQuantity() + "\nOwner: " + ownerName;
     }
 }

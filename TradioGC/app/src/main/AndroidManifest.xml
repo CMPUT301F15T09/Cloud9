@@ -87,10 +87,13 @@
         <activity
             android:name=".trade.TradeDetailActivity"
             android:label="@string/trade_detail" />
+
         <activity
             android:name=".record.RecordActivity"
             android:label="@string/title_activity_record" >
         </activity>
+        <activity android:name=".trade.CounterTradeActivity"
+            android:label="@string/counter_trade" />
     </application>
 
 </manifest>

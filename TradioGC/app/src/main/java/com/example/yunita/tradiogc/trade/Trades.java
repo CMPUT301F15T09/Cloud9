@@ -73,7 +73,7 @@ public class Trades extends ArrayList<Trade> {
     public Trades getPastTrades(){
         Trades pastTrades = new Trades();
         for(Trade t : this){
-            if(t.getStatus().equals("accepted") || t.getStatus().equals("declined")){
+            if(t.getStatus().equals("completed") || t.getStatus().equals("declined")){
                 pastTrades.add(t);
             }
         }

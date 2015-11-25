@@ -171,9 +171,11 @@ public class ItemActivity extends AppCompatActivity {
 
     /**
      * Activity finishes automatically if user offers a trade for this item
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     *
+     * @param requestCode request code for the sender that will be associated
+     *                    with the result data when it is returned
+     * @param resultCode the integer result code returned by the child activity
+     * @param data an intent, which can return result data to the caller
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -247,6 +249,7 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = new Intent(context, TradeActivity.class);
         intent.putExtra("owner_name", ownerName);
         intent.putExtra("item_for_trade", itemForTrade);
+        intent.putExtra("borrower_name", LoginActivity.USERLOGIN.getUsername());
         int result = 0;
         startActivityForResult(intent, result);
     }

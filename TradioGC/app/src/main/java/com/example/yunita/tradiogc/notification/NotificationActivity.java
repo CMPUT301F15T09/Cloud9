@@ -46,6 +46,12 @@ public class NotificationActivity extends AppCompatActivity {
                 Notification notification = notifications.get(position);
                 int tradeId = notification.getTrade().getId();
                 notification.setRead(true);
+
+                // no more current and canceled status
+                if (LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("current")
+                    || LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("canceled")) {
+                    LoginActivity.USERLOGIN.getNotifications().remove(notification);
+                }
                 notificationController.updateToWebServer();
 
                 // call another intent

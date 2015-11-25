@@ -35,17 +35,18 @@ public class NotificationController {
                     LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
                 }
             }
-            // add new accepted trade into notification and change the status to "current"
+            // add new accepted trade into notification and change the status to "accepted"
             else if (trade.getStatus().equals("accepted")) {
                 if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
                     LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
-                    trade.setStatus("current");
+                    trade.setStatus("accepted");
                 }
             }
             // add new declined trade into notification
             else if (trade.getStatus().equals("declined") ) {
                 if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
                     LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
+                    trade.setStatus("declined");
                 }
             }
         }

@@ -51,9 +51,10 @@ public class RecordPageFragment extends Fragment {
                 setCurrentTradesView();
                 break;
             case 2: // completed
-                setPastTradesView();
+                setCompletedTradesView();
                 break;
-            case 3: // past = accepted, declined
+            case 3: // past = completed, declined
+                setPastTradesView();
                 break;
         }
         return view;
@@ -88,5 +89,6 @@ public class RecordPageFragment extends Fragment {
         completedTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, completedTrades);
         listView.setAdapter(completedTradesArrayAdapter);
     }
+
 
 }

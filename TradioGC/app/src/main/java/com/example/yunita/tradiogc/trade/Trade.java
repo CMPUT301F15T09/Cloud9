@@ -91,7 +91,7 @@ public class Trade {
     }
 
     public void setStatus(String status) {
-        // offered, pending, accepted, current, declined, completed
+        // offered, pending, accepted, declined, completed
         this.status = status;
     }
 
@@ -109,9 +109,6 @@ public class Trade {
             str += "Trade for " + ownerItem + " is pending.";
         } else if(status.equals("declined")) {
             str += owner + " declined your trade for " + ownerItem.getName();
-        } else if(status.equals("current")) {
-            // what is current status?
-            str += "CURRENT";
         }
         return str;
     }

@@ -40,6 +40,7 @@ public class TradeDetailActivity extends AppCompatActivity {
     private Context context = this;
     private Trade trade = new Trade();
     private boolean declined = false;
+    private boolean counterTrade = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +81,17 @@ public class TradeDetailActivity extends AppCompatActivity {
             }
         }
 
+        if (LoginActivity.USERLOGIN.getUsername().equals(trade.getBorrower())){
+            counterTrade = true;
+        }
+
         // set trade from
-        tradeFrom.setText("Trade from " + trade.getBorrower());
+        if (!counterTrade) {
+            tradeFrom.setText("Trade with " + trade.getBorrower());
+        } else {
+            tradeFrom.setText("Trade with " + trade.getOwner());
+        }
+
         tradeFrom.setTypeface(null, Typeface.BOLD);
 
 
@@ -89,7 +99,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         Bitmap itemPhoto = decodeImage(trade.getOwnerItem().getPhotos());
         ownerItemPhoto.setImageBitmap(itemPhoto);
         ownerItemName.setText(trade.getOwnerItem().getName());
-        ownerItemPrice.setText(Double.toString(trade.getOwnerItem().getPrice()));
+        ownerItemPrice.setText("$"+Double.toString(trade.getOwnerItem().getPrice()) + " x " + trade.getOwnerItem().getQuantity());
         ownerItemDescription.setText(trade.getOwnerItem().getDesc());
 
         // set trade status
@@ -110,11 +120,27 @@ public class TradeDetailActivity extends AppCompatActivity {
     }
 
     /**
+     * Activity finishes automatically if user offers a counter trade
+     *
+     * @param requestCode request code for the sender that will be associated
+     *                    with the result data when it is returned
+     * @param resultCode the integer result code returned by the child activity
+     * @param data an intent, which can return result data to the caller
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 1){
+            finish();
+        }
+    }
+
+    /**
      *
      * @param view "accept trade" button.
      */
     public void accept(View view){
-        trade.setStatus("current");
+        trade.setStatus("accepted");
+        LoginActivity.USERLOGIN.getNotifications().remove(LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()));
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
 
@@ -136,38 +162,54 @@ public class TradeDetailActivity extends AppCompatActivity {
      * @param view "decline trade" button.
      */
     public void decline(View view){
+        LoginActivity.USERLOGIN.getNotifications().remove(LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()));
         LoginActivity.USERLOGIN.getTrades().remove(trade);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         Thread replyThread = new ReplyThread("declined");
         replyThread.start();
 
-        //create a dialog asking for counter trade
-        AlertDialog builder  = new AlertDialog.Builder(this).create();
-        builder.setMessage("Do you want to offer a counter trade?");
-        builder.setButton(AlertDialog.BUTTON_NEGATIVE, "YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+        // if it is a counter trade, back to notification directly
+        // else show a dialog
+        if (counterTrade) {
+            finish();
+        } else {
+            // create a dialog asking for counter trade
+            AlertDialog builder = new AlertDialog.Builder(this).create();
+            builder.setMessage("Do you want to offer a counter trade?");
+            builder.setButton(AlertDialog.BUTTON_NEGATIVE, "YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
 
-                // call another intent
-                Intent intent = new Intent(context, TradeActivity.class);
-                intent.putExtra("owner_name", trade.getOwner());
-                intent.putExtra("item_for_trade", trade.getOwnerItem());
-                int result = 0;
+                    // call another intent
+                    Intent intent = new Intent(context, CounterTradeActivity.class);
+                    intent.putExtra("item_for_trade", trade.getOwnerItem());
+                    intent.putExtra("borrower_name", trade.getBorrower());
+                    int result = 0;
 
-                startActivityForResult(intent, result);
-                finish();
+                    startActivityForResult(intent, result);
+                    finish();
 
-            }
-        });
-        builder.setButton(AlertDialog.BUTTON_POSITIVE, "NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                finish();
+                }
+            });
+            builder.setButton(AlertDialog.BUTTON_POSITIVE, "NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    finish();
 
-            }
-        });
-        builder.show();
+                }
+            });
+            builder.show();
+        }
     }
 
     // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
@@ -187,11 +229,11 @@ public class TradeDetailActivity extends AppCompatActivity {
 
 
     /**
-     * reply to the borrower
+     * reply to another user in trade
      */
-
     class ReplyThread extends Thread {
         private String status;
+        private User user;
 
         public ReplyThread(String status) {
             this.status = status;
@@ -199,12 +241,16 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            User borrower = userController.getUser(trade.getBorrower());
-            Trade borrowerTrade = borrower.getTrades().findTradeById(trade.getId());
-            if (borrowerTrade != null) {
-                borrowerTrade.setStatus(status);
-                // notify borrow
-                Thread updateTradeThread = userController.new UpdateUserThread(borrower);
+            if (counterTrade) {
+                user = userController.getUser(trade.getOwner());
+            } else {
+                user = userController.getUser(trade.getBorrower());
+            }
+            Trade tradeFound = user.getTrades().findTradeById(trade.getId());
+            if (tradeFound != null) {
+                tradeFound.setStatus(status);
+                // notify the user
+                Thread updateTradeThread = userController.new UpdateUserThread(user);
                 updateTradeThread.start();
             }
         }

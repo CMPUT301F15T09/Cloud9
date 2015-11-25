@@ -102,15 +102,15 @@ public class Trade {
         if(status.equals("offered")){
             str += borrower + " offered a trade for " + ownerItem.getName();
         } else if (status.equals("completed")){
-            // print informative message
+            str += "Trade for " + ownerItem + " is completed.";
         } else if (status.equals("accepted")){
             str += owner + " accepted your trade for " + ownerItem.getName();
         } else if(status.equals("pending")) {
-            // print informative message
+            str += "Trade for " + ownerItem + " is pending.";
         } else if(status.equals("declined")) {
             str += owner + " declined your trade for " + ownerItem.getName();
         } else if(status.equals("current")) {
-            // print informative message
+            str += "CURRENT";
         }
         return str;
     }

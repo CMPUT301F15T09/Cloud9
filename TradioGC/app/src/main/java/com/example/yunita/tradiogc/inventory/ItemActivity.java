@@ -170,6 +170,19 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     /**
+     * Activity finishes automatically if user offers a trade for this item
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 1){
+            finish();
+        }
+    }
+
+    /**
      * Called when the user presses the "Pencil" icon in the Item Detail page.
      * <p>This method is used to send the user to the Edit Item page.
      * It passes the item to be edited.
@@ -234,7 +247,7 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = new Intent(context, TradeActivity.class);
         intent.putExtra("owner_name", ownerName);
         intent.putExtra("item_for_trade", itemForTrade);
-        startActivity(intent);
+        int result = 0;
+        startActivityForResult(intent, result);
     }
-
 }

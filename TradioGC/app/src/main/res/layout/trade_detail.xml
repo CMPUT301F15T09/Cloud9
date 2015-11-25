@@ -29,7 +29,8 @@
             android:background="@mipmap/ic_launcher" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="16dp">
@@ -55,6 +56,13 @@
                 android:text="DOGE" />
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"/>
 
 
     </LinearLayout>

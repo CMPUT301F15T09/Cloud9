@@ -142,6 +142,9 @@ public class TradeActivity extends AppCompatActivity {
         // after offer a trade, should the borrower item is on hold?
         // so that no one can offer a trade to that borrower item.
 
+        // finish the parent item detail activity
+        setResult(1);
+
         finish();
     }
 

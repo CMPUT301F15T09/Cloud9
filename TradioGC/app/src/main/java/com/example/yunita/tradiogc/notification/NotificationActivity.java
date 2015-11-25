@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
@@ -18,8 +19,8 @@ import com.example.yunita.tradiogc.trade.Trades;
 public class NotificationActivity extends AppCompatActivity {
 
     private ListView notificationListView;
-    private ArrayAdapter<Trade> notificationArrayAdapter;
-    private Trades tradesNotif = new Trades();
+    private ArrayAdapter<Notification> notificationArrayAdapter;
+    private Notifications notifications = new Notifications();
     private NotificationController notificationController;
     private Context context = this;
 
@@ -37,15 +38,15 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, tradesNotif);
+        notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, notifications);
         notificationListView.setAdapter(notificationArrayAdapter);
 
         notificationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Trade trade = tradesNotif.get(position);
-                int tradeId = trade.getId();
-                trade.setRead(true);
+                Notification notification = notifications.get(position);
+                int tradeId = notification.getTrade().getId();
+                notification.setRead(true);
                 // call another intent
                 Intent intent = new Intent(context, TradeDetailActivity.class);
                 intent.putExtra("trade_id", tradeId);
@@ -53,6 +54,22 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
+        // Delete friends on long click
+        notificationListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Notification notification = notifications.get(position);
+                // delete it in webserver
+                LoginActivity.USERLOGIN.getNotifications().remove(notification);
+                notificationController.updateToWebServer();
+                // delete it in list
+                notifications.remove(notification);
+                notificationArrayAdapter.notifyDataSetChanged();
+                // show a toast
+                Toast.makeText(context, "Deleting Success", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -61,8 +78,8 @@ public class NotificationActivity extends AppCompatActivity {
 
         notificationController.updateNotification();
 
-        tradesNotif.clear();
-        tradesNotif.addAll(LoginActivity.USERLOGIN.getNotifications());
+        notifications.clear();
+        notifications.addAll(LoginActivity.USERLOGIN.getNotifications());
 
         notificationArrayAdapter.notifyDataSetChanged();
     }

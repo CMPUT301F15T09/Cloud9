@@ -12,27 +12,21 @@ public class Trade {
     private String borrower = "";
     private Item ownerItem = new Item();
     private Inventory borrowerItems = new Inventory();
-    private String status = ""; //offered, pending, accepted, current, declined, completed
+    private String status = "";
     private int id;
-    private boolean read = true;
-
 
     public Trade(){
         Random random = new Random();
         id = random.nextInt(999999999);
     }
 
-    /**
-     * copy a trade
-     */
     public Trade(Trade trade){
-        owner = trade.getOwner();
-        borrower = trade.getBorrower();
-        ownerItem = trade.getOwnerItem();
-        borrowerItems = trade.getBorrowerItems();
-        id = trade.getId();
-        status = trade.getStatus();
-        read = false;
+        this.owner = trade.getOwner();
+        this.borrower = trade.getBorrower();
+        this.ownerItem = trade.getOwnerItem();
+        this.borrowerItems = trade.getBorrowerItems();
+        this.status = trade.getStatus();
+        this.id = trade.getId();
     }
 
     public Trade(String owner, Item ownerItem, Inventory borrowerItems) {
@@ -97,17 +91,10 @@ public class Trade {
     }
 
     public void setStatus(String status) {
-        // offered, pending, accepted,(declined?), completed
+        // offered, pending, accepted, current, declined, completed
         this.status = status;
     }
 
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
-    }
 
     @Override
     public String toString(){
@@ -124,9 +111,6 @@ public class Trade {
             str += owner + " declined your trade for " + ownerItem.getName();
         } else if(status.equals("current")) {
             // print informative message
-        }
-        if (!read) {
-            str = "[ New! ] " + str;
         }
         return str;
     }

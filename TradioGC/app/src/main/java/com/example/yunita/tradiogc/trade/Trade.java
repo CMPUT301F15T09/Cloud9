@@ -110,6 +110,7 @@ public class Trade {
         } else if(status.equals("declined")) {
             str += owner + " declined your trade for " + ownerItem.getName();
         } else if(status.equals("current")) {
+            // what is current status?
             str += "CURRENT";
         }
         return str;

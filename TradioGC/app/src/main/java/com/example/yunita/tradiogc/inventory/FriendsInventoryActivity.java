@@ -51,6 +51,8 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         return searchItems;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

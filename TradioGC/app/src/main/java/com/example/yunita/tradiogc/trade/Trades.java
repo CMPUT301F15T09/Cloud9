@@ -30,7 +30,17 @@ public class Trades extends ArrayList<Trade> {
         return acceptedTrades;
     }
 
-    public Trades getPendingTrade(){
+    public Trades getDeclinedTrades(){
+        Trades declinedTrades = new Trades();
+        for(Trade t : this){
+            if(t.getStatus().equals("declined")){
+                declinedTrades.add(t);
+            }
+        }
+        return declinedTrades;
+    }
+
+    public Trades getPendingTrades(){
         Trades pendingTrades = new Trades();
         for(Trade t : this){
             if(t.getStatus().equals("pending")){
@@ -40,7 +50,7 @@ public class Trades extends ArrayList<Trade> {
         return pendingTrades;
     }
 
-    public Trades getCompletedTrade(){
+    public Trades getCompletedTrades(){
         Trades completedTrades = new Trades();
         for(Trade t : this){
             if(t.getStatus().equals("completed")){

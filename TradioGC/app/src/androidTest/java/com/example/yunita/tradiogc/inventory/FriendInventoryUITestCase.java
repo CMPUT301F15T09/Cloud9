@@ -69,7 +69,7 @@ public class FriendInventoryUITestCase extends ActivityInstrumentationTestCase2 
         getInstrumentation().waitForIdleSync();
 
         assertTrue(friendsInventoryActivity.getItem_list().getChildCount() == 1);
-        Item item = friendsInventoryActivity.getInventory().get(0);
+        Item item = friendsInventoryActivity.getSearchItems().get(0).getoItem();
         assertTrue(item.getName().contains("item"));
         assertEquals(item.getCategory(), 1);
     }

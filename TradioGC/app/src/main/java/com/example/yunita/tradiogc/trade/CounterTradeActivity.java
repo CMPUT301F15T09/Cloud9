@@ -107,7 +107,8 @@ public class CounterTradeActivity extends AppCompatActivity {
         // set item photo and information
         Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());
         ownerItemPhoto.setImageBitmap(itemPhoto);
-        ownerItemName.setText(ownerItem.getName());
+        ownerItemName.setText(ownerItem.getName() + "\n" +
+                "Owner: " + LoginActivity.USERLOGIN.getUsername());
         ownerItemPrice.setText("$"+Double.toString(ownerItem.getPrice()) + " x " + ownerItem.getQuantity());
         ownerItemDescription.setText(ownerItem.getDesc());
 
@@ -210,7 +211,7 @@ public class CounterTradeActivity extends AppCompatActivity {
         public void run() {
             // refresh borrower
             borrower = userController.getUser(username);
-            borrower.getTrades().add(offeredTrade);
+            borrower.getTrades().add(0, offeredTrade);
             System.out.println(offeredTrade.getClass());
             // notify borrower
             Thread updateTradeThread = userController.new UpdateUserThread(borrower);
@@ -227,7 +228,7 @@ public class CounterTradeActivity extends AppCompatActivity {
         @Override
         public void run() {
             synchronized (this) {
-                LoginActivity.USERLOGIN.getTrades().add(pendingTrade);
+                LoginActivity.USERLOGIN.getTrades().add(0, pendingTrade);
 
                 Thread updateTradeThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
                 updateTradeThread.start();

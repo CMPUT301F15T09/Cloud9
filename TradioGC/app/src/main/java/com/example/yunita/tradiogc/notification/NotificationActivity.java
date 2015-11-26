@@ -45,11 +45,9 @@ public class NotificationActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Notification notification = notifications.get(position);
                 int tradeId = notification.getTrade().getId();
-                notification.setRead(true);
 
-                // no more current and canceled status
-                if (LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("current")
-                    || LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("canceled")) {
+                notification.setRead(true);
+                if (!LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("offered")) {
                     LoginActivity.USERLOGIN.getNotifications().remove(notification);
                 }
                 notificationController.updateToWebServer();

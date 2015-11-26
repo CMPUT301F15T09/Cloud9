@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -93,7 +94,8 @@ public class TradeDetailActivity extends AppCompatActivity {
         // set item photo and information
         Bitmap itemPhoto = decodeImage(trade.getOwnerItem().getPhotos());
         ownerItemPhoto.setImageBitmap(itemPhoto);
-        ownerItemName.setText(trade.getOwnerItem().getName());
+        ownerItemName.setText(trade.getOwnerItem().getName() + "\n" +
+                "Owner: " + trade.getOwner());
         ownerItemPrice.setText("$"+Double.toString(trade.getOwnerItem().getPrice()) + " x " + trade.getOwnerItem().getQuantity());
         ownerItemDescription.setText(trade.getOwnerItem().getDesc());
 
@@ -145,7 +147,30 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         Thread replyThread = new ReplyThread("accepted");
         replyThread.start();
-        finish();
+        
+        // create a dialog asking for comments
+        AlertDialog builder = new AlertDialog.Builder(this).create();
+        final EditText comments_et = new EditText(this);
+        comments_et.setHint("say something about how to continue on with the trade...");
+
+        builder.setTitle("Comments:");
+        builder.setButton(AlertDialog.BUTTON_NEGATIVE, "SEND", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                String comments = comments_et.getText().toString();
+                dialog.dismiss();
+
+                // TODO: 11/25/15  call an email activity, send the trade info and comments to both sides
+
+                finish();
+            }
+        });
+        builder.setButton(AlertDialog.BUTTON_POSITIVE, "CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+
     }
 
     /**

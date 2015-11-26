@@ -58,6 +58,9 @@ public class TradeActivity extends AppCompatActivity {
         borrowerInventoryListView = (ListView) findViewById(R.id.trade_inventory_list_view);
         borrowerOfferListView = (ListView) findViewById(R.id.my_offer_list_view);
         tradeWith = (TextView) findViewById(R.id.trade_with);
+
+
+
         ownerItemName = (TextView) findViewById(R.id.ownerItemName);
         ownerItemPrice = (TextView) findViewById(R.id.ownerItemPrice);
         ownerItemDescription = (TextView) findViewById(R.id.ownerItemDescription);
@@ -96,10 +99,12 @@ public class TradeActivity extends AppCompatActivity {
         // set item photo and information
         Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());
         ownerItemPhoto.setImageBitmap(itemPhoto);
-        ownerItemName.setText(ownerItem.getName());
-        ownerItemPrice.setText("$"+Double.toString(ownerItem.getPrice()) + " x " + ownerItem.getQuantity());
-        ownerItemDescription.setText(ownerItem.getDesc());
-        
+        ownerItemName.setText(ownerItem.getName()+"\n" +
+                "Owner: "+owner.getUsername());
+        ownerItemPrice.setText("$" + Double.toString(ownerItem.getPrice()) + " x " + ownerItem.getQuantity());
+        ownerItemDescription.setText("Description: "+ownerItem.getDesc());
+
+
         borrowerInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -189,7 +194,7 @@ public class TradeActivity extends AppCompatActivity {
         @Override
         public void run() {
             owner = userController.getUser(username);
-            owner.getTrades().add(offeredTrade);
+            owner.getTrades().add(0, offeredTrade);
             System.out.println(offeredTrade.getClass());
             // notify owner
             Thread updateTradeThread = userController.new UpdateUserThread(owner);
@@ -205,7 +210,7 @@ public class TradeActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            borrower.getTrades().add(pendingTrade);
+            borrower.getTrades().add(0, pendingTrade);
             // notify owner
             Thread updateTradeThread = userController.new UpdateUserThread(borrower);
             updateTradeThread.start();

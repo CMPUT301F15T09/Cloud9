@@ -69,8 +69,10 @@
             <TextView
                 android:id="@+id/ownerItemDescription"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DOGE" />
+                android:layout_height="wrap_content" />
+
+
+
 
         </LinearLayout>
 

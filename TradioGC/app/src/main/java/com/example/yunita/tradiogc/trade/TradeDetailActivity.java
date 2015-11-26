@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
+import com.example.yunita.tradiogc.Email.GMailSender;
 
 public class TradeDetailActivity extends AppCompatActivity {
     private TextView tradeFrom;
@@ -41,6 +43,7 @@ public class TradeDetailActivity extends AppCompatActivity {
     private Context context = this;
     private Trade trade = new Trade();
     private boolean counterTrade = false;
+    private User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,14 +167,15 @@ public class TradeDetailActivity extends AppCompatActivity {
                 String comments = comments_et.getText().toString();
                 dialog.dismiss();
 
-                // TODO: 11/25/15  call an email activity, send the trade info and comments to both sides
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "TradioGC: Your trade is in progress now");
-                intent.putExtra(Intent.EXTRA_TEXT, "Comments from " + comments);
-                intent.setType("text/plain");
-                startActivity(Intent.createChooser(intent, "Email:"));
-
-
+                Thread emailThread = new EmailThread(comments);
+                emailThread.start();
+                synchronized (emailThread) {
+                    try {
+                        emailThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 finish();
             }
         });
@@ -260,7 +264,6 @@ public class TradeDetailActivity extends AppCompatActivity {
      */
     class ReplyThread extends Thread {
         private String status;
-        private User user;
 
         public ReplyThread(String status) {
             this.status = status;
@@ -279,6 +282,38 @@ public class TradeDetailActivity extends AppCompatActivity {
                 // notify the user
                 Thread updateTradeThread = userController.new UpdateUserThread(user);
                 updateTradeThread.start();
+            }
+        }
+    }
+
+    class EmailThread extends Thread {
+        private String ownerEmail;
+        private String borrowerEmail;
+        private String comments;
+
+
+        public EmailThread(String comments) {
+            this.comments = comments;
+        }
+
+        @Override
+        public void run() {
+            synchronized (this) {
+                try {
+
+                    //taken from http://stackoverflow.com/questions/2020088/sending-email
+                    // -in-android-using-javamail-api-without-using-the-default-built-in-a
+                    // (C) 2010 Vinayak B, shridutt kothari
+                    // TODO: 11/25/15  send the trade info and comments to both sides, pass borrower email and owner email
+                    GMailSender sender = new GMailSender("tradiogc@gmail.com", "tradiogc123");
+                    sender.sendMail("TradioGC: Your trade is in progress now",
+                            "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
+                            "tradiogc@gmail.com",
+                            "tradiogcjunkmail@yopmail.com");
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
+                notify();
             }
         }
     }

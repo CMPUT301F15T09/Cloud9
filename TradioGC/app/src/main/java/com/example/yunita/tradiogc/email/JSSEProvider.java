@@ -1,4 +1,4 @@
-package com.example.yunita.tradiogc.Email;
+package com.example.yunita.tradiogc.email;
 
 /*
  *  Licensed to the Apache Software Foundation (ASF) under one or more

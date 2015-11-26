@@ -2,7 +2,7 @@
 // -in-android-using-javamail-api-without-using-the-default-built-in-a
 // (C) 2010 Vinayak B, shridutt kothari
 
-package com.example.yunita.tradiogc.Email;
+package com.example.yunita.tradiogc.email;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -26,7 +26,7 @@ public class GMailSender extends javax.mail.Authenticator {
     private Session session;
 
     static {
-        Security.addProvider(new com.example.yunita.tradiogc.Email.JSSEProvider());
+        Security.addProvider(new com.example.yunita.tradiogc.email.JSSEProvider());
     }
 
     public GMailSender(String user, String password) {

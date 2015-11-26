@@ -128,6 +128,7 @@ public class EditItemActivity extends AppCompatActivity {
             radioVisibility.check(R.id.private_radio_button);
         }
         nameEdit.setText(item.getName());
+        nameEdit.setSelection(item.getName().length());
         categoriesChoice.setSelection(item.getCategory());
         priceEdit.setText(Double.toString(item.getPrice()));
         descriptionEdit.setText(item.getDesc());

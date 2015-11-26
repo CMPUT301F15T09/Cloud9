@@ -214,24 +214,14 @@ public class ItemActivity extends AppCompatActivity {
 
     /**
      * Called when the user presses the "Clone" button in the Item Detail page.
-     * <p>This method is used to clone the friend's item into the user's inventory.
+     * <p>This method is used to clone the friend's item and copy the item info into AddItemActivity.
      *
      * @param view "Clone" button
      */
     public void cloneItem(View view) {
-        String name = item.getName();
-        int category = item.getCategory();
-        double price = item.getPrice();
-        String description = item.getDesc();
-        Boolean visibility = item.getVisibility();
-        int quantity = item.getQuantity();
-        int quality = item.getQuality();
-        String photo = item.getPhotos();
-
-        Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
-        inventoryController.addItem(newItem);
-
-        finish();
+        Intent intent = new Intent(this, AddItemActivity.class);
+        intent.putExtra("clone",item);
+        startActivity(intent);
     }
 
     /**

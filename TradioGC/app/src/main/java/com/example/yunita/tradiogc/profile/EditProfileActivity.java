@@ -66,9 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
             location_et.setText(LoginActivity.USERLOGIN.getLocation());
             location_et.setSelection(LoginActivity.USERLOGIN.getLocation().length());
             email_et.setText(LoginActivity.USERLOGIN.getEmail());
-            email_et.setSelection(LoginActivity.USERLOGIN.getEmail().length());
             phone_et.setText(LoginActivity.USERLOGIN.getPhone());
-            phone_et.setSelection(LoginActivity.USERLOGIN.getPhone().length());
         }
     }
 

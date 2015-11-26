@@ -25,7 +25,7 @@ import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
-import com.example.yunita.tradiogc.Email.GMailSender;
+import com.example.yunita.tradiogc.email.GMailSender;
 
 public class TradeDetailActivity extends AppCompatActivity {
     private TextView tradeFrom;
@@ -160,14 +160,21 @@ public class TradeDetailActivity extends AppCompatActivity {
                     }
                 }
 
+
                 Thread replyThread = new ReplyThread("accepted");
                 replyThread.start();
-
+                synchronized (replyThread) {
+                    try {
+                        replyThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 String comments = comments_et.getText().toString();
                 dialog.dismiss();
 
-                Thread emailThread = new EmailThread(comments);
+                Thread emailThread = new EmailThread(comments, user.getEmail(), LoginActivity.USERLOGIN.getEmail());
                 emailThread.start();
                 synchronized (emailThread) {
                     try {
@@ -271,45 +278,59 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            if (counterTrade) {
-                user = userController.getUser(trade.getOwner());
-            } else {
-                user = userController.getUser(trade.getBorrower());
-            }
-            Trade tradeFound = user.getTrades().findTradeById(trade.getId());
-            if (tradeFound != null) {
-                tradeFound.setStatus(status);
-                // notify the user
-                Thread updateTradeThread = userController.new UpdateUserThread(user);
-                updateTradeThread.start();
+            synchronized (this) {
+                if (counterTrade) {
+                    user = userController.getUser(trade.getOwner());
+                } else {
+                    user = userController.getUser(trade.getBorrower());
+                }
+                Trade tradeFound = user.getTrades().findTradeById(trade.getId());
+                if (tradeFound != null) {
+                    tradeFound.setStatus(status);
+                    // notify the user
+                    Thread updateTradeThread = userController.new UpdateUserThread(user);
+                    updateTradeThread.start();
+                }
+                notify();
             }
         }
     }
 
     class EmailThread extends Thread {
-        private String ownerEmail;
-        private String borrowerEmail;
+        private String email1;
+        private String email2;
         private String comments;
 
 
-        public EmailThread(String comments) {
+        public EmailThread(String comments, String email1, String email2) {
             this.comments = comments;
+            this.email1 = email1;
+            this.email2 = email2;
         }
 
         @Override
         public void run() {
             synchronized (this) {
                 try {
-
                     //taken from http://stackoverflow.com/questions/2020088/sending-email
                     // -in-android-using-javamail-api-without-using-the-default-built-in-a
                     // (C) 2010 Vinayak B, shridutt kothari
                     // TODO: 11/25/15  send the trade info and comments to both sides, pass borrower email and owner email
                     GMailSender sender = new GMailSender("tradiogc@gmail.com", "tradiogc123");
+
+                    // only for test
                     sender.sendMail("TradioGC: Your trade is in progress now",
                             "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
                             "tradiogc@gmail.com",
                             "tradiogcjunkmail@yopmail.com");
+
+                    /*
+                    sender.sendMail("TradioGC: Your trade is in progress now",
+                            "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
+                            "tradiogc@gmail.com",
+                             email1+ ","+email2);
+                            */
+
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }

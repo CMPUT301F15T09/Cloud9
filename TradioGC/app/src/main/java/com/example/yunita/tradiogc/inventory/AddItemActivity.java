@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -89,6 +90,23 @@ public class AddItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                Item cloneItem = (Item) bundle.getSerializable("clone");
+                if (cloneItem != null) {
+                    nameEdit.setText(cloneItem.getName());
+                    nameEdit.setSelection(cloneItem.getName().length());
+                    categoriesChoice.setSelection(cloneItem.getCategory());
+                    priceEdit.setText(Double.toString(cloneItem.getPrice()));
+                    descriptionEdit.setText(cloneItem.getDesc());
+                    qualityChoice.setSelection(cloneItem.getQuality());
+                    quantityEdit.setText(Integer.toString(cloneItem.getQuantity()));
+                }
+            }
+        }
     }
 
     /**

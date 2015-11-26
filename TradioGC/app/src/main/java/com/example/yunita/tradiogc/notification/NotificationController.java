@@ -29,24 +29,10 @@ public class NotificationController {
         }
 
         for (Trade trade: LoginActivity.USERLOGIN.getTrades()) {
-            // add new offered trade into notification
+            // add new offered trade into owner's notification
             if (trade.getStatus().equals("offered") ) {
                 if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
                     LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
-                }
-            }
-            // add new accepted trade into notification and change the status to "accepted"
-            else if (trade.getStatus().equals("accepted")) {
-                if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
-                    LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
-                    trade.setStatus("accepted");
-                }
-            }
-            // add new declined trade into notification
-            else if (trade.getStatus().equals("declined") ) {
-                if (LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()) == null) {
-                    LoginActivity.USERLOGIN.getNotifications().addNotification(trade);
-                    trade.setStatus("declined");
                 }
             }
         }

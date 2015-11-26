@@ -39,7 +39,6 @@ public class TradeDetailActivity extends AppCompatActivity {
     private UserController userController;
     private Context context = this;
     private Trade trade = new Trade();
-    private boolean declined = false;
     private boolean counterTrade = false;
 
     @Override
@@ -74,10 +73,6 @@ public class TradeDetailActivity extends AppCompatActivity {
             if (intent.getExtras() != null) {
                 int tradeId = intent.getExtras().getInt("trade_id");
                 trade = LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId);
-                if (trade == null) {
-                    trade = LoginActivity.USERLOGIN.getNotifications().findNotificationById(tradeId).getTrade();
-                    declined = true;
-                }
             }
         }
 
@@ -104,18 +99,14 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         // set trade status
         status.setText(trade.getStatus().toUpperCase());
-        if (declined) {
-            status.setText("DECLINED");
-        }
+
 
         // set items offered
         itemsOffered.addAll(trade.getBorrowerItems());
 
         // set panel showed
         if (trade.getStatus().equals("offered")) {
-            if (!declined) {
-                offeredTradePanel.setVisibility(View.VISIBLE);
-            }
+            offeredTradePanel.setVisibility(View.VISIBLE);
         }
     }
 

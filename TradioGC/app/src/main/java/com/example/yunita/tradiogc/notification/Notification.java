@@ -40,44 +40,9 @@ public class Notification  {
             str += "[ New! ] ";
         }
         if (LoginActivity.USERLOGIN.getUsername().equals(trade.getOwner())) {
-            switch (trade.getStatus()) {
-                case "offered":
-                    str += trade.getBorrower() + " offered a trade for " + trade.getOwnerItem().getName();
-                    break;
-                case "accepted": // the counter trade offered by owner is accepted
-                    str += trade.getBorrower() + " accepted your counter trade for " + trade.getOwnerItem().getName();
-                    break;
-                case "pending":
-                    // print informative message
-                    break;
-                case "declined": // the counter trade offered by owner is declined
-                    str += trade.getBorrower() + " declined your counter trade for " + trade.getOwnerItem().getName();
-                    break;
-                case "completed":
-                    // print informative message
-                    break;
-            }
+            str += trade.getBorrower() + " offered a trade for " + trade.getOwnerItem().getName() + " in your inventory";
         } else if (LoginActivity.USERLOGIN.getUsername().equals(trade.getBorrower())) {
-            switch (trade.getStatus()) {
-                case "offered": // login user is offered a counter trade
-                    str += trade.getOwner() + " offered a counter trade to you for " + trade.getOwnerItem().getName();
-                    break;
-                case "completed":
-                    // print informative message
-                    break;
-                case "accepted":
-                    str += trade.getOwner() + " accepted your trade for " + trade.getOwnerItem().getName();
-                    break;
-                case "pending":
-                    // print informative message
-                    break;
-                case "declined":
-                    str += trade.getOwner() + " declined your trade for " + trade.getOwnerItem().getName();
-                    break;
-                case "current":
-                    // print informative message
-                    break;
-            }
+            str += trade.getOwner() + " offered a counter trade for " + trade.getOwnerItem().getName();
         }
         return str;
     }

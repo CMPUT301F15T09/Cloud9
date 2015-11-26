@@ -124,7 +124,7 @@ public class RecordPageFragment extends Fragment {
      */
     public void setCompletedTradesView(){
         trades.clear();
-        trades.addAll(LoginActivity.USERLOGIN.getTrades().getCompletedTrade());
+        trades.addAll(LoginActivity.USERLOGIN.getTrades().getCompletedTrades());
 
         completedTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, trades);
         listView.setAdapter(completedTradesArrayAdapter);

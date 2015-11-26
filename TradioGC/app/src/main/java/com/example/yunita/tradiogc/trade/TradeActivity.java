@@ -42,7 +42,6 @@ public class TradeActivity extends AppCompatActivity {
 
     private Item ownerItem;
     private String ownerName;
-    private User owner;
     private User borrower = LoginActivity.USERLOGIN;
     private Trade offeredTrade;
     private Trade pendingTrade;
@@ -100,7 +99,7 @@ public class TradeActivity extends AppCompatActivity {
         Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());
         ownerItemPhoto.setImageBitmap(itemPhoto);
         ownerItemName.setText(ownerItem.getName()+"\n" +
-                "Owner: "+owner.getUsername());
+                "Owner: "+ownerName);
         ownerItemPrice.setText("$" + Double.toString(ownerItem.getPrice()) + " x " + ownerItem.getQuantity());
         ownerItemDescription.setText("Description: "+ownerItem.getDesc());
 
@@ -193,7 +192,7 @@ public class TradeActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            owner = userController.getUser(username);
+            User owner = userController.getUser(username);
             owner.getTrades().add(0, offeredTrade);
             System.out.println(offeredTrade.getClass());
             // notify owner

@@ -132,34 +132,45 @@ public class TradeDetailActivity extends AppCompatActivity {
      * @param view "accept trade" button.
      */
     public void accept(View view){
-        trade.setStatus("accepted");
-        LoginActivity.USERLOGIN.getNotifications().remove(LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()));
-        Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
-        updateUserThread.start();
 
-        synchronized (updateUserThread) {
-            try {
-                updateUserThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
-        Thread replyThread = new ReplyThread("accepted");
-        replyThread.start();
-        
         // create a dialog asking for comments
         AlertDialog builder = new AlertDialog.Builder(this).create();
         final EditText comments_et = new EditText(this);
         comments_et.setHint("say something about how to continue on with the trade...");
 
         builder.setTitle("Comments:");
+        builder.setView(comments_et);
         builder.setButton(AlertDialog.BUTTON_NEGATIVE, "SEND", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+
+                trade.setStatus("accepted");
+                LoginActivity.USERLOGIN.getNotifications().remove(LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()));
+                Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+                updateUserThread.start();
+
+                synchronized (updateUserThread) {
+                    try {
+                        updateUserThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Thread replyThread = new ReplyThread("accepted");
+                replyThread.start();
+
+
                 String comments = comments_et.getText().toString();
                 dialog.dismiss();
 
                 // TODO: 11/25/15  call an email activity, send the trade info and comments to both sides
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "TradioGC: Your trade is in progress now");
+                intent.putExtra(Intent.EXTRA_TEXT, "Comments from " + comments);
+                intent.setType("text/plain");
+                startActivity(Intent.createChooser(intent, "Email:"));
+
 
                 finish();
             }

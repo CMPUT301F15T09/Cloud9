@@ -161,17 +161,6 @@
             android:background="@drawable/custom_roundrect_button"
             android:onClick="offerTrade"
             android:text="Offer Trade" />
-
-        <Button
-            android:id="@+id/cancel_trade_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_margin="8dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/custom_roundrect_button"
-            android:text="Cancel Trade" />
-
     </LinearLayout>
 
 </LinearLayout>

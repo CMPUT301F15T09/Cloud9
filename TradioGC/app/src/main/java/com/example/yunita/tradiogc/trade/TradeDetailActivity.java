@@ -137,7 +137,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         // create a dialog asking for comments
         AlertDialog builder = new AlertDialog.Builder(this).create();
         final EditText comments_et = new EditText(this);
-        comments_et.setHint("say something about how to continue on with the trade...");
+        comments_et.setHint("say something here...");
 
         builder.setTitle("Comments:");
         builder.setView(comments_et);

@@ -20,6 +20,5 @@
         android:onClick="update"
         android:scaleType="centerInside"
         android:src="@drawable/update_button"
-        android:layout_gravity="right"
-        android:contentDescription="update notification" />
+        android:layout_gravity="right" />
 </LinearLayout>

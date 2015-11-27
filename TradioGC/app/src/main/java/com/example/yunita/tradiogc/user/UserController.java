@@ -198,6 +198,7 @@ public class UserController {
                 result.add(user);
             }
         }
+        result.sortByNumberOfTrades();
         result.notifyObservers();
         return result;
     }
@@ -219,6 +220,8 @@ public class UserController {
         result.notifyObservers();
         return result;
     }
+
+
 
     /**
      * Called when this user information needs to be updated in

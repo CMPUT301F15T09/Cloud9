@@ -27,6 +27,8 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.email.GMailSender;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 public class TradeDetailActivity extends AppCompatActivity {
     private TextView tradeFrom;
     private TextView ownerItemName;
@@ -103,8 +105,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         ownerItemDescription.setText(trade.getOwnerItem().getDesc());
 
         // set trade status
-        status.setText(trade.getStatus().toUpperCase());
-
+        status.setText(WordUtils.capitalizeFully(trade.getStatus()));
 
         // set items offered
         itemsOffered.addAll(trade.getBorrowerItems());

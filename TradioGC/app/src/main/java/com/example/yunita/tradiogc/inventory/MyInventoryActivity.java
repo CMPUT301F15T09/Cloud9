@@ -30,6 +30,7 @@ public class MyInventoryActivity extends AppCompatActivity {
     private Button addItem;
 
     private Inventory inventory = new Inventory();
+    private Inventory searchResult = new Inventory();
     private ArrayAdapter<Item> inventoryViewAdapter;
     private InventoryController inventoryController;
 
@@ -38,7 +39,6 @@ public class MyInventoryActivity extends AppCompatActivity {
     private int category = -1;
     private String query = "";
     private int categorySelection = 0;
-    private boolean clickable = true;
 
     public Button getAddItem() {
         return addItem;
@@ -90,23 +90,19 @@ public class MyInventoryActivity extends AppCompatActivity {
         itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (clickable) {
-                    Item item = inventory.get(position);
-                    viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
-                }
+                Item item = inventory.get(position);
+                viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
             }
         });
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (clickable) {
-                    Item deletedItem = inventory.get(position);
-                    Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
-                    deleteThread.start();
-                    inventory.remove(deletedItem);
-                    Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
-                    notifyUpdated();
-                }
+                Item deletedItem = inventory.get(position);
+                Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                deleteThread.start();
+                inventory.remove(deletedItem);
+                Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
+                inventoryViewAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -148,6 +144,8 @@ public class MyInventoryActivity extends AppCompatActivity {
     public void notifyUpdated() {
         Runnable doUpdateGUIList = new Runnable() {
             public void run() {
+                inventory.clear();
+                inventory.addAll(searchResult);
                 inventoryViewAdapter.notifyDataSetChanged();
             }
         };
@@ -187,15 +185,14 @@ public class MyInventoryActivity extends AppCompatActivity {
      * @param query    input of part of item name
      */
     public void searchItem(int category, String query) {
-        inventory.clear();
+        searchResult.clear();
         for (Item item : LoginActivity.USERLOGIN.getInventory()) {
             if (item.getName().toLowerCase().contains(query.toLowerCase()) &&
                     (item.getCategory() == category || category == -1)) {
-                inventory.add(item);
+                searchResult.add(item);
             }
         }
         notifyUpdated();
-        clickable = true;
     }
 
     /**
@@ -216,14 +213,11 @@ public class MyInventoryActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            synchronized (this) {
-                clickable = false;
-                if (lastWaitTask != null) {
-                    lastWaitTask.cancel(true);
-                }
-                lastWaitTask = new WaitTask();
-                lastWaitTask.execute(s);
+            if (lastWaitTask != null) {
+                lastWaitTask.cancel(true);
             }
+            lastWaitTask = new WaitTask();
+            lastWaitTask.execute(s);
         }
 
         @Override

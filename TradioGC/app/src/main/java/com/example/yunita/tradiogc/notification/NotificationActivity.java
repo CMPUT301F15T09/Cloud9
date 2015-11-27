@@ -19,6 +19,8 @@ public class NotificationActivity extends AppCompatActivity {
 
     private ArrayAdapter<Notification> notificationArrayAdapter;
     private Notifications notifications = new Notifications();
+    private Notifications newNotifications = new Notifications();
+
     private NotificationController notificationController;
     private Context context = this;
 
@@ -80,14 +82,34 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        notifications.clear();
-        notificationController.updateNotification();
-        notifications.addAll(LoginActivity.USERLOGIN.getNotifications());
-        notificationArrayAdapter.notifyDataSetChanged();
+        Thread updateNotificationThread = new UpdateNotificationThread();
+        updateNotificationThread.start();
     }
 
     public void update(View view) {
         onResume();
+    }
+
+    public void notifyUpdated() {
+        Runnable doUpdateGUIList = new Runnable() {
+            public void run() {
+                notifications.clear();
+                notifications.addAll(LoginActivity.USERLOGIN.getNotifications());
+                notificationArrayAdapter.notifyDataSetChanged();
+            }
+        };
+        runOnUiThread(doUpdateGUIList);
+    }
+
+
+    class UpdateNotificationThread extends Thread {
+        public UpdateNotificationThread() {}
+
+        @Override
+        public void run() {
+            notificationController.updateNotification();
+            notifyUpdated();
+        }
+
     }
 }

@@ -21,15 +21,14 @@ import com.example.yunita.tradiogc.user.Users;
 
 public class SearchUserActivity extends AppCompatActivity {
     private Users users;
+    private Users searchResult;
     private ListView userList;
-    private ArrayAdapter<User> usersViewAdapter;
+    private UserListAdapter usersViewAdapter;
     private UserController userController;
 
     private EditText query_et;
     private Context mContext = this;
 
-
-    private boolean clickable = false;
     private String query = "";
 
     public ListView getUserList() {
@@ -68,7 +67,8 @@ public class SearchUserActivity extends AppCompatActivity {
         super.onStart();
 
         users = new Users();
-        usersViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, users);
+        searchResult = new Users();
+        usersViewAdapter = new UserListAdapter(this, R.layout.user_list_item, users);
         userList.setAdapter(usersViewAdapter);
         userController = new UserController(mContext);
 
@@ -84,10 +84,8 @@ public class SearchUserActivity extends AppCompatActivity {
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                if (clickable) {
-                    String username = users.get(pos).getUsername();
-                    startProfileActivity(username);
-                }
+                String username = users.get(pos).getUsername();
+                startProfileActivity(username);
             }
         });
     }
@@ -110,7 +108,6 @@ public class SearchUserActivity extends AppCompatActivity {
         Intent intent = new Intent(mContext, ProfileActivity.class);
         intent.putExtra("profileTarget", username);
         startActivity(intent);
-        finish();
     }
 
     /**
@@ -122,6 +119,8 @@ public class SearchUserActivity extends AppCompatActivity {
         // Thread to update adapter after an operation
         Runnable doUpdateGUIList = new Runnable() {
             public void run() {
+                users.clear();
+                users.addAll(searchResult);
                 usersViewAdapter.notifyDataSetChanged();
             }
         };
@@ -143,15 +142,11 @@ public class SearchUserActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            synchronized (this) {
-                users.clear();
-                users.addAll(userController.searchStrangers(search));
+            searchResult.clear();
+            searchResult.addAll(userController.searchStrangers(search));
 
-                System.out.println("search users: " + users.size());
-                notifyUpdated();
-                clickable = true;
-                notify();
-            }
+            System.out.println("search users: " + searchResult.size());
+            notifyUpdated();
         }
     }
 
@@ -173,14 +168,11 @@ public class SearchUserActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            synchronized (this) {
-                clickable = false;
-                if (lastWaitTask != null) {
-                    lastWaitTask.cancel(true);
-                }
-                lastWaitTask = new WaitTask();
-                lastWaitTask.execute(s);
+            if (lastWaitTask != null) {
+                lastWaitTask.cancel(true);
             }
+            lastWaitTask = new WaitTask();
+            lastWaitTask.execute(s);
         }
 
         @Override

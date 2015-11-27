@@ -20,6 +20,8 @@ import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;
@@ -216,7 +218,7 @@ public class LoginActivity extends Activity {
 
                         USERLOGIN = new User();
                         USERLOGIN.setUsername(username);
-                        USERLOGIN.setLocation(location.toUpperCase());
+                        USERLOGIN.setLocation(WordUtils.capitalizeFully(location));
                         USERLOGIN.setEmail(email.toLowerCase());
                         USERLOGIN.setPhone(phone);
                         USERLOGIN.setInventory(new Inventory());

@@ -29,6 +29,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private EditText query_et;
     private ListView item_list;
 
+    private SearchInventory searchInventory = new SearchInventory();
     private SearchInventory searchItems = new SearchInventory();
     private UserController userController;
 
@@ -41,7 +42,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private int category = -1;
     private String query = "";
     private int categorySelection = 0;
-    private boolean clickable = true;
 
     public ListView getItem_list() {
         return item_list;
@@ -92,16 +92,14 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
-        inventoryViewAdapter = new ArrayAdapter<SearchItem>(this, R.layout.inventory_list_item, searchItems);
+        inventoryViewAdapter = new ArrayAdapter<SearchItem>(this, R.layout.inventory_list_item, searchInventory);
         item_list.setAdapter(inventoryViewAdapter);
 
         item_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (clickable) {
-                    SearchItem searchItem = searchItems.get(position);
-                    viewItemDetails(searchItem, friend.getInventory().indexOf(searchItem.getoItem()));
-                }
+                SearchItem searchItem = searchInventory.get(position);
+                viewItemDetails(searchItem, friend.getInventory().indexOf(searchItem.getoItem()));
             }
         });
 
@@ -155,6 +153,8 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     public void notifyUpdated() {
         Runnable doUpdateGUIList = new Runnable() {
             public void run() {
+                searchInventory.clear();
+                searchInventory.addAll(searchItems);
                 inventoryViewAdapter.notifyDataSetChanged();
             }
         };
@@ -198,7 +198,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         }
         notifyUpdated();
-        clickable = true;
     }
 
     /**
@@ -240,14 +239,12 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            synchronized (this) {
-                clickable = false;
-                if (lastWaitTask != null) {
-                    lastWaitTask.cancel(true);
-                }
-                lastWaitTask = new WaitTask();
-                lastWaitTask.execute(s);
+
+            if (lastWaitTask != null) {
+                lastWaitTask.cancel(true);
             }
+            lastWaitTask = new WaitTask();
+            lastWaitTask.execute(s);
         }
 
         @Override

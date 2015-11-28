@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class MyInventoryActivity extends AppCompatActivity {
+public class  MyInventoryActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText query_et;
     private ListView itemList;
@@ -99,6 +99,7 @@ public class MyInventoryActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Item deletedItem = inventory.get(position);
                 Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                deleteThread.start();
                 deleteThread.start();
                 inventory.remove(deletedItem);
                 Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();

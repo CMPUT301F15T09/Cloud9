@@ -90,9 +90,10 @@ public class ItemActivity extends AppCompatActivity {
                 } else {
                     quality.setText("Used");
                 }
-                if (!item.getPhotos().equals("")) {
-                    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
-                }
+                //LOAD PHOTO
+                //if (!item.getPhotos().equals("")) {
+                //    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
+                //}
             }
 
         }

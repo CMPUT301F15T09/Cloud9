@@ -2,19 +2,29 @@ package com.example.yunita.tradiogc.photo;
 
 import java.util.ArrayList;
 
-public class Photos extends ArrayList<String> {
+public class Photos extends ArrayList<Photo> {
 
-    private String photo;
+    private ArrayList<Photo> Photos;
 
-    public Photos() {
-
+    public Photos(ArrayList<Photo> Photos) {
+        this.Photos = Photos;
     }
 
-    public String getPhoto() {
-        return photo;
+    public void addPhoto (Photo photo){
+        Photos.add(photo);
+    }
+    public void delPhoto(Photo photo){
+        Photos.remove(Photos.indexOf(photo));
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public ArrayList<Photo> getPhotosAtId(int id){
+        ArrayList<Photo> relevantPhotos = new ArrayList<>();
+        for (int i = 0; i<Photos.size();i++){
+            if (Photos.get(i).getitemId() == id){
+                relevantPhotos.add(Photos.get(i));
+            }
+        }
+        return relevantPhotos;
     }
+
 }

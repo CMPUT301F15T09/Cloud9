@@ -124,4 +124,15 @@ public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
 
     }
 
+    // NEW REQUIREMENTS
+
+    /**
+     * Use Case 41
+     * 12.01.01
+     * Test for viewing the top traders on user's friend list
+     */
+    public void testViewTopTraders(){
+
+    }
+
 }

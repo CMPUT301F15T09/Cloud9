@@ -107,4 +107,28 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
         assertFalse(item.getCategory() == 0);
     }
 
+    // NEW REQUIREMENTS
+
+    /**
+     * Use Case 42
+     * 13.01.01
+     * Test for cloning item.
+     */
+    public void testCloneItem(){
+        Item john_item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        // when cloning item, ann can edit the item before it is added to her inventory.
+        Item ann_item = new Item();
+        ann_item.setName(john_item.getName());
+        ann_item.setCategory(1);
+        ann_item.setPrice(john_item.getPrice());
+        ann_item.setDesc(john_item.getDesc());
+        ann_item.setVisibility(john_item.getVisibility());
+        ann_item.setQuality(john_item.getQuality());
+        ann_item.setPhotos(john_item.getPhotos());
+
+        assertFalse(ann_item.getCategory() == john_item.getCategory());
+
+    }
+
+
 }

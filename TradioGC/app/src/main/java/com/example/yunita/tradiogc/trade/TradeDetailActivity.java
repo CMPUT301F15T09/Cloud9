@@ -298,7 +298,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         }
     }
 
-    class EmailThread extends Thread {
+    public class EmailThread extends Thread {
         private String email1;
         private String email2;
         private String comments;

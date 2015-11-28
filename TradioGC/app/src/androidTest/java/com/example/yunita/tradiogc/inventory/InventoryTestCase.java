@@ -18,7 +18,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      */
     public void testAddItem() {
         Inventory inventory = new Inventory();
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         inventory.add(item);
         assertEquals(inventory.size(), 1);
     }
@@ -30,7 +30,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      */
     public void testEditItem() {
         Inventory inventory = new Inventory();
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         inventory.add(item);
 
         item.setName("Indigo Chapters");
@@ -44,7 +44,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      */
     public void testRemoveItem() {
         Inventory inventory = new Inventory();
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         inventory.add(item);
         assertEquals(inventory.size(), 1);
 
@@ -59,7 +59,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      */
     public void testViewInventory() {
         Inventory inventory = new Inventory();
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         inventory.add(item);
         assertEquals(inventory.size(), 1);
 
@@ -73,7 +73,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      * Test for viewing an item's detail page.
      */
     public void testViewItem() {
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         assertTrue(item.getName().equals("Chapters"));
         assertTrue(item.getCategory()==0);
         assertTrue(item.getPrice()==50.00);
@@ -89,7 +89,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      * Test for setting an item's visibility.
      */
     public void testSetItemVisibility() {
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         item.setVisibility(false);
 
         assertFalse(item.getVisibility() == true);
@@ -101,7 +101,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      * Test for setting an item's category.
      */
     public void testSetItemCategory() {
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         item.setCategory(1); // category starts from [0] - [9]
 
         assertFalse(item.getCategory() == 0);
@@ -115,7 +115,7 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
      * Test for cloning item.
      */
     public void testCloneItem(){
-        Item john_item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
+        Item john_item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         // when cloning item, ann can edit the item before it is added to her inventory.
         Item ann_item = new Item();
         ann_item.setName(john_item.getName());
@@ -124,7 +124,6 @@ public class InventoryTestCase extends ActivityInstrumentationTestCase2 {
         ann_item.setDesc(john_item.getDesc());
         ann_item.setVisibility(john_item.getVisibility());
         ann_item.setQuality(john_item.getQuality());
-        ann_item.setPhotos(john_item.getPhotos());
 
         assertFalse(ann_item.getCategory() == john_item.getCategory());
 

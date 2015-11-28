@@ -56,7 +56,7 @@ public class UserController {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername() + "NoPhotos");
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername());
 
             StringEntity stringEntity = new StringEntity(gson.toJson(user));
             addRequest.setEntity(stringEntity);

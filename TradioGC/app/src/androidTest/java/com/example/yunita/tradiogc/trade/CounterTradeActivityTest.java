@@ -36,7 +36,7 @@ public class CounterTradeActivityTest extends ActivityInstrumentationTestCase2 {
         test.setLocation("edmonton");
         test.setPhone("7809998881");
         test.setEmail("tradiogctest@yopmail.com");
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "");
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         Inventory ann_inventory = new Inventory();
         ann_inventory.add(item);
         test.setInventory(ann_inventory);
@@ -44,7 +44,7 @@ public class CounterTradeActivityTest extends ActivityInstrumentationTestCase2 {
         LoginActivity.USERLOGIN = test;
 
         Intent itemIntent = new Intent();
-        item_for_trade = new Item("Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0, "");
+        item_for_trade = new Item("Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0);
         trade = new Trade("test", "test", item_for_trade, ann_inventory);
         trade.setId(1);
         test.getTrades().add(trade);

@@ -1,6 +1,21 @@
 package com.example.yunita.tradiogc.trade;
 
-public class RecordActivityTest {
+import android.app.Activity;
+import android.test.ActivityInstrumentationTestCase2;
+
+import com.example.yunita.tradiogc.record.RecordActivity;
+
+public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
+
+    private RecordActivity recordActivity;
+
+    public RecordActivityTest(){
+        super(com.example.yunita.tradiogc.record.RecordActivity.class);
+    }
+
+    public void testStart() throws Exception {
+        Activity activity = getActivity();
+    }
 
     /**
      * Use Case 27

@@ -26,7 +26,7 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.email.GMailSender;
-
+//TODO: add complete trade button
 public class TradeDetailActivity extends AppCompatActivity {
     private TextView tradeFrom;
     private TextView ownerItemName;

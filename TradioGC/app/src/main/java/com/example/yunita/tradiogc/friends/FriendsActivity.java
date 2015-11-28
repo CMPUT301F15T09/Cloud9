@@ -6,33 +6,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
+import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.UserController;
+import com.example.yunita.tradiogc.user.Users;
 
-// TODO: top traders for friends
 public class FriendsActivity extends AppCompatActivity {
 
     private Context context = this;
-    private Friends friends = new Friends();
-
+    private Users friendsInUser = new Users();
+    private Users resultUsers = new Users();
 
     private ListView friendList;
     private String friendname;
     private FriendsController friendsController;
-    private ArrayAdapter<String> friendsViewAdapter;
+    private UserListAdapter friendsViewAdapter;
     private Button search_user_button;
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-            friendsViewAdapter.remove(friendname);
-            friendsViewAdapter.notifyDataSetChanged();
-        }
-    };
+    private ProgressBar progressBar;
 
     public Button getSearch_user_button() {
         return search_user_button;
@@ -50,9 +47,9 @@ public class FriendsActivity extends AppCompatActivity {
 
         friendsController = new FriendsController(context);
         friendList = (ListView) findViewById(R.id.friend_list_view);
-        friends.addAll(LoginActivity.USERLOGIN.getFriends());
+
         search_user_button = (Button) findViewById(R.id.search_user);
-        search_user_button = (Button) findViewById(R.id.search_user);
+        progressBar = (ProgressBar) findViewById(R.id.friends_main_progressBar);
     }
 
     /**
@@ -65,13 +62,13 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, friends);
+        friendsViewAdapter = new UserListAdapter(this, R.layout.user_list_item, friendsInUser);
         friendList.setAdapter(friendsViewAdapter);
 
         friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String username = friends.get(position);
+                String username = friendsInUser.get(position).getUsername();
                 viewFriendProfile(username);
             }
         });
@@ -79,10 +76,11 @@ public class FriendsActivity extends AppCompatActivity {
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                friendname = friends.get(position);
+                friendname = friendsInUser.get(position).getUsername();
                 Thread deleteThread = new DeleteFriendThread(friendname);
                 deleteThread.start();
-                friends.remove(friendname);
+                friendsInUser.remove(position);
+                friendsViewAdapter.notifyDataSetChanged();
                 Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -95,10 +93,13 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        progressBar.setVisibility(View.VISIBLE);
+        friendsInUser.clear();
+        friendsViewAdapter.notifyDataSetChanged();
         // keep updating friend list (since we use tabmenu, after first
         // visit, this activity will be on resume/pause).
-        friends.clear();
-        friends.addAll(LoginActivity.USERLOGIN.getFriends());
+        Thread getFriendsInUserThread = new GetFriendsInUserThread();
+        getFriendsInUserThread.start();
     }
 
     /**
@@ -125,6 +126,23 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
+     * Called after the friends list is updated and while the getFriendsInUser
+     * thread is running.
+     * <p>This method notifies the view if there is a change in the user's friends list.
+     */
+    public void notifyUpdated() {
+        // Thread to update adapter after an operation
+        Runnable doUpdateGUIList = new Runnable() {
+            public void run() {
+                friendsInUser.clear();
+                friendsInUser.addAll(resultUsers);
+                friendsViewAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+            }
+        };
+        runOnUiThread(doUpdateGUIList);
+    }
+    /**
      * Called when the user attempts to delete a friend by long pressing
      * on a friend's name.
      * <p>This class creates a thread and runs "Delete Friend".
@@ -141,7 +159,30 @@ public class FriendsActivity extends AppCompatActivity {
         @Override
         public void run() {
             friendsController.deleteFriend(friendname);
-            runOnUiThread(doUpdateGUIDetails);
+        }
+    }
+
+    /**
+     * Called when friends list is refreshed.
+     * <p>This class creates a thread and runs "refresh friends list".
+     */
+    class GetFriendsInUserThread extends Thread {
+
+        public GetFriendsInUserThread() {}
+
+        public void run() {
+            UserController userController = new UserController(context);
+
+            resultUsers.clear();
+            for (String friend : LoginActivity.USERLOGIN.getFriends()) {
+                User friendInUser = userController.getUser(friend);
+                if (friendInUser != null) {
+                    resultUsers.add(friendInUser);
+                }
+            }
+
+            resultUsers.sortByNumberOfTrades();
+            notifyUpdated();
         }
     }
 }

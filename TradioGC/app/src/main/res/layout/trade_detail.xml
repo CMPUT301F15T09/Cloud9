@@ -7,7 +7,7 @@
     android:layout_margin="8dp">
 
     <TextView
-        android:id="@+id/trade_from"
+        android:id="@+id/trade_with"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
@@ -67,14 +67,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/borrower_offer_trade_panel"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
-
-
 
         <TextView
             android:layout_width="fill_parent"
@@ -125,6 +122,27 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/owner_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp"
+        android:visibility="gone">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/completeButton"
+            android:layout_margin="8dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_roundrect_button"
+            android:onClick="complete"
+            android:text="Complete Trade" />
+    </LinearLayout>
 </LinearLayout>
 
 

@@ -92,7 +92,7 @@ public class User {
      * @param location this user's new location(city).
      */
     public void setLocation(String location) {
-        this.location = location;
+        this.location = getLocationFormat(location);
     }
 
     /**
@@ -163,6 +163,29 @@ public class User {
 
     public void setNotifications(Notifications notifications) {
         this.notifications = notifications;
+    }
+
+    /**
+     * convert a string to a location-format string
+     * @param location input location string from user
+     * @return a string with location format
+     */
+    public String getLocationFormat(String location) {
+        String string = "";
+        String[] words = location.split(" ");
+
+        for (String word : words) {
+            if (word.length() != 0) {
+                string += " " + String.valueOf(word.charAt(0)).toUpperCase();
+                if (word.length() != 1) {
+                    string += word.substring(1);
+                }
+            }
+        }
+        if (location.length() != 0) {
+            string = string.substring(1);
+        }
+        return string;
     }
 
     /**

@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,6 +47,30 @@ public class TradeDetailActivity extends AppCompatActivity {
     private Trade trade = new Trade();
     private boolean counterTrade = false;
     private User user = new User();
+
+    private EditText comments_et;
+    private AlertDialog acceptBuilder;
+    private AlertDialog counterBuilder;
+
+    public Button getAcceptTradeButton(){
+        return (Button) findViewById(R.id.accept_trade_button);
+    }
+
+    public Button getDeclineTradeButton(){
+        return (Button) findViewById(R.id.decline_trade_button);
+    }
+
+    public EditText getComments_et() {
+        return comments_et;
+    }
+
+    public AlertDialog getAcceptBuilder() {
+        return acceptBuilder;
+    }
+
+    public AlertDialog getCounterBuilder() {
+        return counterBuilder;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,13 +163,13 @@ public class TradeDetailActivity extends AppCompatActivity {
      */
     public void accept(View view){
         // create a dialog asking for comments
-        AlertDialog builder = new AlertDialog.Builder(this).create();
-        final EditText comments_et = new EditText(this);
+        acceptBuilder = new AlertDialog.Builder(this).create();
+        comments_et = new EditText(this);
         comments_et.setHint("say something here...");
 
-        builder.setTitle("Comments:");
-        builder.setView(comments_et);
-        builder.setButton(AlertDialog.BUTTON_NEGATIVE, "SEND", new DialogInterface.OnClickListener() {
+        acceptBuilder.setTitle("Comments:");
+        acceptBuilder.setView(comments_et);
+        acceptBuilder.setButton(AlertDialog.BUTTON_POSITIVE, "SEND", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
                 trade.setStatus("accepted");
@@ -186,12 +211,12 @@ public class TradeDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setButton(AlertDialog.BUTTON_POSITIVE, "CANCEL", new DialogInterface.OnClickListener() {
+        acceptBuilder.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builder.show();
+        acceptBuilder.show();
 
     }
 
@@ -222,9 +247,9 @@ public class TradeDetailActivity extends AppCompatActivity {
             finish();
         } else {
             // create a dialog asking for counter trade
-            AlertDialog builder = new AlertDialog.Builder(this).create();
-            builder.setMessage("Do you want to offer a counter trade?");
-            builder.setButton(AlertDialog.BUTTON_NEGATIVE, "YES", new DialogInterface.OnClickListener() {
+            counterBuilder = new AlertDialog.Builder(this).create();
+            counterBuilder.setMessage("Do you want to offer a counter trade?");
+            counterBuilder.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
@@ -239,14 +264,14 @@ public class TradeDetailActivity extends AppCompatActivity {
 
                 }
             });
-            builder.setButton(AlertDialog.BUTTON_POSITIVE, "NO", new DialogInterface.OnClickListener() {
+            counterBuilder.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     finish();
 
                 }
             });
-            builder.show();
+            counterBuilder.show();
         }
     }
 

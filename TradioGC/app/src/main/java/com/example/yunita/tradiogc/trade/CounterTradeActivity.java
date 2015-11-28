@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,6 +48,9 @@ public class CounterTradeActivity extends AppCompatActivity {
 
     private UserController userController;
 
+    public Button getCounterTradeButton(){
+        return (Button) findViewById(R.id.offer_trade_button);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

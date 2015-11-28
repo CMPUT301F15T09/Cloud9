@@ -4,21 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
-import com.example.yunita.tradiogc.user.UserController;
 
-public class TradeActivityTestCase extends ActivityInstrumentationTestCase2 {
+public class TradeActivityTest extends ActivityInstrumentationTestCase2 {
 
     private TradeActivity tradeActivity;
     private Item item_for_trade;
 
-    public TradeActivityTestCase(){
+    public TradeActivityTest(){
         super(com.example.yunita.tradiogc.trade.TradeActivity.class);
     }
 

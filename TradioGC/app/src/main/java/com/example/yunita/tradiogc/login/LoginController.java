@@ -71,6 +71,21 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername()+"/NoPhotos");
+            // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/[username]
+
+            StringEntity stringEntity = new StringEntity(gson.toJson(user));
+            addRequest.setEntity(stringEntity);
+            addRequest.setHeader("Accept", "application/json");
+
+            HttpResponse response = httpClient.execute(addRequest);
+            String status = response.getStatusLine().toString();
+            Log.i(TAG, status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

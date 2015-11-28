@@ -56,7 +56,7 @@ public class UserController {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername());
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername() + "NoPhotos");
 
             StringEntity stringEntity = new StringEntity(gson.toJson(user));
             addRequest.setEntity(stringEntity);
@@ -65,7 +65,6 @@ public class UserController {
             HttpResponse response = httpClient.execute(addRequest);
             String status = response.getStatusLine().toString();
             Log.i(TAG, status);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

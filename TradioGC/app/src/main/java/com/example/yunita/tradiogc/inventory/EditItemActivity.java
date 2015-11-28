@@ -46,6 +46,7 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageView tempPhoto;
     private String imageFilePath;
     private Bitmap thumbnail;
+    private Boolean usePhoto;
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -91,7 +92,7 @@ public class EditItemActivity extends AppCompatActivity {
             item = new Item();
         }
 
-
+        usePhoto = false;
         radioVisibility = (RadioGroup) findViewById(R.id.radioVisibility);
         privateChoice = (RadioButton) findViewById(R.id.private_radio_button);
         nameEdit = (EditText) findViewById(R.id.item_name_textEdit);
@@ -102,8 +103,17 @@ public class EditItemActivity extends AppCompatActivity {
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         add = (Button) findViewById(R.id.add_item_button);
         save = (Button) findViewById(R.id.save_item_button);
-        tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
+        tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+        //LOAD PHOTO HERE
+        //if (!(item.getPhotos() == "")){
+        //    tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
+        //}
+
+
+        Button delItem = (Button) findViewById(R.id.delete_item_button);
+
+        delItem.setVisibility(View.VISIBLE);
         add.setVisibility(View.GONE);
         save.setVisibility(View.VISIBLE);
 
@@ -134,7 +144,15 @@ public class EditItemActivity extends AppCompatActivity {
         descriptionEdit.setText(item.getDesc());
         qualityChoice.setSelection(item.getQuality());
         quantityEdit.setText(Integer.toString(item.getQuantity()));
+
+        tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+
+        //LOAD PHOTO HERE
+        //if (!(item.getPhotos() == "")){
+        //    tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
+        //}
     }
+
 
     /**
      * Called when the user clicks the "Save" button on the Edit Item page.
@@ -179,8 +197,9 @@ public class EditItemActivity extends AppCompatActivity {
             item.setCategory(category);
             item.setQuantity(quantity);
             item.setQuality(quality);
-            item.setPhotos(photo);
-
+            if (usePhoto){
+                //save photo here
+            }
             inventoryController.updateItem(item);
             finish();
         }
@@ -195,6 +214,7 @@ public class EditItemActivity extends AppCompatActivity {
      * @param view "Upload Photo" button.
      */
     public void takeAPhoto(View view) {
+        usePhoto = true;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
@@ -234,12 +254,14 @@ public class EditItemActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Cancels uploading the photo.
      *
      * @param view "Cancel Image" button.
      */
     public void cancelImage(View view) {
+        usePhoto = false;
         if(imageFilePath != null){
             File file = new File(imageFilePath);
             if (file.exists()) {
@@ -265,4 +287,19 @@ public class EditItemActivity extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
+
+    public Bitmap decodeImage(String encoded){
+        byte[] decodedString = Base64.decode(encoded,Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+        return decodedByte;
+    }
+
+
+    public void delItem(View v){
+        inventoryController.removeExistingItem(item);
+        Intent intent = new Intent(mContext, MyInventoryActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

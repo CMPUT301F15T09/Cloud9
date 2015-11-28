@@ -139,7 +139,6 @@ public class User {
     public Inventory getInventory() {
         return inventory;
     }
-
     /**
      * Changes the inventory of this user.
      *

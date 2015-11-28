@@ -117,8 +117,10 @@ public class TradeDetailActivity extends AppCompatActivity {
 
 
         // set item photo and information
-        Bitmap itemPhoto = decodeImage(trade.getOwnerItem().getPhotos());
-        ownerItemPhoto.setImageBitmap(itemPhoto);
+        //LOAD PHOTO
+        //Bitmap itemPhoto = decodeImage(trade.getOwnerItem().getPhotos());
+        //LOAD PHOTO
+        //ownerItemPhoto.setImageBitmap(itemPhoto);
         ownerItemName.setText(trade.getOwnerItem().getName() + "\n" +
                 "Owner: " + trade.getOwner());
         ownerItemPrice.setText("$"+Double.toString(trade.getOwnerItem().getPrice()) + " x " + trade.getOwnerItem().getQuantity());

@@ -162,6 +162,19 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/delete_item_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Item"
+                android:onClick="delItem"
+                android:layout_weight="1"/>
+        </LinearLayout>
         <!-- save / add item button -->
         <Button
             android:id="@+id/add_item_button"
@@ -189,4 +202,6 @@
 
 
     </LinearLayout>
+
+
 </ScrollView>

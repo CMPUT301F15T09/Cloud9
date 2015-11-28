@@ -42,6 +42,8 @@ public class AddItemActivity extends AppCompatActivity {
     private String imageFilePath;
     private Bitmap thumbnail;
     private Button add;
+    private Button delItem;
+    private Boolean usePhoto;
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -65,6 +67,7 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
 
+        usePhoto = false;
         privateChoice = (RadioButton) findViewById(R.id.private_radio_button);
         nameEdit = (EditText) findViewById(R.id.item_name_textEdit);
         priceEdit = (EditText) findViewById(R.id.price_edit_text);
@@ -74,6 +77,9 @@ public class AddItemActivity extends AppCompatActivity {
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
         add = (Button) findViewById(R.id.add_item_button);
+        delItem = (Button) findViewById(R.id.delete_item_button);
+
+        delItem.setVisibility(View.GONE);
     }
 
     /**
@@ -145,11 +151,15 @@ public class AddItemActivity extends AppCompatActivity {
                 System.out.println(thumbnail.getByteCount());
             }
 
-            Item newItem = new Item(name, category, price, description, visibility, quantity, quality, photo);
-            inventoryController.addItem(newItem);
+            if (usePhoto) {
+                //save photo
+            }
+                Item newItem = new Item(name, category, price, description, visibility, quantity, quality);
+                inventoryController.addItem(newItem);
+            }
 
             finish();
-        }
+
     }
 
     // taken from https://github.com/abramhindle/BogoPicGen
@@ -161,6 +171,7 @@ public class AddItemActivity extends AppCompatActivity {
      * @param view "Upload Photo" button.
      */
     public void takeAPhoto(View view) {
+        usePhoto = true;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
@@ -206,6 +217,7 @@ public class AddItemActivity extends AppCompatActivity {
      * @param view "Cancel Image" button.
      */
     public void cancelImage(View view) {
+        usePhoto = false;
         if(imageFilePath != null){
             File file = new File(imageFilePath);
             if (file.exists()) {

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.yunita.tradiogc.notification.NotificationActivity">
+
+    <item android:id="@+id/update_button"
+        android:title="Update"
+        android:onClick="updateNotification"
+        android:icon="@drawable/update_button"
+        app:showAsAction="always" />
+
+</menu>

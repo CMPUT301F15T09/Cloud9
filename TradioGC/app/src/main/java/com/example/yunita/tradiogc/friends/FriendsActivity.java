@@ -52,7 +52,6 @@ public class FriendsActivity extends AppCompatActivity {
         friendList = (ListView) findViewById(R.id.friend_list_view);
         friends.addAll(LoginActivity.USERLOGIN.getFriends());
         search_user_button = (Button) findViewById(R.id.search_user);
-        System.out.println("friends: " + friends.size());
         search_user_button = (Button) findViewById(R.id.search_user);
     }
 

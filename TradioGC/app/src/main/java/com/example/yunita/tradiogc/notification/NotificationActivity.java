@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +22,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     private ArrayAdapter<Notification> notificationArrayAdapter;
     private Notifications notifications = new Notifications();
-    private Notifications newNotifications = new Notifications();
 
     private NotificationController notificationController;
     private Context context = this;
@@ -28,11 +30,18 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notification);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         notificationListView = (ListView) findViewById(R.id.notification_list_view);
 
         notificationController = new NotificationController(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.notification_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -86,7 +95,7 @@ public class NotificationActivity extends AppCompatActivity {
         updateNotificationThread.start();
     }
 
-    public void update(View view) {
+    public void updateNotification(MenuItem item) {
         onResume();
     }
 

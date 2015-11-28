@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import org.apache.commons.lang3.text.WordUtils;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
@@ -83,8 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String email = email_et.getText().toString();
         String phone = phone_et.getText().toString();
 
-        //TODO: remove wordutil
-        LoginActivity.USERLOGIN.setLocation(WordUtils.capitalizeFully(location));
+        LoginActivity.USERLOGIN.setLocation(location);
         LoginActivity.USERLOGIN.setEmail(email.toLowerCase());
         LoginActivity.USERLOGIN.setPhone(phone);
 

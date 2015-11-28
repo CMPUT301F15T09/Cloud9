@@ -27,9 +27,6 @@ public class RecordPageFragment extends Fragment {
     private Context context = getActivity();
     private int mPage;
     private ListView listView;
-    private ArrayAdapter<Trade> currentTradesArrayAdapter;
-    private ArrayAdapter<Trade> pastTradesArrayAdapter;
-    private ArrayAdapter<Trade> completedTradesArrayAdapter;
     private Trades trades = new Trades();
     private UserController userController;
 
@@ -100,7 +97,7 @@ public class RecordPageFragment extends Fragment {
         trades.clear();
         trades.addAll(LoginActivity.USERLOGIN.getTrades().getCurrentTrades());
 
-        currentTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, trades);
+        RecordListAdapter currentTradesArrayAdapter = new RecordListAdapter(getActivity().getApplicationContext(), R.layout.record_list_item, trades);
         listView.setAdapter(currentTradesArrayAdapter);
 
         listView.setOnItemClickListener(clickListener);
@@ -113,7 +110,7 @@ public class RecordPageFragment extends Fragment {
         trades.clear();
         trades.addAll(LoginActivity.USERLOGIN.getTrades().getPastTrades());
 
-        pastTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, trades);
+        RecordListAdapter pastTradesArrayAdapter = new RecordListAdapter(getActivity().getApplicationContext(), R.layout.record_list_item, trades);
         listView.setAdapter(pastTradesArrayAdapter);
 
         listView.setOnItemClickListener(clickListener);
@@ -126,7 +123,7 @@ public class RecordPageFragment extends Fragment {
         trades.clear();
         trades.addAll(LoginActivity.USERLOGIN.getTrades().getCompletedTrades());
 
-        completedTradesArrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.trades_list_item, trades);
+        RecordListAdapter completedTradesArrayAdapter = new RecordListAdapter(getActivity().getApplicationContext(), R.layout.record_list_item, trades);
         listView.setAdapter(completedTradesArrayAdapter);
 
         listView.setOnItemClickListener(clickListener);

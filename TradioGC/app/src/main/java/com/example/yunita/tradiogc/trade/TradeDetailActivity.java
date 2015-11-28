@@ -27,8 +27,6 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.email.GMailSender;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 public class TradeDetailActivity extends AppCompatActivity {
     private TextView tradeFrom;
     private TextView ownerItemName;
@@ -104,9 +102,8 @@ public class TradeDetailActivity extends AppCompatActivity {
         ownerItemPrice.setText("$"+Double.toString(trade.getOwnerItem().getPrice()) + " x " + trade.getOwnerItem().getQuantity());
         ownerItemDescription.setText(trade.getOwnerItem().getDesc());
 
-        //TODO: remove wordutil
         // set trade status
-        status.setText(WordUtils.capitalizeFully(trade.getStatus()));
+        status.setText(String.valueOf(trade.getStatus().charAt(0)).toUpperCase() + trade.getStatus().substring(1));
 
         // set items offered
         itemsOffered.addAll(trade.getBorrowerItems());

@@ -15,7 +15,7 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
-
+// TODO: top traders for friends
 public class FriendsActivity extends AppCompatActivity {
 
     private Context context = this;

@@ -215,7 +215,7 @@ public class LoginActivity extends Activity {
                         newUser.setPhone(phone);
                         newUser.setInventory(new Inventory());
                         newUser.setTrades(new Trades());
-
+                        //TODO: remove wordutil
                         USERLOGIN = new User();
                         USERLOGIN.setUsername(username);
                         USERLOGIN.setLocation(WordUtils.capitalizeFully(location));

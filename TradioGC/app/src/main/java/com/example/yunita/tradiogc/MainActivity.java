@@ -17,7 +17,7 @@ import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class MainActivity extends TabActivity {
 
-    private String textArray[] = {"Notification", "Friends", "Market", "Profile"};
+    private String textArray[] = {"Notification", "Friends", "Market", "Account"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

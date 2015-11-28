@@ -83,6 +83,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String email = email_et.getText().toString();
         String phone = phone_et.getText().toString();
 
+        //TODO: remove wordutil
         LoginActivity.USERLOGIN.setLocation(WordUtils.capitalizeFully(location));
         LoginActivity.USERLOGIN.setEmail(email.toLowerCase());
         LoginActivity.USERLOGIN.setPhone(phone);

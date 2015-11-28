@@ -104,6 +104,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         ownerItemPrice.setText("$"+Double.toString(trade.getOwnerItem().getPrice()) + " x " + trade.getOwnerItem().getQuantity());
         ownerItemDescription.setText(trade.getOwnerItem().getDesc());
 
+        //TODO: remove wordutil
         // set trade status
         status.setText(WordUtils.capitalizeFully(trade.getStatus()));
 
@@ -316,21 +317,22 @@ public class TradeDetailActivity extends AppCompatActivity {
                     //taken from http://stackoverflow.com/questions/2020088/sending-email
                     // -in-android-using-javamail-api-without-using-the-default-built-in-a
                     // (C) 2010 Vinayak B, shridutt kothari
-                    // TODO: 11/25/15  send the trade info and comments to both sides, pass borrower email and owner email
                     GMailSender sender = new GMailSender("tradiogc@gmail.com", "tradiogc123");
 
+                    /*
                     // only for test
                     sender.sendMail("TradioGC: Your trade is in progress now",
                             "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
                             "tradiogc@gmail.com",
                             "tradiogcjunkmail@yopmail.com");
+                    */
 
-                    /*
+                    // TODO: make an informative message
                     sender.sendMail("TradioGC: Your trade is in progress now",
                             "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
                             "tradiogc@gmail.com",
                              email1+ ","+email2);
-                            */
+
 
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);

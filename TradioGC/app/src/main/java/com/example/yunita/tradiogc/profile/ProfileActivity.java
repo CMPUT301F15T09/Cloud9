@@ -135,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 targetUsername = extras.getString("profileTarget");
-                setTitle(targetUsername + "'s Profile");
+                setTitle(targetUsername + "'s Account");
                 Thread thread = new GetThread(targetUsername);
                 thread.start();
             }

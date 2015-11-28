@@ -1,11 +1,12 @@
-![tradioGC](https://github.com/CMPUT301F15T09/Cloud9/blob/yunita/TradioGC/app/src/main/res/mipmap-xhdpi/logo.png?raw=true)
+![tradioGC](https://github.com/CMPUT301F15T09/Cloud9/blob/yunita/TradioGC/app/src/main/res/mipmap-hdpi/logo.png?raw=true)
 
 ## Update (24/11)
 - READ IMPORTANT INFORMATION IN WIKI!
 - Working on OFFLINE behaviour / connection handler (save/load file)
-- Working on TRADE
-- Working on Trade notification
-- Working on RECORD
+- Working on PHOTOGRAPHS (refactor 'photographs' into a new class)
+- Working on BUG and MISSING REQUIREMENTS
+- Working on Use Case & UI test
+- Working on Use cases, Story board, Class and UC diagram (extra requirements)
 - Use cases need to be updated (extra requirements)
 - Story board, Class and UC diagram need to be updated
 - Demo 5 and Trailer on the way!
@@ -25,7 +26,7 @@ A trading gift-card application
 On the way...
 
 ## Demo
-Here is the [demo](https://github.com/CMPUT301F15T09/Cloud9/blob/yunita/docs/demo/tradiogc_demo_project4.mp4) for project 4
+On the way...
 
 ## Documentation
 You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/Cloud9/wiki)
@@ -41,8 +42,7 @@ You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/C
 - Linkware, http://icons8.com 
 - Alexander Y. Kleymenov, https://svn.apache.org/repos/asf/harmony/enhanced/archive/classlib/java6/modules/x-net/src/main/java/org/apache/harmony/xnet/provider/jsse/JSSEProvider.java
 - Vinayak B, shridutt kothari, http://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
-
->>>>>>> shuming
+- Jane Tedjasukmana, http://janetedja.com
 
 ## License
 TradioGC is licensed under Apache License Version 2.0.

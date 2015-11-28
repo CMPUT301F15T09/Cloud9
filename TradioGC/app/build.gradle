@@ -24,8 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:design:22.2.0'
-    compile files('activation.jar')
-    compile files('additionnal.jar')
-    compile files('mail.jar')
     compile files('commons-lang3-3.4/commons-lang3-3.4.jar')
 }

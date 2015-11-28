@@ -137,8 +137,6 @@ public class TradeDetailActivity extends AppCompatActivity {
      * @param view "accept trade" button.
      */
     public void accept(View view){
-
-
         // create a dialog asking for comments
         AlertDialog builder = new AlertDialog.Builder(this).create();
         final EditText comments_et = new EditText(this);

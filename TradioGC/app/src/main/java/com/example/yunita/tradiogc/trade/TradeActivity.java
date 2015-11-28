@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,6 +48,22 @@ public class TradeActivity extends AppCompatActivity {
     private Trade pendingTrade;
 
     private UserController userController;
+
+    public Button getOfferTradeButton(){
+        return (Button) findViewById(R.id.offer_trade_button);
+    }
+
+    public ListView getBorrowerInventoryListView() {
+        return borrowerInventoryListView;
+    }
+
+    public ListView getBorrowerOfferListView() {
+        return borrowerOfferListView;
+    }
+
+    public Button getCancelButton(){
+        return (Button) findViewById(R.id.cancel_button);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

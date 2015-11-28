@@ -1,4 +1,4 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.trade;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -6,10 +6,6 @@ import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.notification.Notification;
 import com.example.yunita.tradiogc.notification.Notifications;
-import com.example.yunita.tradiogc.trade.CounterTradeActivity;
-import com.example.yunita.tradiogc.trade.Trade;
-import com.example.yunita.tradiogc.trade.TradeDetailActivity;
-import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 
 public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {

@@ -89,6 +89,7 @@ public class EditItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
+        photoController = new PhotoController(mContext);
 
         if (getIntent().getExtras()!=null) {
             item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));

@@ -127,6 +127,7 @@ public class ItemActivity extends AppCompatActivity {
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
+        photoController = new PhotoController(context);
 
         itemImage = (ImageView) findViewById(R.id.itemImage);
         name = (TextView) findViewById(R.id.itemName);

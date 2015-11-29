@@ -7,6 +7,9 @@ import com.example.yunita.tradiogc.user.UserController;
 
 import java.util.Collections;
 
+/**
+ * This controller handles adding and deleting friends from a user's friend list.
+ */
 public class FriendsController {
 
     private static final String TAG = "FriendsController";

@@ -5,6 +5,9 @@ import com.example.yunita.tradiogc.Observer;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines a list of friends for the user.
+ */
 public class Friends extends ArrayList<String> implements Observable {
 
     private static final long serialVersionUID = 3199561696102797345L;

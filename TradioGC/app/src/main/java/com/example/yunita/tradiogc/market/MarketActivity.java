@@ -19,6 +19,9 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
 
+/**
+ * This activity handles the market.
+ */
 public class MarketActivity extends AppCompatActivity {
 
     private Context context = this;

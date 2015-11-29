@@ -26,7 +26,9 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-
+/**
+ * This activity handles editing an item in the user's inventory.
+ */
 public class EditItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private InventoryController inventoryController;
@@ -155,7 +157,7 @@ public class EditItemActivity extends AppCompatActivity {
 
 
     /**
-     * Called when the user clicks the "Save" button on the Edit Item page.
+     * Called when the user presses the "Save" button on the Edit Item page.
      * This method is used to run the update item thread and closes
      * this activity after the thread updates the item information
      * into the webserver.
@@ -205,13 +207,14 @@ public class EditItemActivity extends AppCompatActivity {
         }
     }
 
-    // taken from https://github.com/abramhindle/BogoPicGen
-    // (C) 2015 Abram Hindle modified by Cloud9
+
 
     /**
      * Triggers camera activity and saves the photo into /tmp folder in sdcard.
+     * Code taken from: https://github.com/abramhindle/BogoPicGen
+     * (C) 2015 Abram Hindle, modified by Cloud9
      *
-     * @param view "Upload Photo" button.
+     * @param view "Upload Photo" button
      */
     public void takeAPhoto(View view) {
         usePhoto = true;
@@ -234,10 +237,10 @@ public class EditItemActivity extends AppCompatActivity {
      * Called when an activity you launched exits, giving you the requestCode
      * you started it with, the resultCode it returned, and any additional data from it.
      *
-     * @param requestCode request code for the sender that will be associated
-     *                    with the result data when it is returned
-     * @param resultCode the integer result code returned by the child activity
-     * @param data an intent, which can return result data to the caller
+     * @param requestCode   request code for the sender that will be associated
+     *                      with the result data when it is returned
+     * @param resultCode    the integer result code returned by the child activity
+     * @param data          an intent that can return result data to the caller
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -258,7 +261,7 @@ public class EditItemActivity extends AppCompatActivity {
     /**
      * Cancels uploading the photo.
      *
-     * @param view "Cancel Image" button.
+     * @param view "Cancel Image" button
      */
     public void cancelImage(View view) {
         usePhoto = false;
@@ -277,8 +280,8 @@ public class EditItemActivity extends AppCompatActivity {
     /**
      * Encodes the photo into a string and returns it.
      *
-     * @param photo photo taken from camera.
-     * @return String.
+     * @param photo         photo taken from camera
+     * @return encodedImage string of the encoded image
      */
     public String encodeImage(Bitmap photo) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

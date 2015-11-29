@@ -4,6 +4,9 @@ package com.example.yunita.tradiogc.notification;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.Trade;
 
+/**
+ * This class defines a notification.
+ */
 public class Notification  {
     private Trade trade;
     private boolean read;

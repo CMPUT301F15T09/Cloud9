@@ -4,6 +4,9 @@ import com.example.yunita.tradiogc.inventory.Item;
 
 import java.io.Serializable;
 
+/**
+ * This class defines an item search.
+ */
 public class SearchItem implements Serializable {
 
     private String ownerName;

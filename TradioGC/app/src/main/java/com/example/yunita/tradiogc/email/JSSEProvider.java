@@ -20,8 +20,12 @@ package com.example.yunita.tradiogc.email;
 /**
  * @author Alexander Y. Kleymenov
  * @version $Revision$
+ * This class "enables secure Internet communications".
+ * (http://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/JSSERefGuide.html)
+ * Code taken from:
+ * http://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
+ * (C) 2010 Vinayak B, shridutt kothari
  */
-
 
 import java.security.AccessController;
 import java.security.Provider;

@@ -6,6 +6,9 @@ import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
+/**
+ * This controller handles the user's inventory.
+ */
 public class InventoryController {
     private static final String TAG = "InventoryController";
     private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
@@ -23,11 +26,11 @@ public class InventoryController {
     }
 
     /**
-     * Called after the new item is created.
-     * This method is used to add the item to the user's inventory
+     * Called after a new item is created.
+     * <p>This method is used to add an item to the user's inventory
      * and run the "Update User Thread".
      *
-     * @param item new item
+     * @param item a new item
      */
     public void addItem(Item item) {
         inventory.add(item);
@@ -37,10 +40,10 @@ public class InventoryController {
 
     /**
      * Called when the user long presses on an item that exists in the inventory.
-     * <p>This method is used to remove the item from the inventory and
+     * <p>This method is used to remove an item from the user's inventory and
      * run the "Update User Thread".
      *
-     * @param item existing item in the inventory
+     * @param item an existing item in the user's inventory
      */
     public void removeExistingItem(Item item) {
         inventory.remove(item);
@@ -49,10 +52,10 @@ public class InventoryController {
     }
 
     /**
-     * Called when the user needs to update the items in their inventory.
-     * <p>This method is used to update the user's inventory.
+     * Called when the user edits an item and needs to update the items in their inventory.
+     * <p>This method updates the user's inventory after an item has been edited.
      *
-     * @param item item
+     * @param item an existing item in the user's inventory
      */
     public void updateItem(Item item) {
         if (LoginActivity.USERLOGIN.getInventory().contains(item)) {
@@ -82,7 +85,7 @@ public class InventoryController {
     /**
      * Called when the user long presses on an existing item in their inventory.
      * <p>This class creates a thread and runs "Delete Item".
-     * While it is running, it removes this item from the user's inventory
+     * While it is running, it removes the item from the user's inventory
      * and updates the inventory.
      */
     class DeleteItemThread extends Thread {

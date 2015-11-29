@@ -5,6 +5,9 @@ import com.example.yunita.tradiogc.Observer;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This class defines a user's inventory.
+ */
 public class Inventory extends ArrayList<Item> implements com.example.yunita.tradiogc.Observable, Serializable {
 
     private static final long serialVersionUID = 3199561696102797345L;
@@ -28,17 +31,16 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
     }
 
     /**
-     * Class constructor.
+     * Class constructor for a user's inventory.
      */
     public Inventory(){
 
     }
 
     /**
-     * Class constructor that clones static inventory,
-     * and creates new reference.
+     * Class constructor that clones a static inventory and creates new reference.
      *
-     * @param temp userlogin inventory.
+     * @param temp  userlogin inventory
      */
     public Inventory(Inventory temp){
         this.addAll(temp);
@@ -47,7 +49,7 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
     /**
      * Gets the user's list of public items.
      *
-     * @return Inventory inventory that only contains public items
+     * @return pInventory   inventory that only contains public items
      */
     public Inventory getPublicItems() {
         Inventory pInventory = new Inventory();

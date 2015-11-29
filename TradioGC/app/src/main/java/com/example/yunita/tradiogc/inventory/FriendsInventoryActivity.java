@@ -24,6 +24,9 @@ import com.example.yunita.tradiogc.user.UserController;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This activity handles viewing a user's friend's inventory.
+ */
 public class FriendsInventoryActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText query_et;
@@ -69,10 +72,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets the friend's name that was passed from previous activity.
+     * Gets the friend's username that was passed from the previous activity.
      * <p>This method runs the "Get Inventory Thread" and gets the inventory of a
      * friend. In addition, when the user clicks on an item, it sends the user
-     * to the Item Detail page.
+     * to the the item's Item Detail page.
      */
     @Override
     protected void onStart() {
@@ -128,7 +131,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Loading user's category choice and refreshing user data
+     * This loads the user's category choice and refreshes the user data.
      */
     @Override
     protected void onResume() {
@@ -148,7 +151,9 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Notify the listview to be refreshed
+     * Called after the friend's inventory list is updated.
+     * <p>This method notifies the view if there is a change in the friend's
+     * inventory or if the user chooses to narrow the inventory search.
      */
     public void notifyUpdated() {
         Runnable doUpdateGUIList = new Runnable() {
@@ -164,13 +169,13 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
 
     /**
-     * Called when the user clicks on an item.
-     * This method is used to send the user to the Item Detail page,
-     * pass the item index position, and tell the Item Detail activity
+     * Called when the user presses on an item.
+     * <p>This method is used to send the user to the item's Item Detail page,
+     * pass the item's index position, and tell the Item Detail activity
      * to show the Item Detail page from a friend's perspective.
      *
-     * @param searchItem this item.
-     * @param position this item's index in the inventory.
+     * @param searchItem    this item
+     * @param position      this item's index in the inventory
      */
     public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
@@ -183,10 +188,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user changes the category selection or edittext.
-     * This method is used to browse items by query and category.
+     * Called when the user changes the category selection or text query.
+     * <p>This method is used to browse items by query and category.
      *
-     * @param category the category choosed
+     * @param category the category chosen
      * @param query    input of part of item name
      */
     public void searchItem(int category, String query) {
@@ -202,7 +207,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
     /**
      * Called when the activity starts.
-     * <p>This class creates a thread and runs "Refresh User".
+     * <p>This class creates a thread and runs the "Refresh User" thread.
      * While it is running, it refreshes the user data.
      */
     class RefreshUserThread extends Thread {
@@ -224,9 +229,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     /**
      * This class sets up the accuracy of the search list view
      * while doing a partial search.
+     * Code taken from:
+     * http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+     * (C) 2015 user1338795
      */
-    // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
-    // (C) 2015 user1338795
     abstract class DelayedTextWatcher implements TextWatcher {
 
         private long delayTime;

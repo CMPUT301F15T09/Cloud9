@@ -2,6 +2,9 @@ package com.example.yunita.tradiogc.market;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines an inventory search.
+ */
 public class SearchInventory extends ArrayList<SearchItem> {
 
     /**

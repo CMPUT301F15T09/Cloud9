@@ -18,6 +18,9 @@ import com.example.yunita.tradiogc.inventory.ItemActivity;
 
 import java.util.ArrayList;
 
+/**
+ * This activity handles the search of an item.
+ */
 public class ItemSearchActivity extends AppCompatActivity {
 
     private Context context = this;

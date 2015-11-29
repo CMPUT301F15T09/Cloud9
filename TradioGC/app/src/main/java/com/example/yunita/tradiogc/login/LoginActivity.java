@@ -20,6 +20,9 @@ import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
+/**
+ * This activity handles the user's login.
+ */
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;

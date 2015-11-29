@@ -19,6 +19,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+/**
+ * This controller handles the user's login.
+ */
 public class LoginController {
 
     private static final String TAG = "LoginController";

@@ -18,6 +18,9 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
 
+/**
+ * This activity handles the user's Friend page.
+ */
 public class FriendsActivity extends AppCompatActivity {
 
     private Context context = this;
@@ -103,7 +106,7 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks the "Add New Friend" button.
+     * Called when the user presses the "Add New Friend" button.
      * <p>This method is used to send the user to the Search Friend page.
      *
      * @param view "Add New Friend" button
@@ -143,11 +146,11 @@ public class FriendsActivity extends AppCompatActivity {
         runOnUiThread(doUpdateGUIList);
     }
     /**
-     * Called when the user attempts to delete a friend by long pressing
+     * This class is called when the user deletes a friend by long pressing
      * on a friend's name.
      * <p>This class creates a thread and runs "Delete Friend".
      * While it is running, it removes this friend from the user's friend list
-     * and updates the Friends list view.
+     * and updates the friends list view.
      */
     class DeleteFriendThread extends Thread {
         private String friendname;
@@ -163,8 +166,8 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when friends list is refreshed.
-     * <p>This class creates a thread and runs "refresh friends list".
+     * This class is called when the friends list is refreshed.
+     * <p>This class creates a thread and runs "Refresh Friends List".
      */
     class GetFriendsInUserThread extends Thread {
 

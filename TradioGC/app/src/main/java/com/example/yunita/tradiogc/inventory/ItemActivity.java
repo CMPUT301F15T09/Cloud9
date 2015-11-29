@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,9 +19,12 @@ import com.example.yunita.tradiogc.photo.Photo;
 import com.example.yunita.tradiogc.photo.PhotoController;
 import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
-
 import java.util.ArrayList;
 
+
+/**
+ * This activity handles viewing an item's details.
+ */
 public class ItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
     private Item item;
@@ -45,42 +46,90 @@ public class ItemActivity extends AppCompatActivity {
     private ImageView itemImage;
     private Photo photo;
 
+    /**
+     * Sets item.
+     *
+     * @param item item that is viewed
+     */
     public void setItem(Item item) {
         this.item = item;
     }
 
+    /**
+     * Gets the name of the item.
+     *
+     * @return name name of the item
+     */
     public TextView getName() {
         return name;
     }
 
+    /**
+     * Gets the category of the item.
+     *
+     * @return category category of the item
+     */
     public TextView getCategory() {
         return category;
     }
 
+    /**
+     * Gets the price of the item.
+     *
+     * @return price price of the item
+     */
     public TextView getPrice() {
         return price;
     }
 
+    /**
+     * Gets the description of the item.
+     *
+     * @return description description of the item
+     */
     public TextView getDescription() {
         return description;
     }
 
+    /**
+     * Gets the quantity of the item.
+     *
+     * @return quantity quantity of the item
+     */
     public TextView getQuantity() {
         return quantity;
     }
 
+    /**
+     * Gets the quality of the item.
+     *
+     * @return quality quality of the item
+     */
     public TextView getQuality() {
         return quality;
     }
 
+    /**
+     * Gets the "Edit" button.
+     *
+     * @return edit_button "Edit" button
+     */
     public ImageButton getEdit_button() {
         return edit_button;
     }
 
+    /**
+     * Called when the user makes a changes and need to update the GUI details.
+     *
+     * @return doUpdateGUIDetails values from updating the GUI
+     */
     public Runnable getDoUpdateGUIDetails() {
         return doUpdateGUIDetails;
     }
 
+    /**
+     *  Updates the GUI details.
+     */
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             // Hasn't been tested yet
@@ -189,10 +238,10 @@ public class ItemActivity extends AppCompatActivity {
     /**
      * Activity finishes automatically if user offers a trade for this item
      *
-     * @param requestCode request code for the sender that will be associated
-     *                    with the result data when it is returned
-     * @param resultCode the integer result code returned by the child activity
-     * @param data an intent, which can return result data to the caller
+     * @param requestCode   request code for the sender that will be associated
+     *                      with the result data when it is returned
+     * @param resultCode    the integer result code returned by the child activity
+     * @param data          an intent that can return result data to the caller
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -206,7 +255,7 @@ public class ItemActivity extends AppCompatActivity {
      * <p>This method is used to send the user to the Edit Item page.
      * It passes the item to be edited.
      *
-     * @param view "Pencil" icon in Item Detail page.
+     * @param view "Pencil" icon in Item Detail page
      */
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
@@ -214,14 +263,16 @@ public class ItemActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
-    // (C) 2011 user432209
+    //
 
     /**
      * Decodes the encoded string into an image and returns it.
+     * Code taken from:
+     * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+     * (C) 2011 user432209
      *
      * @param encoded encoded image in string format.
-     * @return Bitmap.
+     * @return decodedByte Bitmap of the decoded photo string
      */
     public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);

@@ -11,12 +11,25 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.Users;
 
+/**
+ * This adapter takes the position of the username displayed in the user list and
+ * returns the user list item containing the user's username, location, and
+ * number of trades that the user has.
+ */
 class UserListAdapter extends ArrayAdapter {
 
     private Context context;
     private int id;
     private Users users;
 
+    /**
+     * Class constructor specifying that this adapter class uses a context, id, and
+     * list of users.
+     *
+     * @param context
+     * @param id
+     * @param users
+     */
     public UserListAdapter(Context context, int id, Users users) {
         super(context, id, users);
         this.context = context;

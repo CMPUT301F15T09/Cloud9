@@ -5,4 +5,4 @@
     android:padding="8dp"
     android:textSize="16sp"
     android:drawablePadding="3dp"
-    android:drawableLeft="@drawable/doge"/>
+    android:drawableLeft="@mipmap/ic_launcher"/>

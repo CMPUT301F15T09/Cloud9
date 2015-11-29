@@ -3,7 +3,9 @@ package com.example.yunita.tradiogc.inventory;
 import java.io.Serializable;
 import java.util.Random;
 
-
+/**
+ * This class defines an item.
+ */
 public class Item implements Serializable {
     private String name;
     private int category;
@@ -15,7 +17,7 @@ public class Item implements Serializable {
     private int id;
 
     /**
-     * Class constructor.
+     * Class constructor for an item.
      */
     public Item() {
         name = "";
@@ -63,7 +65,7 @@ public class Item implements Serializable {
     /**
      * Gets the id of this item.
      *
-     * @return id
+     * @return id id of the item
      */
     public int getId() {
         return id;
@@ -72,7 +74,7 @@ public class Item implements Serializable {
     /**
      * Changes the id of this item.
      *
-     * @param id new item's id.
+     * @param id item's new id
      */
     public void setId(int id) {
         this.id = id;
@@ -81,7 +83,7 @@ public class Item implements Serializable {
     /**
      * Gets the name of this item.
      *
-     * @return name
+     * @return name name of the item
      */
     public String getName() {
         return name;
@@ -90,7 +92,7 @@ public class Item implements Serializable {
     /**
      * Changes the name of this item.
      *
-     * @param name this item's new name
+     * @param name item's new name
      */
     public void setName(String name) {
         this.name = name;
@@ -100,7 +102,7 @@ public class Item implements Serializable {
      * Gets the category of this item.
      * Category is specified by an integer from 0 - 9.
      *
-     * @return category
+     * @return category category of the item
      */
     public int getCategory() {
         return category;
@@ -110,7 +112,7 @@ public class Item implements Serializable {
      * Changes the category of this item.
      * Category is specified by an integer from 0 - 9.
      *
-     * @param category this item's new category
+     * @param category item's new category
      */
     public void setCategory(int category) {
         this.category = category;
@@ -119,7 +121,7 @@ public class Item implements Serializable {
     /**
      * Gets the price of this item.
      *
-     * @return price
+     * @return price price of the item
      */
     public double getPrice() {
         return price;
@@ -128,7 +130,7 @@ public class Item implements Serializable {
     /**
      * Changes the price of this item.
      *
-     * @param price this item's new price
+     * @param price item's new price
      */
     public void setPrice(double price) {
         double newPrice = price * 100;
@@ -141,7 +143,7 @@ public class Item implements Serializable {
     /**
      * Gets the description of this item.
      *
-     * @return description
+     * @return desc description of the item
      */
     public String getDesc() {
         return desc;
@@ -159,7 +161,7 @@ public class Item implements Serializable {
     /**
      * Gets the visibility of this item.
      *
-     * @return visibility
+     * @return visibility visibility of the item
      */
     public Boolean getVisibility() {
         return visibility;
@@ -168,7 +170,7 @@ public class Item implements Serializable {
     /**
      * Changes the visibility of this item.
      *
-     * @param visibility this item's new visibility
+     * @param visibility item's new visibility
      */
     public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
@@ -186,7 +188,7 @@ public class Item implements Serializable {
     /**
      * Changes the quantity of this item.
      *
-     * @param quantity this item's new quantity
+     * @param quantity item's new quantity
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -196,7 +198,7 @@ public class Item implements Serializable {
      * Gets the quality of this item.
      * Quality is specified by an integer: 0 (new) or 1 (used).
      *
-     * @return quality
+     * @return quality quality of the item
      */
     public int getQuality() {
         return quality;
@@ -206,7 +208,7 @@ public class Item implements Serializable {
      * Changes the quality of this item.
      * Quality is specified by an integer: 0 (new) or 1 (used).
      *
-     * @param quality this item's new quality
+     * @param quality item's new quality
      */
     public void setQuality(int quality) {
         this.quality = quality;
@@ -216,7 +218,7 @@ public class Item implements Serializable {
      * Return the new printing format of the item.
      * <p>The new format of item is [name]\n[price].
      *
-     * @return String:  item's name with its price in a new line
+     * @return string consisting of the item's name with its price and quantity in a new line
      */
     @Override
     public String toString() {

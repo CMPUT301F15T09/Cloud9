@@ -19,6 +19,13 @@ import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
 
+/**
+ * This class sets up the settings for sending emails with TradioGC's default e-mail address:
+ * tradiogc@gmail.com
+ * Code taken from:
+ * http://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
+ * (C) 2010 Vinayak B, shridutt kothari
+ */
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;

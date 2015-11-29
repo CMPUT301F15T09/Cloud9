@@ -2,6 +2,9 @@ package com.example.yunita.tradiogc.inventory;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines an array of ten categories that the item can be placed in.
+ */
 public class Categories {
     private ArrayList<String> categories = new ArrayList<>();
 

@@ -19,6 +19,11 @@ import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
 
+/**
+ * This activity searches and displays users in the webserver that are
+ * not in the user's friend list.
+ * The results can be based on a text query made by the user.
+ */
 public class SearchUserActivity extends AppCompatActivity {
     private Users users;
     private Users searchResult;
@@ -58,8 +63,9 @@ public class SearchUserActivity extends AppCompatActivity {
      * according to the user's query.
      * <p>This method runs the "Search Thread". While the thread is running, it
      * searches for all users in the webserver that contains the text query and returns
-     * the list of users.
-     * When the user clicks on a username, it sends the user to that username's
+     * the list of users. If the text query is empty, the thread returns all users in
+     * the webserver.
+     * When the user presses on a username, it sends the user to that person's
      * profile page.
      */
     @Override
@@ -99,8 +105,9 @@ public class SearchUserActivity extends AppCompatActivity {
 
 
     /**
-     * Called when the user clicks a username in the search list view.
-     * <p>This method is used to send the user to that username's profile page.
+     * Called when the user presses on a username in the search list view.
+     * <p>This method is used to send the user to the profile page of the username
+     * that was pressed..
      *
      * @param username the name of the user that the login user wants to track
      */
@@ -153,9 +160,10 @@ public class SearchUserActivity extends AppCompatActivity {
     /**
      * This class sets up the accuracy of the search list view
      * while doing a partial search.
+     * Code taken from:
+     * http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+     * (C) 2015 user1338795
      */
-    // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
-    // (C) 2015 user1338795
     abstract class DelayedTextWatcher implements TextWatcher {
 
         private long delayTime;

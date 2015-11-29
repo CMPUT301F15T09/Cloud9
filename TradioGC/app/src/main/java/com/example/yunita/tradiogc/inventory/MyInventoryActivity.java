@@ -22,7 +22,9 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * This activity handles the viewing of a user's inventory.
+ */
 public class  MyInventoryActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText query_et;
@@ -131,7 +133,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Loading user's category choice
+     * This loads the user's category choice
      */
     @Override
     protected void onResume() {
@@ -140,7 +142,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Notify the listview to be refreshed
+     * Notifies the list view to be refreshed
      */
     public void notifyUpdated() {
         Runnable doUpdateGUIList = new Runnable() {

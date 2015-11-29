@@ -28,6 +28,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Random;
 
+/**
+ * This activity handles adding an item to the user's inventory.
+ */
 public class AddItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private InventoryController inventoryController;
@@ -167,13 +170,12 @@ public class AddItemActivity extends AppCompatActivity {
         }
     }
 
-    // taken from https://github.com/abramhindle/BogoPicGen
-    // (C) 2015 Abram Hindle modified by Cloud9
-
     /**
-     * Triggers camera activity and saves the photo into /tmp folder in sdcard.
+     * Triggers camera activity and saves the photo into the /tmp folder in the sdcard.
+     * Code taken from: https://github.com/abramhindle/BogoPicGen
+     * (C) 2015 Abram Hindle, modified by Cloud9
      *
-     * @param view "Upload Photo" button.
+     * @param view "Upload Photo" button
      */
     public void takeAPhoto(View view) {
         usePhoto = true;
@@ -197,10 +199,10 @@ public class AddItemActivity extends AppCompatActivity {
      * Called when an activity you launched exits, giving you the requestCode
      * you started it with, the resultCode it returned, and any additional data from it.
      *
-     * @param requestCode request code for the sender that will be associated
-     *                    with the result data when it is returned
-     * @param resultCode the integer result code returned by the child activity
-     * @param data an intent, which can return result data to the caller
+     * @param requestCode   request code for the sender that will be associated
+     *                      with the result data when it is returned
+     * @param resultCode    the integer result code returned by the child activity
+     * @param data          an intent that can return result data to the caller
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -212,7 +214,7 @@ public class AddItemActivity extends AppCompatActivity {
                 thumbnail = Bitmap.createScaledBitmap(temp, (int) tWidth, (int) tHeight, true);
                 tempPhoto.setImageBitmap(thumbnail);
 
-                // everytime user "accept the photo", it is added into the photo list
+                // Every time the user "accepts the photo", it is added to the photo list
                 photo.addEncodedPhoto(thumbnail);
             } else {
                 thumbnail = null;
@@ -221,7 +223,8 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Cancels uploading the photo.
+     * Called when the user presses the "Cancel Image" button.
+     * <p>This method cancels uploading a recently taken photo to an item.
      *
      * @param view "Cancel Image" button.
      */

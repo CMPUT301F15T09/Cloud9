@@ -3,6 +3,7 @@ package com.example.yunita.tradiogc.user;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.data.SearchHit;
 import com.example.yunita.tradiogc.data.SearchResponse;
@@ -22,6 +23,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -34,6 +38,8 @@ public class UserController {
     private Users users = new Users();
     private Context context;
     private Friends friends = LoginActivity.USERLOGIN.getFriends();
+    private CheckNetwork checkNetwork = new CheckNetwork(this.context);
+
 
     /**
      * Class constructor specifying this controller class is a subclass of Context.
@@ -76,6 +82,8 @@ public class UserController {
      * @param username this user's name.
      */
     public User getUser(String username) {
+        User user;
+
         SearchHit<User> sr = null;
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(webServer.getResourceUrl() + username);
@@ -108,6 +116,7 @@ public class UserController {
         }
 
         return sr.getSource();
+
 
     }
 
@@ -261,6 +270,22 @@ public class UserController {
                 LoginActivity.USERLOGIN = getUser(username);
                 notify();
             }
+        }
+    }
+    
+    public User loadUserFromFile(String username){
+        User user;
+        try{
+            FileInputStream fis = context.openFileInput(username + ".sav");
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+
+            user = gson.fromJson(in, User.class);
+            return user;
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -31,6 +31,7 @@ public class LoginController {
         }
     };
 
+
     /**
      * Class constructor.
      */
@@ -44,6 +45,7 @@ public class LoginController {
      */
     public LoginController(Context context) {
         this.context = context;
+
     }
 
     /**
@@ -108,6 +110,8 @@ public class LoginController {
         }
     }
 
+
+
     /**
      * Called when the user attempts to sign up by clicking on the "Sign Up" button.
      * This class creates a thread and runs "Add User".
@@ -115,11 +119,13 @@ public class LoginController {
      * After it is done, it closes the activity.
      */
     class SignUpThread extends Thread {
+
         private User newUser;
 
         public SignUpThread(User newUser) {
             this.newUser = newUser;
         }
+
 
         @Override
         public void run() {

@@ -23,7 +23,7 @@ public class CheckNetwork {
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
+                activeNetwork.isAvailable() && activeNetwork.isConnected();
         return isConnected;
     }
 

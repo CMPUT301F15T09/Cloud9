@@ -83,7 +83,7 @@ public class ItemActivity extends AppCompatActivity {
             if (item != null) {
                 name.setText(item.getName());
                 category.setText(categories.getCategories().get(item.getCategory()));
-                price.setText("$" + Double.toString(Double.parseDouble(item.getPrice())));
+                price.setText("$" + Double.toString(item.getPrice()));
                 description.setText(item.getDesc());
                 quantity.setText(Integer.toString(item.getQuantity()));
                 if (item.getQuality() == 0) {

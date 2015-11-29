@@ -9,11 +9,21 @@ public class Photo {
 
     private String photo;
     private int photoId;
+    private int itemId;
 
     public Photo(String photo, int itemId) {
         Random random = new Random();
         photoId = random.nextInt(999999999);
         this.photo = photo;
+        this.itemId = itemId;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public String getPhoto() {

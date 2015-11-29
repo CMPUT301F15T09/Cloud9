@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,8 +17,12 @@ import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.photo.Photo;
+import com.example.yunita.tradiogc.photo.PhotoController;
 import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
+
+import java.util.ArrayList;
 
 public class ItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
@@ -26,6 +32,7 @@ public class ItemActivity extends AppCompatActivity {
     private String perspective = "";
     private UserController userController;
     private int index;
+    private PhotoController photoController;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
@@ -36,6 +43,7 @@ public class ItemActivity extends AppCompatActivity {
     private TextView quantity;
     private TextView quality;
     private ImageView itemImage;
+    private Photo photo;
 
     public void setItem(Item item) {
         this.item = item;
@@ -90,6 +98,16 @@ public class ItemActivity extends AppCompatActivity {
                 } else {
                     quality.setText("Used");
                 }
+
+                photoController.getItem(item.getId());
+                photo = photoController.getPhoto();
+                ArrayList<String> photos;
+
+                photos = photo.getEncodedPhoto();
+                if(photos.size() != 0) {
+                    itemImage.setImageBitmap(decodeImage(photos.get(0)));
+                }
+
                 //LOAD PHOTO
                 //if (!item.getPhotos().equals("")) {
                 //    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
@@ -109,8 +127,6 @@ public class ItemActivity extends AppCompatActivity {
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
-
-
 
         itemImage = (ImageView) findViewById(R.id.itemImage);
         name = (TextView) findViewById(R.id.itemName);

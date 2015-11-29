@@ -25,7 +25,7 @@ public class Photo {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+        public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 

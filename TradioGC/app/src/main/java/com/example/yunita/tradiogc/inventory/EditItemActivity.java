@@ -163,7 +163,7 @@ public class EditItemActivity extends AppCompatActivity {
 
         Photo photo = photoController.getItemPhoto(item.getId());
 
-        ArrayList<String> photos = new ArrayList<>();
+        ArrayList<String> photos;
 
         photos = photo.getEncodedPhoto();
         if(photos.size() != 0) {

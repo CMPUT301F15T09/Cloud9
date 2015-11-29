@@ -22,9 +22,12 @@ import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.photo.Photo;
+import com.example.yunita.tradiogc.photo.PhotoController;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class EditItemActivity extends AppCompatActivity {
@@ -47,6 +50,7 @@ public class EditItemActivity extends AppCompatActivity {
     private String imageFilePath;
     private Bitmap thumbnail;
     private Boolean usePhoto;
+    private PhotoController photoController;
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -105,6 +109,16 @@ public class EditItemActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.save_item_button);
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
+        Photo photo = photoController.getItemPhoto(item.getId());
+
+        ArrayList<String> photos = new ArrayList<>();
+
+        photos = photo.getEncodedPhoto();
+        if(photos.size() != 0) {
+            tempPhoto.setImageBitmap(decodeImage(photos.get(0)));
+        }
+
+
         //LOAD PHOTO HERE
         //if (!(item.getPhotos() == "")){
         //    tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
@@ -147,6 +161,14 @@ public class EditItemActivity extends AppCompatActivity {
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
+        Photo photo = photoController.getItemPhoto(item.getId());
+
+        ArrayList<String> photos;
+
+        photos = photo.getEncodedPhoto();
+        if(photos.size() != 0) {
+            tempPhoto.setImageBitmap(decodeImage(photos.get(0)));
+        }
         //LOAD PHOTO HERE
         //if (!(item.getPhotos() == "")){
         //    tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));

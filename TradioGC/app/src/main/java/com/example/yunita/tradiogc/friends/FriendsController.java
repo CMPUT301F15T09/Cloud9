@@ -47,6 +47,8 @@ public class FriendsController {
      */
     public void addFriend(String friendname) {
         LoginActivity.USERLOGIN.getFriends().add(friendname);
+        Friends friends = LoginActivity.USERLOGIN.getFriends();
+        saveFriendsInFile(friends, LoginActivity.USERLOGIN);
         Collections.sort(LoginActivity.USERLOGIN.getFriends(), String.CASE_INSENSITIVE_ORDER);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
@@ -61,6 +63,8 @@ public class FriendsController {
      */
     public void deleteFriend(String friendname) {
         LoginActivity.USERLOGIN.getFriends().remove(friendname);
+        Friends friends = LoginActivity.USERLOGIN.getFriends();
+        saveFriendsInFile(friends, LoginActivity.USERLOGIN);
         System.out.println("login friends = " + LoginActivity.USERLOGIN.getFriends().size());
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
@@ -85,16 +89,16 @@ public class FriendsController {
         }
     }
 
-    private Friends loadFriendsFromFile(Friends friends, User user){
+    private Friends loadFriendsFromFile(User user){
         try{
             FileInputStream fis = context.openFileInput(user.getUsername() + "friends.sav");
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Item>>() {}.getType();
-            friends = gson.fromJson(in, listType);
+            Friends friends = gson.fromJson(in, listType);
             return friends;
         } catch (FileNotFoundException e) {
-            friends = new Friends();
+            Friends friends = new Friends();
             return friends;
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,25 @@ public class RecordPageFragment extends Fragment {
             // call another intent
             Intent intent = new Intent(getActivity(), TradeDetailActivity.class);
             intent.putExtra("trade_id", tradeId);
-            startActivity(intent);
+            //startActivity(intent);
+            startActivityForResult(intent, 2);
+
+            //getActivity().finish();
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Override this method in the activity that hosts the Fragment and call super
+        // in order to receive the result inside onActivityResult from the fragment.
+        super.onActivityResult(requestCode, resultCode, data);
+        if( requestCode == 2 ) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+
+        }
+
+    }
 
     public static RecordPageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -61,6 +78,7 @@ public class RecordPageFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,12 +96,15 @@ public class RecordPageFragment extends Fragment {
         switch (mPage) {
             case 0:// current = pending, offered, accepted
                 setCurrentTradesView();
+                System.out.println("**********");
                 break;
             case 1: // completed
                 setCompletedTradesView();
+                System.out.println("++++++++++");
                 break;
             case 2: // past = completed, declined
                 setPastTradesView();
+                System.out.println("==========");
                 break;
         }
     }
@@ -140,6 +161,7 @@ public class RecordPageFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
         setView();
     }
 }

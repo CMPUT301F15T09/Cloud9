@@ -72,4 +72,6 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
     private static String makeFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
     }
+
+
 }

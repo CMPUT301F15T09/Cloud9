@@ -5,6 +5,9 @@ import android.content.Context;
 import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.offline.ItemstobeAdded;
+import com.example.yunita.tradiogc.offline.ItemstobeDeleted;
+import com.example.yunita.tradiogc.offline.ItemstobeUpdated;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.google.gson.Gson;
@@ -23,6 +26,9 @@ import java.util.ArrayList;
 public class InventoryController {
     private static final String TAG = "InventoryController";
     private UserController userController;
+    private ItemstobeAdded newItems;
+    private ItemstobeDeleted oldItems;
+    private ItemstobeUpdated changedItems;
     private Context context;
     private Gson gson = new Gson();
     private WebServer webServer = new WebServer();
@@ -47,9 +53,9 @@ public class InventoryController {
                 inventory = onlineinv;
             }
             else {
-                LoginActivity.USERLOGIN.setInventory(fileinv);
-                Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
-                updateUserThread.start();
+                newItems.addAllItems();
+                changedItems.upAllItems();
+                oldItems.delAllItems();
                 inventory = LoginActivity.USERLOGIN.getInventory();
             }
         }
@@ -67,11 +73,7 @@ public class InventoryController {
      */
     public void addItem(Item item) {
         if (checkNetwork.isOnline()) {
-            Inventory fileinv = loadInventoryInFile(inventory, LoginActivity.USERLOGIN);
-            if (inventory != fileinv){
-                LoginActivity.USERLOGIN.setInventory(fileinv);
-                inventory = LoginActivity.USERLOGIN.getInventory();
-            }
+
             inventory.add(item);
             Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
@@ -81,6 +83,8 @@ public class InventoryController {
         else {
             inventory.add(item);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
+            newItems.addItem(item);
+            notify();
         }
     }
 
@@ -94,11 +98,6 @@ public class InventoryController {
      */
     public void removeExistingItem(Item item) {
         if (checkNetwork.isOnline()) {
-            Inventory fileinv = loadInventoryInFile(inventory, LoginActivity.USERLOGIN);
-            if (inventory != fileinv) {
-                LoginActivity.USERLOGIN.setInventory(fileinv);
-                inventory = LoginActivity.USERLOGIN.getInventory();
-            }
             inventory.remove(item);
             Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
@@ -108,6 +107,8 @@ public class InventoryController {
         else {
             inventory.remove(item);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
+            oldItems.addItem(item);
+            notify();
         }
     }
 
@@ -118,31 +119,35 @@ public class InventoryController {
      */
 
     public void updateItem(Item item) {
-        if (LoginActivity.USERLOGIN.getInventory().contains(item)) {
+        if (checkNetwork.isOnline()) {
+            if (LoginActivity.USERLOGIN.getInventory().contains(item)) {
 
-            Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
-            updateUserThread.start();
-            synchronized (updateUserThread) {
-                try {
-                    updateUserThread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
-
-                saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
-
-                getUserLoginThread.start();
-                synchronized (getUserLoginThread) {
+                Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+                updateUserThread.start();
+                synchronized (updateUserThread) {
                     try {
-                        getUserLoginThread.wait();
+                        updateUserThread.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+
+                    saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
+
+                    getUserLoginThread.start();
+                    synchronized (getUserLoginThread) {
+                        try {
+                            getUserLoginThread.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
+            } else {
+                addItem(item);
             }
-        } else {
-            addItem(item);
+        }else{
+            changedItems.addItem(item);
         }
 
     }

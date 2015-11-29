@@ -272,7 +272,7 @@ public class UserController {
             }
         }
     }
-    
+
     public User loadUserFromFile(String username){
         User user;
         try{

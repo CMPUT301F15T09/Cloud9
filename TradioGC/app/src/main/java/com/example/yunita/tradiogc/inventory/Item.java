@@ -32,6 +32,7 @@ public class Item implements Serializable {
     /**
      * Class constructor specifying the details of the object.
      *
+     * @param id         contains item's id
      * @param name       contains the name of the item
      * @param category   contains an integer that represents an index of the Categories array
      * @param price      contains a double for the price of the item
@@ -40,9 +41,8 @@ public class Item implements Serializable {
      * @param quantity   contains an integer 1..* for the amount that the owner has of the item
      * @param quality    contains an integer that describes the item's quality; 0 is new and 1 is used
      */
-    public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality) {
-        Random random = new Random();
-        id = random.nextInt(999999999);
+    public Item(int id, String name, int category, double price, String desc, Boolean visibility, int quantity, int quality) {
+        this.id = id;
 
         this.category = category;
         this.name = name;

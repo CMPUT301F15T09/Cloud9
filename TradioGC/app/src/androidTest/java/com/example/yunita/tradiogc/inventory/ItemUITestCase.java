@@ -13,7 +13,7 @@ public class ItemUITestCase extends ActivityInstrumentationTestCase2 {
      * Test for setting an item into an inventory list view.
      */
     public void testItemActivityUI() {
-        Item item = new Item("testitem", 0, 5.0, "test", true, 1, 0);
+        Item item = new Item(1,"testitem", 0, 5.0, "test", true, 1, 0);
         // Start an ItemActivity
         itemActivity = (ItemActivity) getActivity();
 

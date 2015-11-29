@@ -77,10 +77,7 @@
             android:name=".market.ItemSearchActivity"
             android:label="@string/title_activity_item_search" >
         </activity>
-        <activity
-            android:name=".photo.PhotoActivity"
-            android:label="TEST" >
-        </activity>
+
         <activity
             android:name=".trade.TradeActivity"
             android:label="@string/trade" />

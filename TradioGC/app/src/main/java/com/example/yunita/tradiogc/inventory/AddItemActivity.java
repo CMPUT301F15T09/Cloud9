@@ -21,9 +21,12 @@ import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.photo.Photo;
+import com.example.yunita.tradiogc.photo.PhotoController;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Random;
 
 public class AddItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -44,6 +47,10 @@ public class AddItemActivity extends AppCompatActivity {
     private Button add;
     private Button delItem;
     private Boolean usePhoto;
+
+    private PhotoController photoController;
+    private Photo photo = new Photo();
+
 
     public EditText getNameEdit() {
         return nameEdit;
@@ -80,6 +87,8 @@ public class AddItemActivity extends AppCompatActivity {
         delItem = (Button) findViewById(R.id.delete_item_button);
 
         delItem.setVisibility(View.GONE);
+
+        photoController = new PhotoController(mContext);
     }
 
     /**
@@ -127,7 +136,8 @@ public class AddItemActivity extends AppCompatActivity {
         String name = nameEdit.getText().toString();
         String price_str = priceEdit.getText().toString();
         String description = descriptionEdit.getText().toString();
-
+        Random random = new Random();
+        int id = random.nextInt(999999999);
 
         if (TextUtils.isEmpty(name)) {
             nameEdit.setError("Name cannot be empty.");
@@ -141,25 +151,20 @@ public class AddItemActivity extends AppCompatActivity {
                 visibility = false;
             }
             int quantity = 1;
-            if (Integer.parseInt(quantityEdit.getText().toString()) > 0){
+            if (Integer.parseInt(quantityEdit.getText().toString()) > 0) {
                 quantity = Integer.parseInt(quantityEdit.getText().toString());
             }
             int quality = qualityChoice.getSelectedItemPosition();
-            String photo = "";
             if (thumbnail != null) {
-                photo = encodeImage(thumbnail);
-                System.out.println(thumbnail.getByteCount());
+                photo.setItemId(id);
+                photoController.addPhoto(id, photo);
             }
 
-            if (usePhoto) {
-                //save photo
-            }
-                Item newItem = new Item(name, category, price, description, visibility, quantity, quality);
-                inventoryController.addItem(newItem);
-            }
+            Item newItem = new Item(id, name, category, price, description, visibility, quantity, quality);
+            inventoryController.addItem(newItem);
 
             finish();
-
+        }
     }
 
     // taken from https://github.com/abramhindle/BogoPicGen
@@ -185,6 +190,7 @@ public class AddItemActivity extends AppCompatActivity {
         imageFileUri = Uri.fromFile(imageFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
     }
 
     /**
@@ -205,6 +211,9 @@ public class AddItemActivity extends AppCompatActivity {
 
                 thumbnail = Bitmap.createScaledBitmap(temp, (int) tWidth, (int) tHeight, true);
                 tempPhoto.setImageBitmap(thumbnail);
+
+                // everytime user "accept the photo", it is added into the photo list
+                photo.addEncodedPhoto(thumbnail);
             } else {
                 thumbnail = null;
             }
@@ -227,20 +236,4 @@ public class AddItemActivity extends AppCompatActivity {
         }
     }
 
-    // taken from http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android
-    // (C) 2015 Roman Truba modified by Cloud9
-
-    /**
-     * Encodes the photo into a string and returns it.
-     *
-     * @param photo photo taken from camera.
-     * @return String.
-     */
-    public String encodeImage(Bitmap photo) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.JPEG, 10, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
 }

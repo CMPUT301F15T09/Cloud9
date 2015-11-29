@@ -32,7 +32,7 @@ public class TradeActivityTest extends ActivityInstrumentationTestCase2 {
         test_borrower.setLocation("edmonton");
         test_borrower.setPhone("7809998881");
         test_borrower.setEmail("test@yahoo.com");
-        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        Item item = new Item(1, "Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         Inventory ann_inventory = new Inventory();
         ann_inventory.add(item);
         test_borrower.setInventory(ann_inventory);
@@ -40,7 +40,7 @@ public class TradeActivityTest extends ActivityInstrumentationTestCase2 {
         LoginActivity.USERLOGIN = test_borrower;
 
         Intent itemIntent = new Intent();
-        item_for_trade = new Item("Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0);
+        item_for_trade = new Item(1, "Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0);
         itemIntent.putExtra("item_for_trade", item_for_trade);
         itemIntent.putExtra("owner_name", "test_owner");
         setActivityIntent(itemIntent);

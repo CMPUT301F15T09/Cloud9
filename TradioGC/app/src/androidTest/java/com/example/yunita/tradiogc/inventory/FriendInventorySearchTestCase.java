@@ -20,8 +20,8 @@ public class FriendInventorySearchTestCase extends ActivityInstrumentationTestCa
      */
     public void testSearchFriendInventory() {
         Inventory friendInventory = new Inventory();
-        Item item1 = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
-        Item item2 = new Item("Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0, "image");
+        Item item1 = new Item(1, "Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        Item item2 = new Item(2, "Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0);
         friendInventory.add(item1);
 
         assertTrue(friendInventory.contains(item1));
@@ -37,8 +37,8 @@ public class FriendInventorySearchTestCase extends ActivityInstrumentationTestCa
         // SearchInventory contains owner name and owner item
         SearchInventory market = new SearchInventory();
 
-        Item item1 = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
-        Item item2 = new Item("Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0, "image");
+        Item item1 = new Item(1, "Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        Item item2 = new Item(2, "Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0);
 
         market.add(new SearchItem("john", item1));
         market.add(new SearchItem("ann", item2));
@@ -58,8 +58,8 @@ public class FriendInventorySearchTestCase extends ActivityInstrumentationTestCa
         // SearchInventory contains owner name and owner item
         SearchInventory market = new SearchInventory();
 
-        Item item1 = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0, "image");
-        Item item2 = new Item("Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0, "image");
+        Item item1 = new Item(1, "Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        Item item2 = new Item(2, "Bestbuy", 1, 150.00, "bestbuy gc", true, 1, 0);
 
         market.add(new SearchItem("john", item1));
         market.add(new SearchItem("ann", item2));

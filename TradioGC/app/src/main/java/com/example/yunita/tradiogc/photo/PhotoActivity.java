@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.inventory.Item;
+import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.market.ItemSearchActivity;
 
 import java.io.File;
@@ -30,11 +32,17 @@ public class PhotoActivity extends Activity {
     private Context context = this;
     private ImageView tempPhoto;
     private String imageFilePath;
+    private PhotoController photoController;
+
+    private Photo photo = new Photo();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_main);
+
+        photoController = new PhotoController(context);
 
         ImageButton button = (ImageButton) findViewById(R.id.TakeAPhoto);
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
@@ -45,12 +53,25 @@ public class PhotoActivity extends Activity {
             }
         };
         button.setOnClickListener(listener);
+
+//        GetPhotoThread getPhotoThread = new GetPhotoThread(1);
+//        getPhotoThread.start();
+//        synchronized (getPhotoThread) {
+//            try {
+//                getPhotoThread.wait();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        System.out.println("ON CREATE PHOTO");
     }
 
     public void takeAPhoto() {
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tradiogc";
         File folderF = new File(folder);
         if (!folderF.exists()) {
             folderF.mkdir();
@@ -67,11 +88,15 @@ public class PhotoActivity extends Activity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap thumbnail = BitmapFactory.decodeFile(imageFileUri.getPath());
-                double tHeight = thumbnail.getHeight() * 0.3;
-                double tWidth = thumbnail.getWidth() * 0.3;
+                double tHeight = thumbnail.getHeight() * 0.2;
+                double tWidth = thumbnail.getWidth() * 0.2;
 
-                Bitmap b = Bitmap.createScaledBitmap(thumbnail, (int) tWidth, (int) tHeight, true);
-                tempPhoto.setImageBitmap(b);
+                Bitmap scaledPhoto = Bitmap.createScaledBitmap(thumbnail, (int) tWidth, (int) tHeight, true);
+                tempPhoto.setImageBitmap(scaledPhoto);
+
+                photo.addEncodedPhoto(scaledPhoto);
+
+                photoController.addPhoto(1, photo);
             }
         }
     }
@@ -85,8 +110,22 @@ public class PhotoActivity extends Activity {
     }
 
     public void attachPhotoToItem(View view) {
-        Intent intent = new Intent(context, ItemSearchActivity.class);
-        intent.putExtra("image_url", imageFileUri);
-        startActivity(intent);
     }
+
+    public class GetPhotoThread extends Thread {
+        private int itemId;
+
+        public GetPhotoThread(int itemId) {
+            this.itemId = itemId;
+        }
+
+        @Override
+        public void run() {
+            synchronized (this) {
+                photo = photoController.getItemPhoto(itemId);
+                notify();
+            }
+        }
+    }
+
 }

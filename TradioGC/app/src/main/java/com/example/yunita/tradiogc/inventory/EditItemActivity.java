@@ -140,7 +140,7 @@ public class EditItemActivity extends AppCompatActivity {
         nameEdit.setText(item.getName());
         nameEdit.setSelection(item.getName().length());
         categoriesChoice.setSelection(item.getCategory());
-        priceEdit.setText(Double.toString(item.getPrice()));
+        priceEdit.setText(item.getPrice());
         descriptionEdit.setText(item.getDesc());
         qualityChoice.setSelection(item.getQuality());
         quantityEdit.setText(Integer.toString(item.getQuantity()));
@@ -197,10 +197,12 @@ public class EditItemActivity extends AppCompatActivity {
             item.setCategory(category);
             item.setQuantity(quantity);
             item.setQuality(quality);
+
             if (usePhoto){
                 //save photo here
             }
             inventoryController.updateItem(item);
+
             finish();
         }
     }

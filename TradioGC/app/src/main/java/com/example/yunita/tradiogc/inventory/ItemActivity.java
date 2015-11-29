@@ -79,10 +79,11 @@ public class ItemActivity extends AppCompatActivity {
             // Need to check if the item has a photo
             // If no photo, we need to set the visibility of itemImage to "gone"
             //photo.setImage... waiting for photo to be implemented
+
             if (item != null) {
                 name.setText(item.getName());
                 category.setText(categories.getCategories().get(item.getCategory()));
-                price.setText("$" + Double.toString(item.getPrice()));
+                price.setText("$" + Double.toString(Double.parseDouble(item.getPrice())));
                 description.setText(item.getDesc());
                 quantity.setText(Integer.toString(item.getQuantity()));
                 if (item.getQuality() == 0) {
@@ -94,6 +95,7 @@ public class ItemActivity extends AppCompatActivity {
                 //if (!item.getPhotos().equals("")) {
                 //    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
                 //}
+
             }
 
         }

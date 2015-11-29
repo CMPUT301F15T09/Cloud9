@@ -41,10 +41,22 @@ public class RecordPageFragment extends Fragment {
             // call another intent
             Intent intent = new Intent(getActivity(), TradeDetailActivity.class);
             intent.putExtra("trade_id", tradeId);
-            //startActivity(intent);
-            startActivityForResult(intent, 2);
 
-            //getActivity().finish();
+            switch (mPage) {
+                case 0:
+                    intent.putExtra("tab_title", "current");
+                    break;
+                case 1:
+                    intent.putExtra("tab_title", "completed");
+                    break;
+                case 2:
+                    intent.putExtra("tab_title", "past");
+                    break;
+            }
+
+            startActivity(intent);
+            getActivity().overridePendingTransition(0, 0);
+            getActivity().finish();
         }
     };
 

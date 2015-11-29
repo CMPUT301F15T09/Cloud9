@@ -24,6 +24,7 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.record.RecordActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.email.GMailSender;
@@ -46,6 +47,7 @@ public class TradeDetailActivity extends AppCompatActivity {
     private String anotherUsername="";
     private User anotherUser = new User();
     private boolean counterTrade = false;
+    private String tab_title;
 
     private EditText comments_et;
     private AlertDialog acceptBuilder;
@@ -100,6 +102,7 @@ public class TradeDetailActivity extends AppCompatActivity {
             if (intent.getExtras() != null) {
                 int tradeId = intent.getExtras().getInt("trade_id");
                 trade = LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId);
+                tab_title = intent.getExtras().getString("tab_title");
             }
         }
 
@@ -151,8 +154,19 @@ public class TradeDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == 1){
-            finish();
+            onBackPressed();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (tab_title != null) {
+            Intent intent = new Intent(this, RecordActivity.class);
+            intent.putExtra("tab_title", tab_title);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        }
+    finish();
     }
 
     /**
@@ -201,7 +215,7 @@ public class TradeDetailActivity extends AppCompatActivity {
 
                 Thread emailThread = new EmailThread(comments, anotherUser.getEmail(), LoginActivity.USERLOGIN.getEmail());
                 emailThread.start();
-                finish();
+                onBackPressed();
             }
         });
         acceptBuilder.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
@@ -239,7 +253,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         // if it is a counter trade, back to notification directly
         // else show a dialog
         if (counterTrade) {
-            finish();
+            onBackPressed();
         } else {
             // create a dialog asking for counter trade
             counterBuilder = new AlertDialog.Builder(this).create();
@@ -255,14 +269,14 @@ public class TradeDetailActivity extends AppCompatActivity {
                     int result = 0;
 
                     startActivityForResult(intent, result);
-                    finish();
+                    onBackPressed();
 
                 }
             });
             counterBuilder.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    finish();
+                    onBackPressed();
 
                 }
             });
@@ -289,7 +303,7 @@ public class TradeDetailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        finish();
+        onBackPressed();
     }
 
     // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview

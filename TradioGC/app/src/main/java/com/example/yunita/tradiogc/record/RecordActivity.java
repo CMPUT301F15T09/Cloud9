@@ -3,6 +3,7 @@
 
 package com.example.yunita.tradiogc.record;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 import com.example.yunita.tradiogc.R;
 
 public class RecordActivity extends AppCompatActivity {
+    private String tab_title;
+
 
     public ListView getRecordListView(){
         return (ListView) findViewById(R.id.record_list_view);
@@ -24,6 +27,14 @@ public class RecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record_activity);
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                tab_title = bundle.getString("tab_title");
+            }
+        }
+
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         final RecordFragmentPagerAdapter recordFragmentPagerAdapter = new RecordFragmentPagerAdapter(getSupportFragmentManager(), this);
@@ -32,6 +43,22 @@ public class RecordActivity extends AppCompatActivity {
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (tab_title != null) {
+            TabLayout.Tab tab;
+            switch (tab_title) {
+                case "completed":
+                    tab = tabLayout.getTabAt(1);
+                    break;
+                case "past":
+                    tab = tabLayout.getTabAt(2);
+                    break;
+                default:
+                    tab = tabLayout.getTabAt(0);
+                    break;
+            }
+            tab.select();
+        }
     }
 
 }

@@ -249,6 +249,13 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         Thread replyThread = new ReplyThread("declined");
         replyThread.start();
+        synchronized (replyThread) {
+            try {
+                replyThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         // if it is a counter trade, back to notification directly
         // else show a dialog
@@ -293,6 +300,13 @@ public class TradeDetailActivity extends AppCompatActivity {
 
         Thread replyThread = new ReplyThread("completed");
         replyThread.start();
+        synchronized (replyThread) {
+            try {
+                replyThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();

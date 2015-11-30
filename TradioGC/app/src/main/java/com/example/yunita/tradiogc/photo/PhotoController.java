@@ -46,6 +46,7 @@ public class PhotoController {
     }
 
     public void addPhoto(int item_id, Photo photo){
+        
         UpdateItemPhotoThread updateItemPhotoThread = new UpdateItemPhotoThread(item_id, photo);
         updateItemPhotoThread.start();
     }

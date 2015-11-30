@@ -112,7 +112,7 @@
                 android:paddingRight="20dp" />
 
             <Switch
-                android:id="@+id/switch_button"
+                android:id="@+id/switch_button_download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:thumb="@drawable/custom_roundrect_button"/>

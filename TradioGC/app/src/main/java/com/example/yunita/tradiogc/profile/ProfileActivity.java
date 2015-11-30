@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
@@ -38,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button myinventory_button;
     private Button friendinventory_button;
     private Button addfriend_button;
+    private Switch downloadPhotos;
 
     private TextView username;
     private TextView location;
@@ -167,6 +170,8 @@ public class ProfileActivity extends AppCompatActivity {
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
 
+        downloadPhotos = (Switch) findViewById(R.id.switch_button_download);
+
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         myinventory_button = (Button) findViewById(R.id.my_inventory_button);
         friendinventory_button = (Button) findViewById(R.id.friend_inventory_btn);
@@ -190,6 +195,20 @@ public class ProfileActivity extends AppCompatActivity {
         friendsController = new FriendsController(context);
         userController = new UserController(context);
         Intent intent = getIntent();
+
+        downloadPhotos.setChecked(LoginActivity.USERLOGIN.getDownloadPhotos());
+        downloadPhotos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    LoginActivity.USERLOGIN.setDownloadPhotos(true);
+                }
+                else{
+                    LoginActivity.USERLOGIN.setDownloadPhotos(false);
+                }
+            }
+        });
+
 
         if (intent != null) {
             Bundle extras = intent.getExtras();
@@ -300,4 +319,5 @@ public class ProfileActivity extends AppCompatActivity {
             runOnUiThread(doUpdateGUIDetails);
         }
     }
+
 }

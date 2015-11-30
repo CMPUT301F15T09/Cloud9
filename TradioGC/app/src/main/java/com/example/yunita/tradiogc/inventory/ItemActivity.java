@@ -150,15 +150,16 @@ public class ItemActivity extends AppCompatActivity {
                     quality.setText("Used");
                 }
 
-                photoController.getItem(item.getId());
-                photo = photoController.getPhoto();
-                photos = new ArrayList<>();
-                if (photo != null){
-                    photos = photo.getEncodedPhoto();
-                    itemImage.setImageBitmap(decodeImage(photos.get(photoIndex)));
-                }
-                else {
-                    photo = new Photo();
+                if (LoginActivity.USERLOGIN.getDownloadPhotos()) {
+                    photoController.getItem(item.getId());
+                    photo = photoController.getPhoto();
+                    photos = new ArrayList<>();
+                    if (photo != null) {
+                        photos = photo.getEncodedPhoto();
+                        itemImage.setImageBitmap(decodeImage(photos.get(photoIndex)));
+                    } else {
+                        photo = new Photo();
+                    }
                 }
             }
 

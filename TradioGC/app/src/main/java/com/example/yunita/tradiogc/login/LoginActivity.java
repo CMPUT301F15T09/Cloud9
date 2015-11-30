@@ -251,6 +251,7 @@ public class LoginActivity extends Activity {
                         newUser.setPhone(phone);
                         newUser.setInventory(new Inventory());
                         newUser.setTrades(new Trades());
+                        newUser.setDownloadPhotos(true);
 
                         USERLOGIN = new User();
                         USERLOGIN.setUsername(username);
@@ -259,6 +260,7 @@ public class LoginActivity extends Activity {
                         USERLOGIN.setPhone(phone);
                         USERLOGIN.setInventory(new Inventory());
                         USERLOGIN.setTrades(new Trades());
+                        USERLOGIN.setDownloadPhotos(true);
 
                         // Execute the thread
                         Thread thread2 = loginController.new SignUpThread(newUser);

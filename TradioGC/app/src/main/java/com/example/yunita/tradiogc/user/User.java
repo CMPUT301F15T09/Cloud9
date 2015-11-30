@@ -18,6 +18,7 @@ public class User {
     private Inventory inventory;
     private Trades trades;
     private Notifications notifications;
+    private Boolean downloadPhotos;
 
     /**
      * Class constructor for a user.
@@ -31,7 +32,16 @@ public class User {
         inventory = new Inventory();
         trades = new Trades();
         notifications = new Notifications();
+        downloadPhotos = true;
 
+    }
+
+    public Boolean getDownloadPhotos() {
+        return downloadPhotos;
+    }
+
+    public void setDownloadPhotos(Boolean downloadPhotos) {
+        this.downloadPhotos = downloadPhotos;
     }
 
     /**

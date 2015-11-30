@@ -121,6 +121,9 @@ public class EditItemActivity extends AppCompatActivity {
             photoArray = photo.getEncodedPhoto();
             tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
         }
+        else{
+            photo = new Photo();
+        }
 
         Button delPhoto = (Button) findViewById(R.id.delete_photo_button);
         Button delItem = (Button) findViewById(R.id.delete_item_button);
@@ -145,6 +148,7 @@ public class EditItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
+        photo = new Photo();
 
 
         if (!item.getVisibility()) {
@@ -158,6 +162,7 @@ public class EditItemActivity extends AppCompatActivity {
         qualityChoice.setSelection(item.getQuality());
         quantityEdit.setText(Integer.toString(item.getQuantity()));
 
+
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
         photoController.getItem(item.getId());
@@ -167,6 +172,9 @@ public class EditItemActivity extends AppCompatActivity {
         if (photo != null) {
             photoArray = photo.getEncodedPhoto();
             tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+        }
+        else{
+            photo = new Photo();
         }
     }
 

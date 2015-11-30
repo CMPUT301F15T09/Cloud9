@@ -20,6 +20,7 @@ import com.example.yunita.tradiogc.photo.PhotoController;
 import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ItemActivity extends AppCompatActivity {
@@ -41,6 +42,8 @@ public class ItemActivity extends AppCompatActivity {
     private TextView quality;
     private ImageView itemImage;
     private Photo photo;
+    private ArrayList<String> photos;
+    private int photoIndex;
 
     public void setItem(Item item) {
         this.item = item;
@@ -98,11 +101,13 @@ public class ItemActivity extends AppCompatActivity {
 
                 photoController.getItem(item.getId());
                 photo = photoController.getPhoto();
-
+                photos = new ArrayList<>();
                 if (photo != null){
-                    ArrayList<String> photos;
                     photos = photo.getEncodedPhoto();
-                    itemImage.setImageBitmap(decodeImage(photos.get(0)));
+                    itemImage.setImageBitmap(decodeImage(photos.get(photoIndex)));
+                }
+                else {
+                    photo = new Photo();
                 }
             }
 
@@ -119,6 +124,7 @@ public class ItemActivity extends AppCompatActivity {
         userController = new UserController(context);
         photoController = new PhotoController(context);
 
+        photoIndex = 0;
         itemImage = (ImageView) findViewById(R.id.itemImage);
         name = (TextView) findViewById(R.id.itemName);
         category = (TextView) findViewById(R.id.itemCategory);
@@ -138,6 +144,7 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         categories = new Categories();
 
+        photoIndex = 0;
 
         if (intent.getExtras() != null) {
             perspective = intent.getExtras().getString("owner");
@@ -165,6 +172,8 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        photoIndex = 0;
         if (perspective!=null && perspective.equals("owner")) {
             Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
             getUserLoginThread.start();
@@ -252,5 +261,14 @@ public class ItemActivity extends AppCompatActivity {
         intent.putExtra("borrower_name", LoginActivity.USERLOGIN.getUsername());
         int result = 0;
         startActivityForResult(intent, result);
+    }
+    public void nextPhoto (View v){
+        if (photo != null) {
+            photoIndex++;
+            if (photoIndex >= photos.size()) {
+                photoIndex = 0;
+            }
+            itemImage.setImageBitmap(decodeImage(photos.get(photoIndex)));
+        }
     }
 }

@@ -26,7 +26,7 @@ A trading gift-card application
 [TradioGC Preview is up now!](https://youtu.be/r3O27hR8o0U)
 
 ## Demo
-On the way...
+[TradioGC Demo is up now!](https://youtu.be/pxnRsc4ec9A)
 
 ## Documentation
 You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/Cloud9/wiki)

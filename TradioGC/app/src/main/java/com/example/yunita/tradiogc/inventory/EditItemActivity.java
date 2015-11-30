@@ -115,6 +115,7 @@ public class EditItemActivity extends AppCompatActivity {
 
         photoController.getItem(item.getId());
         photo = photoController.getPhoto();
+
         ArrayList<String> photoArray;
 
         if (photo != null) {
@@ -323,17 +324,19 @@ public class EditItemActivity extends AppCompatActivity {
 
 
     public void delItem(View v){
+        photoController.clearPhoto(photo.getItemId(),photo);
         inventoryController.removeExistingItem(item);
         Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);
         finish();
     }
     public void delPhoto(View v){
-        photo.removeEncodedPhoto();
-        photoController.updateItemPhotos(photo.getItemId(),photo);
-        Intent intent = new Intent(mContext, MyInventoryActivity.class);
-        startActivity(intent);
-        finish();
+        if (photo != null) {
+            photoController.delPhoto(photo.getItemId(), photo);
+            Intent intent = new Intent(mContext, MyInventoryActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

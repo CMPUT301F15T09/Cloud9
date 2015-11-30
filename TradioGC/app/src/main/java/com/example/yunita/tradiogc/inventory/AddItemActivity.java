@@ -219,6 +219,8 @@ public class AddItemActivity extends AppCompatActivity {
                 tempPhoto.setImageBitmap(thumbnail);
 
                 // everytime user "accept the photo", it is added into the photo list
+                photo.clear();
+                photo.getEncodedPhoto().add("");
                 photo.addEncodedPhoto(thumbnail);
             } else {
                 thumbnail = null;

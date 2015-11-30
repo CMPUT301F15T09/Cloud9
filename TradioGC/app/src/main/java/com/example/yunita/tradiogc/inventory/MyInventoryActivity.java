@@ -100,7 +100,6 @@ public class  MyInventoryActivity extends AppCompatActivity {
                 Item deletedItem = inventory.get(position);
                 Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
                 deleteThread.start();
-                deleteThread.start();
                 inventory.remove(deletedItem);
                 Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
                 inventoryViewAdapter.notifyDataSetChanged();

@@ -21,6 +21,12 @@ public class Photo {
         this.itemId = itemId;
     }
 
+    public void clear(){
+        for (int i = 0 ; i <this.encodedPhoto.size(); i++){
+            removeEncodedPhoto();
+        }
+    }
+
     public int getItemId() {
         return itemId;
     }
@@ -34,6 +40,9 @@ public class Photo {
     }
 
     public void addEncodedPhoto(Bitmap bitmap){
+        if (this.encodedPhoto.get(0).equals("")){
+            this.encodedPhoto.remove(0);
+        }
         this.encodedPhoto.add(encodeImage(bitmap));
     }
 

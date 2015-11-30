@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.data.SearchHit;
-import com.example.yunita.tradiogc.user.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -16,10 +15,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -46,10 +43,26 @@ public class PhotoController {
     }
 
     public void addPhoto(int item_id, Photo photo){
-        
         UpdateItemPhotoThread updateItemPhotoThread = new UpdateItemPhotoThread(item_id, photo);
         updateItemPhotoThread.start();
     }
+
+    public void delPhoto(int item_id, Photo photo){
+        photo.removeEncodedPhoto();
+        if (photo.getEncodedPhoto().size() == 0){
+            photo.getEncodedPhoto().add("");
+        }
+        UpdateItemPhotoThread updateItemPhotoThread = new UpdateItemPhotoThread(item_id, photo);
+        updateItemPhotoThread.start();
+    }
+    public void clearPhoto(int item_id, Photo photo){
+        photo.clear();
+        UpdateItemPhotoThread updateItemPhotoThread = new UpdateItemPhotoThread(item_id, photo);
+        updateItemPhotoThread.start();
+    }
+
+
+
 
     public void getItem(int item_id){
         GetItemPhotoThread getItemPhotoThread = new GetItemPhotoThread(item_id);

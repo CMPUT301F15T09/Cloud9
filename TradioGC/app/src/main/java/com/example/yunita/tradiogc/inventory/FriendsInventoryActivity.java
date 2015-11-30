@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.market.SearchInventory;
 import com.example.yunita.tradiogc.market.SearchItem;
@@ -32,15 +33,18 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private EditText query_et;
     private ListView item_list;
 
+    private Context context = this;
+
     private SearchInventory searchInventory = new SearchInventory();
     private SearchInventory searchItems = new SearchInventory();
     private UserController userController;
+
+    private CheckNetwork checkNetwork = new CheckNetwork(context);
 
     private String friendname = "testfriend"; // for test. Do not change it
     private User friend;
     private ArrayAdapter<SearchItem> inventoryViewAdapter;
 
-    private Context context = this;
 
     private int category = -1;
     private String query = "";
@@ -119,7 +123,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categorySelection = position;
                 category = position - 1;
-                if (friend!=null) {
+                if (friend != null) {
                     searchItem(category, query);
                 }
             }
@@ -144,18 +148,20 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!friendname.equals("")) {
-            Thread refreshUserThread = new RefreshUserThread(friendname);
-            refreshUserThread.start();
-            synchronized (refreshUserThread) {
-                try {
-                    refreshUserThread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        if (checkNetwork.isOnline()) {
+            if (!friendname.equals("")) {
+                Thread refreshUserThread = new RefreshUserThread(friendname);
+                refreshUserThread.start();
+                synchronized (refreshUserThread) {
+                    try {
+                        refreshUserThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            categoriesChoice.setSelection(categorySelection);
         }
-        categoriesChoice.setSelection(categorySelection);
     }
 
     /**

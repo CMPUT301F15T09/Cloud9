@@ -13,9 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.inventory.Inventory;
+import com.example.yunita.tradiogc.inventory.InventoryController;
+import com.example.yunita.tradiogc.offline.ItemstobeAdded;
+import com.example.yunita.tradiogc.offline.ItemstobeDeleted;
+import com.example.yunita.tradiogc.offline.ItemstobeUpdated;
 import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
@@ -31,6 +37,15 @@ public class LoginActivity extends Activity {
     private Context mContext = this;
     private LoginController loginController;
     private UserController userController;
+
+    private InventoryController inventoryController;
+    private FriendsController friendsController;
+
+    private ItemstobeAdded newItems = new ItemstobeAdded(mContext);
+    private ItemstobeDeleted oldItems = new ItemstobeDeleted(mContext);
+    private ItemstobeUpdated changedItems = new ItemstobeUpdated(mContext);
+
+    private CheckNetwork checkNetwork = new CheckNetwork(mContext);
 
     private LinearLayout login_view;
     private LinearLayout signup_view;
@@ -114,6 +129,8 @@ public class LoginActivity extends Activity {
 
         loginController = new LoginController(mContext);
         userController = new UserController(mContext);
+        inventoryController = new InventoryController(mContext);
+        friendsController = new FriendsController(mContext);
 
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
@@ -182,20 +199,39 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (!username.equals("")) {
-            Thread thread = userController.new GetUserLoginThread(username);
-            thread.start();
+            if(checkNetwork.isOnline()) {
+                Thread thread = userController.new GetUserLoginThread(username);
+                thread.start();
 
-            synchronized (thread) {
-                try {
-                    thread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized (thread) {
+                    try {
+                        thread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (USERLOGIN == null) {
+                        Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        goToMain();
+                        /*if (newItems.getAddInventory().isEmpty()){
+                            goToMain();
+                        } else {
+                            newItems.addAllItems();
+                            changedItems.upAllItems();
+                            oldItems.delAllItems();
+                            goToMain();
+                        }*/
+                    }
                 }
-
+            }else{
+                USERLOGIN = userController.loadUserFromFile(username);
                 if (USERLOGIN == null) {
-                    Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(mContext, "No Internet connection. This username does not exist in local memory", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
+
                     goToMain();
                 }
             }
@@ -219,68 +255,78 @@ public class LoginActivity extends Activity {
         String email = email_et.getText().toString();
         String phone = phone_et.getText().toString();
 
-        // Execute the thread
-        if (username.equals("")) {
-            username_et.setError("Username cannot be empty.");
-        } else if (username.contains(" ")) {
-            username_et.setError("Username cannot include empty space.");
-        } else if (email.equals("")) {
-            email_et.setError("Email cannot be empty.");
-        } else if (!email.contains("@")) {
-            email_et.setError("Email must include \"@\"");
-        } else {
-            Thread thread = userController.new GetUserLoginThread(username);
-            thread.start();
+        if (checkNetwork.isOnline()){
+            // Execute the thread
+            if (username.equals("")) {
+                username_et.setError("Username cannot be empty.");
+            } else if (username.contains(" ")) {
+                username_et.setError("Username cannot include empty space.");
+            } else if (email.equals("")) {
+                email_et.setError("Email cannot be empty.");
+            } else if (!email.contains("@")) {
+                email_et.setError("Email must include \"@\"");
+            } else {
+                Thread thread = userController.new GetUserLoginThread(username);
+                thread.start();
 
-            synchronized (thread) {
-                try {
-                    thread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                if (USERLOGIN != null) {
-                    Toast toast = Toast.makeText(mContext, "This username already exists.", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
+                synchronized (thread) {
                     try {
-                        User newUser = new User();
-                        newUser.setUsername(username);
-                        newUser.setLocation(location.toUpperCase());
-                        newUser.setEmail(email.toLowerCase());
-                        newUser.setPhone(phone);
-                        newUser.setInventory(new Inventory());
-                        newUser.setTrades(new Trades());
-
-                        USERLOGIN = new User();
-                        USERLOGIN.setUsername(username);
-                        USERLOGIN.setLocation(location);
-                        USERLOGIN.setEmail(email.toLowerCase());
-                        USERLOGIN.setPhone(phone);
-                        USERLOGIN.setInventory(new Inventory());
-                        USERLOGIN.setTrades(new Trades());
-
-                        // Execute the thread
-                        Thread thread2 = loginController.new SignUpThread(newUser);
-                        thread2.start();
-                        synchronized (thread2) {
-                            try {
-                                thread2.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        Toast toast = Toast.makeText(mContext, "User account has been created", Toast.LENGTH_SHORT);
-                        toast.show();
-
-                        goToMain();
-                    } catch (Exception e) {
+                        thread.wait();
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
+                    }
+
+                    if (USERLOGIN != null) {
+                        Toast toast = Toast.makeText(mContext, "This username already exists.", Toast.LENGTH_SHORT);
+
+                        toast.show();
+                    } else {
+                        try {
+
+                            User newUser = new User();
+                            newUser.setUsername(username);
+                            newUser.setLocation(location.toUpperCase());
+                            newUser.setEmail(email.toLowerCase());
+                            newUser.setPhone(phone);
+                            newUser.setInventory(new Inventory());
+                            newUser.setTrades(new Trades());
+
+                            USERLOGIN = new User();
+                            USERLOGIN.setUsername(username);
+                            USERLOGIN.setLocation(location);
+                            USERLOGIN.setEmail(email.toLowerCase());
+                            USERLOGIN.setPhone(phone);
+                            USERLOGIN.setInventory(new Inventory());
+                            USERLOGIN.setTrades(new Trades());
+
+
+
+                            // Execute the thread
+                            Thread thread2 = loginController.new SignUpThread(newUser);
+                            thread2.start();
+                            synchronized (thread2) {
+                                try {
+                                    thread2.wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            Toast toast = Toast.makeText(mContext, "User account has been created", Toast.LENGTH_SHORT);
+
+                            toast.show();
+
+                            goToMain();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
+        }else{
+            Toast toast = Toast.makeText(mContext, "You are not connected to the internet. You cannot create an account.", Toast.LENGTH_SHORT);
+            toast.show();
         }
-
 
     }
 }

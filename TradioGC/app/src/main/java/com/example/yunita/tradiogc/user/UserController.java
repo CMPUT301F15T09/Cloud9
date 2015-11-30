@@ -22,6 +22,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -262,6 +265,22 @@ public class UserController {
                 LoginActivity.USERLOGIN = getUser(username);
                 notify();
             }
+        }
+    }
+
+    public User loadUserFromFile(String username){
+        User user;
+        try{
+            FileInputStream fis = context.openFileInput(username + ".sav");
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+
+            user = gson.fromJson(in, User.class);
+            return user;
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

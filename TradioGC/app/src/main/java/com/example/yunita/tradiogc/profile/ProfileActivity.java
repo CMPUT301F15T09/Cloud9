@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.friends.FriendsController;
@@ -30,6 +32,8 @@ public class ProfileActivity extends AppCompatActivity {
     private UserController userController;
     private FriendsController friendsController;
     private Context context = this;
+
+    private CheckNetwork checkNetwork = new CheckNetwork(context);
 
     private LinearLayout myprofile_panel;
     private LinearLayout stranger_panel;
@@ -197,8 +201,14 @@ public class ProfileActivity extends AppCompatActivity {
             if (extras != null) {
                 targetUsername = extras.getString("profileTarget");
                 setTitle(targetUsername + "'s Account");
-                Thread thread = new GetThread(targetUsername);
-                thread.start();
+                if (checkNetwork.isOnline()) {
+                    Thread thread = new GetThread(targetUsername);
+                    thread.start();
+                }
+                else {
+                    user = LoginActivity.USERLOGIN;
+                    runOnUiThread(doUpdateGUIDetails);
+                }
             }
         }
 
@@ -257,8 +267,13 @@ public class ProfileActivity extends AppCompatActivity {
      * @param view "Add Friend" button
      */
     public void addFriend(View view) {
-        friendsController.addFriend(targetUsername);
-        finish();
+        if (checkNetwork.isOnline()) {
+            friendsController.addFriend(targetUsername);
+            finish();
+        }else{
+            Toast toast = Toast.makeText(context, "You are not connected to internet.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     /**
@@ -268,8 +283,13 @@ public class ProfileActivity extends AppCompatActivity {
      * @param view "Pencil" icon
      */
     public void editProfile(View view) {
-        Intent intent = new Intent(context, EditProfileActivity.class);
-        startActivity(intent);
+        if (checkNetwork.isOnline()) {
+            Intent intent = new Intent(context, EditProfileActivity.class);
+            startActivity(intent);
+        }else{
+            Toast toast = Toast.makeText(context, "You are not connected to internet.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     /**
@@ -279,8 +299,13 @@ public class ProfileActivity extends AppCompatActivity {
      * @param view "Trade Record" button
      */
     public void goToRecord(View view){
-        Intent intent = new Intent(context, RecordActivity.class);
-        startActivity(intent);
+        if(checkNetwork.isOnline()) {
+            Intent intent = new Intent(context, RecordActivity.class);
+            startActivity(intent);
+        }else{
+            Toast toast = Toast.makeText(context, "You are not connected to internet.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     /**

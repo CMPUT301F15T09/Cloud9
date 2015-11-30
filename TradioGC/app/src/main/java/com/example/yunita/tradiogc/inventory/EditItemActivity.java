@@ -268,7 +268,7 @@ public class EditItemActivity extends AppCompatActivity {
             item.setQuantity(quantity);
             item.setQuality(quality);
 
-            inventoryController.updateItem(item);
+            inventoryController.updateItem(item, LoginActivity.USERLOGIN);
 
             finish();
         }
@@ -366,7 +366,7 @@ public class EditItemActivity extends AppCompatActivity {
 
 
     public void delItem(View v){
-        inventoryController.removeExistingItem(item);
+        inventoryController.removeExistingItem(item, LoginActivity.USERLOGIN);
         Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);
         finish();

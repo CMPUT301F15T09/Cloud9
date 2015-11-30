@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.photo.Photo;
@@ -34,6 +35,8 @@ public class ItemActivity extends AppCompatActivity {
     private UserController userController;
     private int index;
     private PhotoController photoController;
+
+    private CheckNetwork checkNetwork = new CheckNetwork(context);
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
@@ -226,16 +229,18 @@ public class ItemActivity extends AppCompatActivity {
         super.onResume();
 
         photoIndex = 0;
-        if (perspective!=null && perspective.equals("owner")) {
-            Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
-            getUserLoginThread.start();
-            synchronized (getUserLoginThread) {
-                try {
-                    getUserLoginThread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        if (checkNetwork.isOnline()) {
+            if (perspective != null && perspective.equals("owner")) {
+                Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+                getUserLoginThread.start();
+                synchronized (getUserLoginThread) {
+                    try {
+                        getUserLoginThread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(doUpdateGUIDetails);
                 }
-                runOnUiThread(doUpdateGUIDetails);
             }
         }
     }

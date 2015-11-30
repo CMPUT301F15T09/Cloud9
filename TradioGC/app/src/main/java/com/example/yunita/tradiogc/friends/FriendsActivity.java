@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
@@ -26,6 +27,9 @@ public class FriendsActivity extends AppCompatActivity {
     private Context context = this;
     private Users friendsInUser = new Users();
     private Users resultUsers = new Users();
+
+    private CheckNetwork checkNetwork = new CheckNetwork(this.context);
+
 
     private ListView friendList;
     private String friendname;
@@ -101,8 +105,12 @@ public class FriendsActivity extends AppCompatActivity {
         friendsViewAdapter.notifyDataSetChanged();
         // Keeps updating friend list (since we use a tab menu, after the first
         // visit, this activity will be on resume/pause).
-        Thread getFriendsInUserThread = new GetFriendsInUserThread();
-        getFriendsInUserThread.start();
+        if (checkNetwork.isOnline()) {
+            Thread getFriendsInUserThread = new GetFriendsInUserThread();
+            getFriendsInUserThread.start();
+        }else {
+            //
+        }
     }
 
     /**

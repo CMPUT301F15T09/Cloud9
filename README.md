@@ -43,6 +43,7 @@ You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/C
 - Alexander Y. Kleymenov, https://svn.apache.org/repos/asf/harmony/enhanced/archive/classlib/java6/modules/x-net/src/main/java/org/apache/harmony/xnet/provider/jsse/JSSEProvider.java
 - Vinayak B, shridutt kothari, http://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
 - Jane Tedjasukmana, http://janetedja.com
+- Recep Kutuk, http://rcpktk.deviantart.com/?rnrd=161775
 
 ## License
 TradioGC is licensed under Apache License Version 2.0.

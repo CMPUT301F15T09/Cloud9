@@ -182,21 +182,25 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (!username.equals("")) {
-            Thread thread = userController.new GetUserLoginThread(username);
-            thread.start();
+            if (username.contains(" ")) {
+                username_et.setError("Username cannot include empty space.");
+            } else {
+                Thread thread = userController.new GetUserLoginThread(username);
+                thread.start();
 
-            synchronized (thread) {
-                try {
-                    thread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                synchronized (thread) {
+                    try {
+                        thread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-                if (USERLOGIN == null) {
-                    Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    goToMain();
+                    if (USERLOGIN == null) {
+                        Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        goToMain();
+                    }
                 }
             }
         } else {

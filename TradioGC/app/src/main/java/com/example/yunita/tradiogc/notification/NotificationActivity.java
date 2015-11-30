@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.TradeDetailActivity;
@@ -26,6 +27,8 @@ public class NotificationActivity extends AppCompatActivity {
 
     private NotificationController notificationController;
     private Context context = this;
+
+    private CheckNetwork checkNetwork = new CheckNetwork(context);
 
     private ProgressBar progressBar;
 
@@ -52,53 +55,62 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (checkNetwork.isOnline()) {
+            notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, notifications);
+            notificationListView.setAdapter(notificationArrayAdapter);
 
-        notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, notifications);
-        notificationListView.setAdapter(notificationArrayAdapter);
+            notificationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Notification notification = notifications.get(position);
+                    int tradeId = notification.getTrade().getId();
 
-        notificationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Notification notification = notifications.get(position);
-                int tradeId = notification.getTrade().getId();
+                    notification.setRead(true);
+                    if (!LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("offered")) {
+                        LoginActivity.USERLOGIN.getNotifications().remove(notification);
+                    }
+                    notificationController.updateToWebServer();
 
-                notification.setRead(true);
-                if (!LoginActivity.USERLOGIN.getTrades().findTradeById(tradeId).getStatus().equals("offered")) {
-                    LoginActivity.USERLOGIN.getNotifications().remove(notification);
+                    // call another intent
+                    Intent intent = new Intent(context, TradeDetailActivity.class);
+                    intent.putExtra("trade_id", tradeId);
+                    startActivity(intent);
                 }
-                notificationController.updateToWebServer();
+            });
 
-                // call another intent
-                Intent intent = new Intent(context, TradeDetailActivity.class);
-                intent.putExtra("trade_id", tradeId);
-                startActivity(intent);
-            }
-        });
-
-        // Delete friends on long click
-        notificationListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Notification notification = notifications.get(position);
-                // delete it in webserver
-                LoginActivity.USERLOGIN.getNotifications().remove(notification);
-                notificationController.updateToWebServer();
-                // delete it in list
-                notifications.remove(notification);
-                notificationArrayAdapter.notifyDataSetChanged();
-                // show a toast
-                Toast.makeText(context, "Deleting Success", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+            // Delete friends on long click
+            notificationListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    Notification notification = notifications.get(position);
+                    // delete it in webserver
+                    LoginActivity.USERLOGIN.getNotifications().remove(notification);
+                    notificationController.updateToWebServer();
+                    // delete it in list
+                    notifications.remove(notification);
+                    notificationArrayAdapter.notifyDataSetChanged();
+                    // show a toast
+                    Toast.makeText(context, "Deleting Success", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+        }else{
+            notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, notifications);
+            notificationListView.setAdapter(notificationArrayAdapter);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.VISIBLE);
-        Thread updateNotificationThread = new UpdateNotificationThread();
-        updateNotificationThread.start();
+        if (checkNetwork.isOnline()) {
+            progressBar.setVisibility(View.VISIBLE);
+            Thread updateNotificationThread = new UpdateNotificationThread();
+            updateNotificationThread.start();
+        }
+        else{
+            progressBar.setVisibility((View.GONE));
+        }
     }
 
     public void updateNotification(MenuItem item) {

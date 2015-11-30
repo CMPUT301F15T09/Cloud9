@@ -47,7 +47,6 @@ public class UserController {
      * @param context
      */
     public UserController(Context context) {
-        gson = new Gson();
         this.context = context;
     }
 

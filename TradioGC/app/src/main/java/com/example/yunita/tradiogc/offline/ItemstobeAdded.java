@@ -24,19 +24,23 @@ import java.util.ArrayList;
  * Created by User on 2015-11-29.
  */
 public class ItemstobeAdded {
+
     Inventory addInventory;
     InventoryController inventoryController;
     private Context context;
-    private Gson gson;
+    private Gson gson = new Gson();
 
     public ItemstobeAdded(Context context) {
         super();
         this.context = context;
+    }
 
-        this.addInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
+    public Inventory getAddInventory(){
+        return addInventory;
     }
 
     public void addItem(Item item) {
+        this.addInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
         addInventory.add(item);
         saveAddInvInFile(addInventory, LoginActivity.USERLOGIN);
     }
@@ -45,6 +49,8 @@ public class ItemstobeAdded {
         for (Item item: addInventory){
             inventoryController.addItem(item);
         }
+        Inventory inventory = new Inventory();
+        saveAddInvInFile(inventory, LoginActivity.USERLOGIN);
     }
 
 

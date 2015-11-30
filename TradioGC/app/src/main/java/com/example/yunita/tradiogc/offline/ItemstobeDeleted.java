@@ -27,16 +27,16 @@ public class ItemstobeDeleted {
     Inventory delInventory;
     InventoryController inventoryController;
     private Context context;
-    private Gson gson;
+    private Gson gson = new Gson();
 
     public ItemstobeDeleted(Context context) {
         super();
         this.context = context;
 
-        this.delInventory = loadDelInvFromFile(LoginActivity.USERLOGIN);
     }
 
     public void addItem(Item item) {
+        this.delInventory = loadDelInvFromFile(LoginActivity.USERLOGIN);
         delInventory.add(item);
         saveDelInvInFile(delInventory, LoginActivity.USERLOGIN);
     }
@@ -44,6 +44,8 @@ public class ItemstobeDeleted {
         for (Item item: delInventory){
             inventoryController.removeExistingItem(item);
         }
+        Inventory inventory = new Inventory();
+        saveDelInvInFile(inventory, LoginActivity.USERLOGIN);
     }
 
 

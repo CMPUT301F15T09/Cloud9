@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.friends.FriendsController;
@@ -27,6 +28,8 @@ public class ProfileActivity extends AppCompatActivity {
     private UserController userController;
     private FriendsController friendsController;
     private Context context = this;
+
+    private CheckNetwork checkNetwork = new CheckNetwork(context);
 
     private LinearLayout myprofile_panel;
     private LinearLayout stranger_panel;
@@ -136,8 +139,14 @@ public class ProfileActivity extends AppCompatActivity {
             if (extras != null) {
                 targetUsername = extras.getString("profileTarget");
                 setTitle(targetUsername + "'s Account");
-                Thread thread = new GetThread(targetUsername);
-                thread.start();
+                if (checkNetwork.isOnline()) {
+                    Thread thread = new GetThread(targetUsername);
+                    thread.start();
+                }
+                else {
+                    user = LoginActivity.USERLOGIN;
+                    runOnUiThread(doUpdateGUIDetails);
+                }
             }
         }
 

@@ -116,7 +116,7 @@ public class FriendsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SearchUserActivity.class);
             startActivity(intent);
         }else{
-            //
+          //  friendsInUser = LoginActivity.USERLOGIN.getFriends();
         }
     }
 

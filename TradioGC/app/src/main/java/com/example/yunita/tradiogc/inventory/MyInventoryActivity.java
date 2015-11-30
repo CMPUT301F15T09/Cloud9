@@ -16,8 +16,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.offline.ItemstobeDeleted;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
     private InventoryController inventoryController;
 
     private Context context = this;
+    private CheckNetwork checkNetwork = new CheckNetwork(context);
 
     private int category = -1;
     private String query = "";
@@ -94,13 +97,19 @@ public class  MyInventoryActivity extends AppCompatActivity {
                 viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
             }
         });
+
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Item deletedItem = inventory.get(position);
-                Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
-                deleteThread.start();
-                deleteThread.start();
+                if (checkNetwork.isOnline()) {
+                    Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                    deleteThread.start();
+                    deleteThread.start();
+                }else{
+                    ItemstobeDeleted itemsdel = new ItemstobeDeleted(context);
+                    itemsdel.addItem(deletedItem);
+                }
                 inventory.remove(deletedItem);
                 Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
                 inventoryViewAdapter.notifyDataSetChanged();

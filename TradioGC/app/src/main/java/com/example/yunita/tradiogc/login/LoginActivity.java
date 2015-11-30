@@ -16,7 +16,12 @@ import android.widget.Toast;
 import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.inventory.Inventory;
+import com.example.yunita.tradiogc.inventory.InventoryController;
+import com.example.yunita.tradiogc.offline.ItemstobeAdded;
+import com.example.yunita.tradiogc.offline.ItemstobeDeleted;
+import com.example.yunita.tradiogc.offline.ItemstobeUpdated;
 import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
@@ -29,6 +34,8 @@ public class LoginActivity extends Activity {
     private Context mContext = this;
     private LoginController loginController;
     private UserController userController;
+    private InventoryController inventoryController;
+    private FriendsController friendsController;
     private CheckNetwork checkNetwork = new CheckNetwork(mContext);
 
     private LinearLayout login_view;
@@ -78,6 +85,8 @@ public class LoginActivity extends Activity {
 
         loginController = new LoginController(mContext);
         userController = new UserController(mContext);
+        inventoryController = new InventoryController(mContext);
+        friendsController = new FriendsController(mContext);
 
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
@@ -143,6 +152,9 @@ public class LoginActivity extends Activity {
     public void login(View view) {
 
         final String username = username_et.getText().toString();
+        ItemstobeAdded newItems = new ItemstobeAdded(mContext);
+        ItemstobeDeleted oldItems = new ItemstobeDeleted(mContext);
+        ItemstobeUpdated changedItems = new ItemstobeUpdated(mContext);
 
         // Execute the thread
         if (!username.equals("")) {
@@ -162,6 +174,18 @@ public class LoginActivity extends Activity {
                         toast.show();
                     } else {
                         goToMain();
+                        /*.saveUserInFile(USERLOGIN);
+                        if (checkNetwork.isOnline()){
+                            if (newItems.getAddInventory().isEmpty()){
+                                goToMain();
+                            }
+                            else {
+                                newItems.addAllItems();
+                                changedItems.upAllItems();
+                                oldItems.delAllItems();
+                                goToMain();
+                            }
+                        }*/
                     }
 
                 }
@@ -171,6 +195,7 @@ public class LoginActivity extends Activity {
                     Toast toast = Toast.makeText(mContext, "No Internet connection. This username does not exist in local memory", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
+
                     goToMain();
                 }
             }
@@ -239,6 +264,8 @@ public class LoginActivity extends Activity {
                             USERLOGIN.setInventory(new Inventory());
                             USERLOGIN.setTrades(new Trades());
 
+
+
                             // Execute the thread
                             Thread thread2 = loginController.new SignUpThread(newUser);
                             thread2.start();
@@ -249,6 +276,7 @@ public class LoginActivity extends Activity {
                                     e.printStackTrace();
                                 }
                             }
+
                             Toast toast = Toast.makeText(mContext, "User account has been created", Toast.LENGTH_SHORT);
 
                             toast.show();

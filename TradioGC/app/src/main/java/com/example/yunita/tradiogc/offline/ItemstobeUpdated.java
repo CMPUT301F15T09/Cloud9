@@ -27,16 +27,17 @@ public class ItemstobeUpdated {
     Inventory upInventory;
     InventoryController inventoryController;
     private Context context;
-    private Gson gson;
+    private Gson gson = new Gson();
 
     public ItemstobeUpdated(Context context) {
         super();
         this.context = context;
 
-        this.upInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
     }
 
     public void addItem(Item item) {
+
+        this.upInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
         upInventory.add(item);
         saveAddInvInFile(upInventory, LoginActivity.USERLOGIN);
     }
@@ -45,6 +46,8 @@ public class ItemstobeUpdated {
         for (Item item: upInventory){
             inventoryController.updateItem(item);
         }
+        Inventory inventory = new Inventory();
+        saveAddInvInFile(inventory, LoginActivity.USERLOGIN);
     }
 
 

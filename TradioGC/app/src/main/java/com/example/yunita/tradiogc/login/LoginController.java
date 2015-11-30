@@ -96,7 +96,7 @@ public class LoginController {
      *
      * @param user new user
      */
-    private void saveUserInFile(User user) {
+    public void saveUserInFile(User user) {
         try {
             FileOutputStream fos = context.openFileOutput(user.getUsername() + ".sav", 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);

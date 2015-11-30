@@ -26,14 +26,14 @@ import java.util.ArrayList;
 public class InventoryController {
     private static final String TAG = "InventoryController";
     private UserController userController;
-    private ItemstobeAdded newItems;
-    private ItemstobeDeleted oldItems;
-    private ItemstobeUpdated changedItems;
     private Context context;
+    private ItemstobeAdded newItems = new ItemstobeAdded(context);
+    private ItemstobeDeleted oldItems = new ItemstobeDeleted(context);
+    private ItemstobeUpdated changedItems = new ItemstobeUpdated(context);
     private Gson gson = new Gson();
     private WebServer webServer = new WebServer();
-    private CheckNetwork checkNetwork = new CheckNetwork(this.context);
-    private Inventory inventory;
+    private CheckNetwork checkNetwork;
+    private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
 
     /**
      * Class constructor specifying that this controller class is a subclass of Context.
@@ -44,24 +44,7 @@ public class InventoryController {
         super();
         this.context = context;
         this.userController = new UserController(context);
-        Inventory onlineinv;
-        Inventory fileinv;
-        fileinv = loadInventoryInFile(inventory, LoginActivity.USERLOGIN);
-        if (checkNetwork.isOnline() == true){
-            onlineinv = LoginActivity.USERLOGIN.getInventory();
-            if (onlineinv == fileinv) {
-                inventory = onlineinv;
-            }
-            else {
-                newItems.addAllItems();
-                changedItems.upAllItems();
-                oldItems.delAllItems();
-                inventory = LoginActivity.USERLOGIN.getInventory();
-            }
-        }
-        else{
-            inventory = loadInventoryInFile(inventory, LoginActivity.USERLOGIN);
-        }
+        this.checkNetwork = new CheckNetwork(context);
     }
 
     /**
@@ -73,7 +56,6 @@ public class InventoryController {
      */
     public void addItem(Item item) {
         if (checkNetwork.isOnline()) {
-
             inventory.add(item);
             Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
@@ -84,7 +66,6 @@ public class InventoryController {
             inventory.add(item);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
             newItems.addItem(item);
-            notify();
         }
     }
 
@@ -105,10 +86,11 @@ public class InventoryController {
             updateUserThread.start();
         }
         else {
+            inventory = LoginActivity.USERLOGIN.getInventory();
             inventory.remove(item);
             saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
             oldItems.addItem(item);
-            notify();
+
         }
     }
 
@@ -160,7 +142,6 @@ public class InventoryController {
      */
     class DeleteItemThread extends Thread {
         private Item item;
-
         public DeleteItemThread(Item item) {
             this.item = item;
         }
@@ -194,7 +175,7 @@ public class InventoryController {
         }
     }
 
-    private Inventory loadInventoryInFile(Inventory inventory, User user){
+    public Inventory loadInventoryInFile(User user){
         try{
             FileInputStream fis = context.openFileInput(user.getUsername() + "inventory.sav");
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));

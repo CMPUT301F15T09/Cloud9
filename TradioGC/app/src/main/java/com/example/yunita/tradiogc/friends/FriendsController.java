@@ -25,7 +25,7 @@ public class FriendsController {
     private static final String TAG = "FriendsController";
     private UserController userController;
     private Context context;
-    private Gson gson;
+    private Gson gson = new Gson();
 
     /**
      * Class constructor specifying that this controller class is a subclass of Context.
@@ -89,7 +89,7 @@ public class FriendsController {
         }
     }
 
-    private Friends loadFriendsFromFile(User user){
+    public Friends loadFriendsFromFile(User user){
         try{
             FileInputStream fis = context.openFileInput(user.getUsername() + "friends.sav");
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));

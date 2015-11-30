@@ -36,6 +36,13 @@ public class InventoryController {
         inventory.add(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -49,6 +56,13 @@ public class InventoryController {
         inventory.remove(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

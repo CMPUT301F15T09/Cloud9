@@ -22,9 +22,12 @@ import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.photo.Photo;
+import com.example.yunita.tradiogc.photo.PhotoController;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * This activity handles editing an item in the user's inventory.
@@ -44,11 +47,14 @@ public class EditItemActivity extends AppCompatActivity {
     private Item item = new Item();
     private Button add;
     private Button save;
+    private Button delPhoto;
     private Uri imageFileUri;
     private ImageView tempPhoto;
     private String imageFilePath;
     private Bitmap thumbnail;
     private Boolean usePhoto;
+    private PhotoController photoController;
+    private Photo photo;
 
     /**
      * Gets the name of the item to be edited.
@@ -127,6 +133,7 @@ public class EditItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
+        photoController = new PhotoController(mContext);
 
         if (getIntent().getExtras()!=null) {
             item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
@@ -147,14 +154,23 @@ public class EditItemActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.save_item_button);
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
-        //LOAD PHOTO HERE
-        //if (!(item.getPhotos() == "")){
-        //    tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
-        //}
 
+        photoController.getItem(item.getId());
+        photo = photoController.getPhoto();
+        ArrayList<String> photoArray;
 
+        if (photo != null) {
+            photoArray = photo.getEncodedPhoto();
+            tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+        }
+        else{
+            photo = new Photo();
+        }
+
+        Button delPhoto = (Button) findViewById(R.id.delete_photo_button);
         Button delItem = (Button) findViewById(R.id.delete_item_button);
 
+        delPhoto.setVisibility(View.VISIBLE);
         delItem.setVisibility(View.VISIBLE);
         add.setVisibility(View.GONE);
         save.setVisibility(View.VISIBLE);
@@ -174,6 +190,7 @@ public class EditItemActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qualityChoice.setAdapter(adapter2);
+        photo = new Photo();
 
 
         if (!item.getVisibility()) {
@@ -187,12 +204,20 @@ public class EditItemActivity extends AppCompatActivity {
         qualityChoice.setSelection(item.getQuality());
         quantityEdit.setText(Integer.toString(item.getQuantity()));
 
+
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
-        //LOAD PHOTO HERE
-        //if (!(item.getPhotos() == "")){
-        //    tempPhoto.setImageBitmap(decodeImage(item.getPhotos()));
-        //}
+        photoController.getItem(item.getId());
+        photo = photoController.getPhoto();
+        ArrayList<String> photoArray;
+
+        if (photo != null) {
+            photoArray = photo.getEncodedPhoto();
+            tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+        }
+        else{
+            photo = new Photo();
+        }
     }
 
 
@@ -226,10 +251,13 @@ public class EditItemActivity extends AppCompatActivity {
             }
             int quality = qualityChoice.getSelectedItemPosition();
 
-            String photo = "";
+
             if (thumbnail != null) {
-                photo = encodeImage(thumbnail);
-                System.out.println(thumbnail.getByteCount());
+                if (usePhoto){
+                    photo.addEncodedPhoto(thumbnail);
+                    photo.setItemId(item.getId());
+                    photoController.addPhoto(item.getId(), photo);
+                }
             }
 
             item.setName(name);
@@ -239,10 +267,9 @@ public class EditItemActivity extends AppCompatActivity {
             item.setCategory(category);
             item.setQuantity(quantity);
             item.setQuality(quality);
-            if (usePhoto){
-                //save photo here
-            }
+
             inventoryController.updateItem(item);
+
             finish();
         }
     }
@@ -332,14 +359,21 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     public Bitmap decodeImage(String encoded){
-        byte[] decodedString = Base64.decode(encoded,Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+        byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
     }
 
 
     public void delItem(View v){
         inventoryController.removeExistingItem(item);
+        Intent intent = new Intent(mContext, MyInventoryActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    public void delPhoto(View v){
+        photo.removeEncodedPhoto();
+        photoController.updateItemPhotos(photo.getItemId(),photo);
         Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);
         finish();

@@ -67,6 +67,13 @@ public class Photo {
     }
 
     /**
+     * Removes an encoded photo from an item's list of photos.
+     */
+    public void removeEncodedPhoto() {
+        this.encodedPhoto.remove(0);
+    }
+
+    /**
      * Encodes the photo into a string and returns it.
      * Code taken from:
      * http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android

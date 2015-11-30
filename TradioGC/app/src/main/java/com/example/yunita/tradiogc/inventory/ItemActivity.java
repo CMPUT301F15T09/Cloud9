@@ -15,20 +15,25 @@ import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.photo.Photo;
+import com.example.yunita.tradiogc.photo.PhotoController;
 import com.example.yunita.tradiogc.trade.TradeActivity;
 import com.example.yunita.tradiogc.user.UserController;
+import java.util.ArrayList;
+
 
 /**
  * This activity handles viewing an item's details.
  */
 public class ItemActivity extends AppCompatActivity {
-    private InventoryController inventoryController;
+
     private Item item;
     private Context context = this;
     private Categories categories;
     private String perspective = "";
     private UserController userController;
     private int index;
+    private PhotoController photoController;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
@@ -39,6 +44,9 @@ public class ItemActivity extends AppCompatActivity {
     private TextView quantity;
     private TextView quality;
     private ImageView itemImage;
+    private Photo photo;
+    private ArrayList<String> photos;
+    private int photoIndex;
 
     /**
      * Sets item.
@@ -141,10 +149,17 @@ public class ItemActivity extends AppCompatActivity {
                 } else {
                     quality.setText("Used");
                 }
-                //LOAD PHOTO
-                //if (!item.getPhotos().equals("")) {
-                //    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
-                //}
+
+                photoController.getItem(item.getId());
+                photo = photoController.getPhoto();
+                photos = new ArrayList<>();
+                if (photo != null){
+                    photos = photo.getEncodedPhoto();
+                    itemImage.setImageBitmap(decodeImage(photos.get(photoIndex)));
+                }
+                else {
+                    photo = new Photo();
+                }
             }
 
         }
@@ -156,11 +171,12 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        inventoryController = new InventoryController(context);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
+        photoController = new PhotoController(context);
 
+        photoIndex = 0;
         itemImage = (ImageView) findViewById(R.id.itemImage);
         name = (TextView) findViewById(R.id.itemName);
         category = (TextView) findViewById(R.id.itemCategory);
@@ -180,12 +196,15 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         categories = new Categories();
 
+        photoIndex = 0;
 
         if (intent.getExtras() != null) {
             perspective = intent.getExtras().getString("owner");
             index = intent.getExtras().getInt("index");
             if (perspective.equals("owner")) {
+                System.out.println(">>>" + LoginActivity.USERLOGIN.getInventory().size());
                 item = LoginActivity.USERLOGIN.getInventory().get(index);
+                System.out.println(LoginActivity.USERLOGIN.getInventory().size());
             } else {
                 item = (Item) intent.getSerializableExtra("item");
             }
@@ -205,6 +224,8 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        photoIndex = 0;
         if (perspective!=null && perspective.equals("owner")) {
             Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
             getUserLoginThread.start();
@@ -294,5 +315,14 @@ public class ItemActivity extends AppCompatActivity {
         intent.putExtra("borrower_name", LoginActivity.USERLOGIN.getUsername());
         int result = 0;
         startActivityForResult(intent, result);
+    }
+    public void nextPhoto (View v){
+        if (photo != null) {
+            photoIndex++;
+            if (photoIndex >= photos.size()) {
+                photoIndex = 0;
+            }
+            itemImage.setImageBitmap(decodeImage(photos.get(photoIndex)));
+        }
     }
 }

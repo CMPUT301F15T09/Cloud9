@@ -8,7 +8,6 @@ import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,8 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 /**
  * Created by User on 2015-11-29.
@@ -36,6 +33,7 @@ public class ItemstobeAdded {
     }
 
     public Inventory getAddInventory(){
+        addInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
         return addInventory;
     }
 
@@ -73,8 +71,7 @@ public class ItemstobeAdded {
             FileInputStream fis = context.openFileInput(user.getUsername() + "addinventory.sav");
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Item>>() {}.getType();
-            addInventory = gson.fromJson(in, listType);
+            addInventory = gson.fromJson(in, Inventory.class);
             return addInventory;
         } catch (FileNotFoundException e) {
             addInventory = new Inventory();

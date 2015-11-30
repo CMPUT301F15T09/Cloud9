@@ -188,7 +188,7 @@ public class InventoryController {
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Item>>() {}.getType();
-            inventory = gson.fromJson(in, listType);
+            inventory = gson.fromJson(in, Inventory.class);
             return inventory;
         } catch (FileNotFoundException e) {
             inventory = new Inventory();

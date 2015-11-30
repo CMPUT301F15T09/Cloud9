@@ -215,14 +215,16 @@ public class LoginActivity extends Activity {
                         Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
-                        goToMain();
                         loginController.saveUserInFile(LoginActivity.USERLOGIN);
                         inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
+                        goToMain();
                         /*if (newItems.getAddInventory().isEmpty()){
+                            inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
                             goToMain();
                         } else {
                             newItems.addAllItems();
-                            changedItems.upAllItems();
+                            inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
+                            /*changedItems.upAllItems();
                             oldItems.delAllItems();
                             goToMain();
                         }*/
@@ -234,8 +236,8 @@ public class LoginActivity extends Activity {
                     Toast toast = Toast.makeText(mContext, "No Internet connection. This username does not exist in local memory", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-//                    Inventory inventory = inventoryController.loadInventoryInFile(LoginActivity.USERLOGIN);
-             //       LoginActivity.USERLOGIN.setInventory(inventory);
+                    Inventory inventory = inventoryController.loadInventoryInFile(LoginActivity.USERLOGIN);
+                    LoginActivity.USERLOGIN.setInventory(inventory);
                     goToMain();
                 }
             }

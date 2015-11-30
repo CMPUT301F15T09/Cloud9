@@ -191,7 +191,7 @@ public class User {
             if (word.length() != 0) {
                 string += " " + String.valueOf(word.charAt(0)).toUpperCase();
                 if (word.length() != 1) {
-                    string += word.substring(1);
+                    string += word.substring(1).toLowerCase();
                 }
             }
         }

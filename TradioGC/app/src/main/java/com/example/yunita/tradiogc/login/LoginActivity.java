@@ -199,6 +199,7 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (!username.equals("")) {
+
             if(checkNetwork.isOnline()) {
                 Thread thread = userController.new GetUserLoginThread(username);
                 thread.start();
@@ -215,6 +216,8 @@ public class LoginActivity extends Activity {
                         toast.show();
                     } else {
                         goToMain();
+                        loginController.saveUserInFile(LoginActivity.USERLOGIN);
+                        inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
                         /*if (newItems.getAddInventory().isEmpty()){
                             goToMain();
                         } else {
@@ -231,7 +234,8 @@ public class LoginActivity extends Activity {
                     Toast toast = Toast.makeText(mContext, "No Internet connection. This username does not exist in local memory", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-
+//                    Inventory inventory = inventoryController.loadInventoryInFile(LoginActivity.USERLOGIN);
+             //       LoginActivity.USERLOGIN.setInventory(inventory);
                     goToMain();
                 }
             }

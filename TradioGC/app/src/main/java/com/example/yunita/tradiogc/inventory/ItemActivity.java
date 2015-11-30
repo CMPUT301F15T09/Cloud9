@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +23,6 @@ import com.example.yunita.tradiogc.user.UserController;
 import java.util.ArrayList;
 
 public class ItemActivity extends AppCompatActivity {
-    private InventoryController inventoryController;
     private Item item;
     private Context context = this;
     private Categories categories;
@@ -101,17 +98,12 @@ public class ItemActivity extends AppCompatActivity {
 
                 photoController.getItem(item.getId());
                 photo = photoController.getPhoto();
-                ArrayList<String> photos;
 
-                photos = photo.getEncodedPhoto();
-                if(photos.size() != 0) {
+                if (photo != null){
+                    ArrayList<String> photos;
+                    photos = photo.getEncodedPhoto();
                     itemImage.setImageBitmap(decodeImage(photos.get(0)));
                 }
-
-                //LOAD PHOTO
-                //if (!item.getPhotos().equals("")) {
-                //    itemImage.setImageBitmap(decodeImage(item.getPhotos()));
-                //}
             }
 
         }
@@ -122,8 +114,6 @@ public class ItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        inventoryController = new InventoryController(context);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
@@ -153,7 +143,9 @@ public class ItemActivity extends AppCompatActivity {
             perspective = intent.getExtras().getString("owner");
             index = intent.getExtras().getInt("index");
             if (perspective.equals("owner")) {
+                System.out.println(">>>" + LoginActivity.USERLOGIN.getInventory().size());
                 item = LoginActivity.USERLOGIN.getInventory().get(index);
+                System.out.println(LoginActivity.USERLOGIN.getInventory().size());
             } else {
                 item = (Item) intent.getSerializableExtra("item");
             }

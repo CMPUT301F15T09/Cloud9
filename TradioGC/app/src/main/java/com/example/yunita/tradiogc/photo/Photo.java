@@ -21,6 +21,10 @@ public class Photo {
         this.itemId = itemId;
     }
 
+    public Boolean Size(){
+        return (this.encodedPhoto.get(0).equals(""));
+    }
+
     public int getItemId() {
         return itemId;
     }
@@ -37,6 +41,9 @@ public class Photo {
         this.encodedPhoto.add(encodeImage(bitmap));
     }
 
+    public void removeEncodedPhoto() {
+        this.encodedPhoto.remove(0);
+    }
     // taken from http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android
     // (C) 2015 Roman Truba modified by Cloud9
 

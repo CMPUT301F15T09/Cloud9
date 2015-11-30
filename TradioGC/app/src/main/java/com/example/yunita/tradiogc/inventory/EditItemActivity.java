@@ -24,6 +24,7 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.photo.Photo;
 import com.example.yunita.tradiogc.photo.PhotoController;
+import com.example.yunita.tradiogc.user.UserController;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -155,17 +156,18 @@ public class EditItemActivity extends AppCompatActivity {
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
-        photoController.getItem(item.getId());
-        photo = photoController.getPhoto();
+        if (LoginActivity.USERLOGIN.getDownloadPhotos()) {
+            photoController.getItem(item.getId());
+            photo = photoController.getPhoto();
 
-        ArrayList<String> photoArray;
+            ArrayList<String> photoArray;
 
-        if (photo != null) {
-            photoArray = photo.getEncodedPhoto();
-            tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
-        }
-        else{
-            photo = new Photo();
+            if (photo != null) {
+                photoArray = photo.getEncodedPhoto();
+                tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+            } else {
+                photo = new Photo();
+            }
         }
 
         Button delPhoto = (Button) findViewById(R.id.delete_photo_button);
@@ -208,16 +210,17 @@ public class EditItemActivity extends AppCompatActivity {
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
-        photoController.getItem(item.getId());
-        photo = photoController.getPhoto();
-        ArrayList<String> photoArray;
+        if (LoginActivity.USERLOGIN.getDownloadPhotos()) {
+            photoController.getItem(item.getId());
+            photo = photoController.getPhoto();
+            ArrayList<String> photoArray;
 
-        if (photo != null) {
-            photoArray = photo.getEncodedPhoto();
-            tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
-        }
-        else{
-            photo = new Photo();
+            if (photo != null) {
+                photoArray = photo.getEncodedPhoto();
+                tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+            } else {
+                photo = new Photo();
+            }
         }
     }
 

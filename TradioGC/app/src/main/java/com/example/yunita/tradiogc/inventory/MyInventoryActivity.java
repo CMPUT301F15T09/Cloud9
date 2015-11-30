@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
@@ -35,6 +36,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
     private Inventory searchResult = new Inventory();
     private ArrayAdapter<Item> inventoryViewAdapter;
     private InventoryController inventoryController;
+
 
     private Context context = this;
 

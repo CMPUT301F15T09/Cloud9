@@ -109,15 +109,12 @@ public class RecordPageFragment extends Fragment {
         switch (mPage) {
             case 0:// current = pending, offered, accepted
                 setCurrentTradesView();
-                System.out.println("**********");
                 break;
             case 1: // completed
                 setCompletedTradesView();
-                System.out.println("++++++++++");
                 break;
             case 2: // past = completed, declined
                 setPastTradesView();
-                System.out.println("==========");
                 break;
         }
     }

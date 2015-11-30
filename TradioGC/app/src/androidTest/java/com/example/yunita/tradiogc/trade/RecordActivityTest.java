@@ -2,22 +2,23 @@ package com.example.yunita.tradiogc.trade;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.record.RecordActivity;
+import com.example.yunita.tradiogc.record.RecordListAdapter;
 import com.example.yunita.tradiogc.user.User;
 
 public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
 
     private RecordActivity recordActivity;
+    private ListView recordListView;
+    private RecordListAdapter recordListAdapter;
 
     public RecordActivityTest(){
         super(com.example.yunita.tradiogc.record.RecordActivity.class);
     }
-
-    private ListView recordListView;
 
     public void testStart() throws Exception {
         Activity activity = getActivity();
@@ -52,7 +53,31 @@ public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
         test_borrower.setTrades(test_borrower_trades);
 
         LoginActivity.USERLOGIN = test_borrower;
+    }
 
+    /**
+     * Use Case 26
+     * 04.08.01, 04.09.01
+     * Test for browsing a user's past trades.
+     */
+
+    public void testBrowsePastTrades(){
+        recordActivity = (RecordActivity) getActivity();
+
+        recordActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recordListAdapter = new RecordListAdapter(getActivity().getApplicationContext(),
+                        R.layout.record_list_item,
+                        LoginActivity.USERLOGIN.getTrades().getPastTrades());
+                recordListView = recordActivity.getRecordListView();
+                recordListView.setAdapter(recordListAdapter);
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        assertEquals(recordListAdapter.getCount(), 2);
     }
 
     /**
@@ -66,14 +91,17 @@ public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
         recordActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // select tab
+                recordListAdapter = new RecordListAdapter(getActivity().getApplicationContext(),
+                        R.layout.record_list_item,
+                        LoginActivity.USERLOGIN.getTrades().getCurrentTrades());
                 recordListView = recordActivity.getRecordListView();
+                recordListView.setAdapter(recordListAdapter);
             }
         });
 
         getInstrumentation().waitForIdleSync();
 
-        assertEquals(recordListView.getAdapter().getCount(), 0);
+        assertEquals(recordListAdapter.getCount(), 3);
     }
 
     /**
@@ -84,6 +112,21 @@ public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
     public void testBrowseMySentTrades(){
         recordActivity = (RecordActivity) getActivity();
 
+        recordActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recordListAdapter = new RecordListAdapter(getActivity().getApplicationContext(),
+                        R.layout.record_list_item,
+                        LoginActivity.USERLOGIN.getTrades().getPendingTrades());
+                recordListView = recordActivity.getRecordListView();
+                recordListView.setAdapter(recordListAdapter);
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        assertEquals(recordListAdapter.getCount(), 1);
+
     }
 
     /**
@@ -92,7 +135,22 @@ public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
      * Test for browsing trades that were offered to the user.
      */
     public void testBrowseTradesOfferedToMe(){
+        recordActivity = (RecordActivity) getActivity();
 
+        recordActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recordListAdapter = new RecordListAdapter(getActivity().getApplicationContext(),
+                        R.layout.record_list_item,
+                        LoginActivity.USERLOGIN.getTrades().getOfferedTrades());
+                recordListView = recordActivity.getRecordListView();
+                recordListView.setAdapter(recordListAdapter);
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        assertEquals(recordListAdapter.getCount(), 1);
     }
 
     /**
@@ -101,7 +159,22 @@ public class RecordActivityTest extends ActivityInstrumentationTestCase2 {
      * Test for browsing a user's completed trades.
      */
     public void testBrowseCompleteTrades(){
+        recordActivity = (RecordActivity) getActivity();
 
+        recordActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recordListAdapter = new RecordListAdapter(getActivity().getApplicationContext(),
+                        R.layout.record_list_item,
+                        LoginActivity.USERLOGIN.getTrades().getCompletedTrades());
+                recordListView = recordActivity.getRecordListView();
+                recordListView.setAdapter(recordListAdapter);
+            }
+        });
+
+        getInstrumentation().waitForIdleSync();
+
+        assertEquals(recordListAdapter.getCount(), 1);
     }
 
 }

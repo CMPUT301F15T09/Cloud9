@@ -111,11 +111,10 @@
                 android:text="@string/photo_download"
                 android:paddingRight="20dp" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switch_button_download"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/custom_roundrect_button"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout

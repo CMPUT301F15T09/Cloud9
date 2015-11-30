@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.support.v7.widget.SwitchCompat;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
@@ -40,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button myinventory_button;
     private Button friendinventory_button;
     private Button addfriend_button;
-    private Switch downloadPhotos;
+    private SwitchCompat downloadPhotos;
 
     private TextView username;
     private TextView location;
@@ -170,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
 
-        downloadPhotos = (Switch) findViewById(R.id.switch_button_download);
+        downloadPhotos = (SwitchCompat) findViewById(R.id.switch_button_download);
 
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         myinventory_button = (Button) findViewById(R.id.my_inventory_button);

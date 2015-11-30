@@ -23,7 +23,7 @@ A trading gift-card application
 - Target Sdk Version: 21
 
 ## Trailer
-On the way...
+[TradioGC Preview is up now!](https://youtu.be/r3O27hR8o0U)
 
 ## Demo
 On the way...

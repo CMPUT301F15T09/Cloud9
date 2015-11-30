@@ -21,8 +21,6 @@ import com.example.yunita.tradiogc.trade.TradeDetailActivity;
 import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.UserController;
 
-//TODO: refresh data
-//TODO: separate offered to me and my offer
 public class RecordPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private int mPage;

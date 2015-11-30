@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * This activity handles viewing an item's details.
  */
 public class ItemActivity extends AppCompatActivity {
-    private InventoryController inventoryController;
+
     private Item item;
     private Context context = this;
     private Categories categories;
@@ -172,7 +172,6 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        inventoryController = new InventoryController(context);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);

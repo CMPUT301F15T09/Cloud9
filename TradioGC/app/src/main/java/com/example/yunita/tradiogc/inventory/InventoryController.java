@@ -47,19 +47,21 @@ public class InventoryController {
 
     /**
      * Called when the user long presses on an item that exists in the inventory.
-     * <p>This method is used to remove an item from the user's inventory and
+     * <p>This method is used to remove the item from the inventory and
      * run the "Update User Thread".
      *
-     * @param item an existing item in the user's inventory
+     * @param item existing item in the inventory
      */
     public void removeExistingItem(Item item) {
         inventory.remove(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
-        try {
-            updateUserThread.join();
-        }catch (InterruptedException e) {
-            e.printStackTrace();
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -91,29 +93,6 @@ public class InventoryController {
             }
         } else {
             addItem(item);
-        }
-    }
-
-    /**
-     * Called when the user long presses on an existing item in their inventory.
-     * <p>This class creates a thread and runs "Delete Item".
-     * While it is running, it removes the item from the user's inventory
-     * and updates the inventory.
-     */
-    class DeleteItemThread extends Thread {
-        private Item item;
-
-        public DeleteItemThread(Item item) {
-            this.item = item;
-        }
-
-        @Override
-        public void run() {
-            synchronized (this) {
-                removeExistingItem(item);
-                inventory.remove(item);
-                notify();
-            }
         }
     }
 

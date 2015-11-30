@@ -234,7 +234,8 @@ public class TradeDetailActivity extends AppCompatActivity {
                     }
                 }
 
-                String comments = comments_et.getText().toString();
+                String comments = formatEmail(comments_et.getText().toString());
+
                 dialog.dismiss();
 
                 Thread emailThread = new EmailThread(comments, anotherUser.getEmail(), LoginActivity.USERLOGIN.getEmail());
@@ -248,6 +249,22 @@ public class TradeDetailActivity extends AppCompatActivity {
             }
         });
         acceptBuilder.show();
+    }
+
+    /**
+     * Formats the email message.
+     *
+     * @param tradeComment owner's comment
+     * @return String
+     */
+    public String formatEmail(String tradeComment){
+        String comments = "Comment from " + LoginActivity.USERLOGIN.getUsername() + ": " + tradeComment + "\n";
+        comments += "======================================\n ";
+        comments += "Trade Detail:\n ";
+        comments += "======================================\n ";
+        comments += trade.getOwner() + "'s item: " + trade.getOwnerItem().getName()+"\n";
+        comments += trade.getBorrower() + "'s offer(s): " + trade.getBorrowerItems();
+        return comments;
     }
 
     /**
@@ -415,16 +432,8 @@ public class TradeDetailActivity extends AppCompatActivity {
                     // (C) 2010 Vinayak B, shridutt kothari
                     GMailSender sender = new GMailSender("tradiogc@gmail.com", "tradiogc123");
 
-                    /*
-                    // only for test
-                    sender.sendMail("TradioGC: Your trade is in progress now",
-                            "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
-                            "tradiogc@gmail.com",
-                            "tradiogcjunkmail@yopmail.com");
-                    */
-
                     sender.sendMail("TradioGC: New Accepted Trade",
-                            "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
+                            comments,
                             "tradiogc@gmail.com",
                              email1+ ","+email2);
 

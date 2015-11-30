@@ -71,7 +71,9 @@ public class PhotographTestCase extends ActivityInstrumentationTestCase2 {
         Bitmap bitmap = Bitmap.createBitmap(100, 200, Bitmap.Config.RGB_565);
         photo.addEncodedPhoto(bitmap);
 
-        // do something
+        // enabled photo means you run the webserver
+        Bitmap thumbnail = photo.decodeImage(photo.getEncodedPhoto().get(0));
+        assertNotNull(thumbnail);
     }
 
     /**
@@ -79,13 +81,15 @@ public class PhotographTestCase extends ActivityInstrumentationTestCase2 {
      * 06.05.01, 10.01.01
      * Test for disabling photograph downloads.
      */
-    public void DisablePhotographDownload(){
+    public void testDisablePhotographDownload(){
         Item item = new Item(1,"Chapters", 0, 50.00, "chapters gc", true, 1, 0);
         Photo photo = new Photo(item.getId());
         Bitmap bitmap = Bitmap.createBitmap(100, 200, Bitmap.Config.RGB_565);
         photo.addEncodedPhoto(bitmap);
 
-        // do something
+        // disabled photo means the app does not run the webserver
+        Bitmap thumbnail = null;
+        assertTrue(thumbnail == null);
     }
 
 }

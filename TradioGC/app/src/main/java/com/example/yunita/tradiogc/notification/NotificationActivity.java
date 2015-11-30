@@ -32,6 +32,15 @@ public class NotificationActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    /**
+     * Gets notification list view.
+     *
+     * @return notification list view.
+     */
+    public ListView getNotificationListView() {
+        return notificationListView;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

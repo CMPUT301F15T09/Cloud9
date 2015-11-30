@@ -4,6 +4,8 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.friends.Friends;
+import com.example.yunita.tradiogc.trade.Trade;
+import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
@@ -23,7 +25,7 @@ public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
     public void testSearchUsername() {
         // We have 2 users: ann and john
         User doge = new User();
-        doge.setUsername("doge");
+        doge.setUsername("john");
 
         UserController search = new UserController(context);
         Users username = search.searchUsers(doge.getUsername());
@@ -117,8 +119,10 @@ public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
 
         // Assert that the friend profile is john's
         User friend_profile = john;
+
+        System.out.println(friend_profile.getLocation());
         assertTrue(friend_profile.getUsername().equals("john"));
-        assertTrue(friend_profile.getLocation().equals("edmonton"));
+        assertTrue(friend_profile.getLocation().equals("Edmonton"));
         assertTrue(friend_profile.getEmail().equals("john@yahoo.com"));
         assertTrue(friend_profile.getPhone().equals("7803332221"));
 
@@ -132,7 +136,27 @@ public class FriendsTestCase extends ActivityInstrumentationTestCase2 {
      * Test for viewing the top traders on user's friend list
      */
     public void testViewTopTraders(){
+        Trade completedTrade = new Trade();
+        completedTrade.setStatus("completed");
 
+        User john = new User();
+        john.setUsername("john");
+
+
+        User mike = new User();
+        john.setUsername("mike");
+
+
+        john.getTrades().add(completedTrade);
+        mike.getTrades().add(completedTrade);
+        mike.getTrades().add(completedTrade);
+
+        Users users = new Users();
+        users.add(john);
+        users.add(mike);
+        users.sortByNumberOfTrades();
+
+        assertTrue(users.get(0) == mike);
     }
 
 }

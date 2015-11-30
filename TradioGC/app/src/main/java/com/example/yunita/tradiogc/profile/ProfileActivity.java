@@ -37,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton edit_button;
     private Button myinventory_button;
     private Button friendinventory_button;
-
     private Button addfriend_button;
 
     private TextView username;

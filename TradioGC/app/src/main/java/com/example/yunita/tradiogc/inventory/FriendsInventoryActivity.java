@@ -46,15 +46,23 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private String query = "";
     private int categorySelection = 0;
 
+    /**
+     * Gets the list of items in a friend's inventory.
+     *
+     * @return item_list list of items in a friend's inventory
+     */
     public ListView getItem_list() {
         return item_list;
     }
 
+    /**
+     * Gets the list of items from searching a friend's inventory.
+     *
+     * @return searchItems search result from searching a friend's inventory
+     */
     public SearchInventory getSearchItems() {
         return searchItems;
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,8 +21,9 @@ import com.example.yunita.tradiogc.trade.TradeDetailActivity;
 import com.example.yunita.tradiogc.trade.Trades;
 import com.example.yunita.tradiogc.user.UserController;
 
-//TODO: refresh data
-//TODO: separate offered to me and my offer
+/**
+ * This class creates a fragment used for the Record Activity
+ */
 public class RecordPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private int mPage;
@@ -38,7 +39,7 @@ public class RecordPageFragment extends Fragment {
             Trade trade = trades.get(position);
             int tradeId = trade.getId();
 
-            // call another intent
+            // Calls another intent
             Intent intent = new Intent(getActivity(), TradeDetailActivity.class);
             intent.putExtra("trade_id", tradeId);
             //startActivity(intent);
@@ -90,7 +91,7 @@ public class RecordPageFragment extends Fragment {
     }
 
     /**
-     * set the list view
+     * Sets the list view for the trade records.
      */
     public void setView() {
         switch (mPage) {
@@ -149,7 +150,7 @@ public class RecordPageFragment extends Fragment {
     }
 
     /**
-     * update the view
+     * Updates the view.
      */
     public void update(){
         Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());

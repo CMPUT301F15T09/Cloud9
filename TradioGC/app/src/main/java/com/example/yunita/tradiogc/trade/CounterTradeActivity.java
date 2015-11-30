@@ -23,6 +23,9 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
+/**
+ * This activity handles counter trades made by the owner to the borrower.
+ */
 public class CounterTradeActivity extends AppCompatActivity {
     private Context context = this;
 
@@ -48,6 +51,11 @@ public class CounterTradeActivity extends AppCompatActivity {
 
     private UserController userController;
 
+    /**
+     * Gets the "Offer Trade" button for creating a counter trade.
+     *
+     * @return Button "Offer Trade" button.
+     */
     public Button getCounterTradeButton(){
         return (Button) findViewById(R.id.offer_trade_button);
     }
@@ -69,11 +77,14 @@ public class CounterTradeActivity extends AppCompatActivity {
         userController = new UserController(context);
     }
 
+    /**
+     * Initialises the trade with the details from the declined trade.
+     */
     @Override
     protected void onStart() {
         super.onStart();
 
-        // get the borrower name and trade item from intent
+        // Gets the borrower name and trade item from intent
         Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getExtras();
@@ -83,7 +94,7 @@ public class CounterTradeActivity extends AppCompatActivity {
             }
         }
 
-        // wait for getting borrower
+        // Waits for getting the borrower
         Thread getBorrowerThread = new GetBorrowerThread(borrowerName);
         getBorrowerThread.start();
         synchronized (getBorrowerThread) {
@@ -94,7 +105,7 @@ public class CounterTradeActivity extends AppCompatActivity {
             }
         }
 
-        // set the inventory list and offering items list
+        // Sets the inventory list and offering items list
         borrowerInventory.addAll(borrower.getInventory().getPublicItems());
 
         borrowerInventoryArrayAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, borrowerInventory);
@@ -104,7 +115,7 @@ public class CounterTradeActivity extends AppCompatActivity {
         borrowerOfferListView.setAdapter(borrowerOfferArrayAdapter);
 
 
-        // set trade with
+        // Sets trade with
         tradeWith.setText("Trade with " + borrower.getUsername());
         tradeWith.setTypeface(null, Typeface.BOLD);
 
@@ -141,20 +152,22 @@ public class CounterTradeActivity extends AppCompatActivity {
     }
 
     /**
+     * Called when the owner presses the "Offer Trade" button.
+     * <p>This method offers a counter trade to the borrower.
      *
-     * @param view "offer trade" button.
+     * @param view "Offer Trade" button.
      */
     public void offerTrade(View view){
-        // borrower has offered counter trade
+        // Borrower has a offered a counter trade
         offeredTrade = new Trade(LoginActivity.USERLOGIN.getUsername(), borrowerName, ownerItem, borrowerOffer);
         offeredTrade.setStatus("offered");
 
-        // owner has pending counter trade
+        // Owner has a pending counter trade
         pendingTrade = new Trade(LoginActivity.USERLOGIN.getUsername(), borrowerName, ownerItem, borrowerOffer);
         pendingTrade.setId(offeredTrade.getId());
         pendingTrade.setStatus("pending");
 
-        // save the pending trade in owner trades
+        // Save the pending trade in owner trades
         SavePendingTradeThread savePendingTradeThread = new SavePendingTradeThread();
         savePendingTradeThread.start();
         synchronized (savePendingTradeThread) {
@@ -165,22 +178,20 @@ public class CounterTradeActivity extends AppCompatActivity {
             }
         }
 
-        // send notification to borrower
+        // Send notification to the borrower
         sendBorrowerNotifThread sendOwnerNotifThread = new sendBorrowerNotifThread(borrowerName);
         sendOwnerNotifThread.start();
 
-        // after offer a trade, should the borrower item is on hold?
-        // so that no one can offer a trade to that borrower item.
-
-        // finish the parent trade detail activity
         setResult(1);
 
         finish();
     }
 
     /**
+     * Called when the owner presses the "X" button for cancelling a trade.
+     * <p>This method cancels the trade that is getting composed.
      *
-     * @param view "cancel trade" button.
+     * @param view "X" button
      */
     public void cancelTrade(View view) {
         // finish the parent trade detail activity
@@ -188,14 +199,14 @@ public class CounterTradeActivity extends AppCompatActivity {
         finish();
     }
 
-    // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
-    // (C) 2011 user432209
-
     /**
      * Decodes the encoded string into an image and returns it.
+     * Code taken from:
+     * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+     * (C) 2011 user432209
      *
-     * @param encoded encoded image in string format.
-     * @return Bitmap.
+     * @param encoded       encoded image in string format
+     * @return decodedByte  decoded image as a Bitmap
      */
     public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
@@ -204,7 +215,7 @@ public class CounterTradeActivity extends AppCompatActivity {
     }
 
     /**
-     * for borrower
+     * Sends a notification to the original borrower.
      */
     class sendBorrowerNotifThread extends Thread {
         private String username;
@@ -215,18 +226,18 @@ public class CounterTradeActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            // refresh borrower
+            // Refresh borrower
             borrower = userController.getUser(username);
             borrower.getTrades().add(0, offeredTrade);
             System.out.println(offeredTrade.getClass());
-            // notify borrower
+            // Notify borrower
             Thread updateTradeThread = userController.new UpdateUserThread(borrower);
             updateTradeThread.start();
         }
     }
 
     /**
-     * for owner
+     * Saves the trade as a pending trade for the owner.
      */
     class SavePendingTradeThread extends Thread {
         public SavePendingTradeThread() {}
@@ -252,7 +263,7 @@ public class CounterTradeActivity extends AppCompatActivity {
     }
 
     /**
-     * get borrower from web server
+     * Gets the borrower from the webserver.
      */
     class GetBorrowerThread extends Thread {
         private String name;

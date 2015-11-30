@@ -18,6 +18,9 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.trade.TradeDetailActivity;
 
+/**
+ * This activity handles notifications received by the user.
+ */
 public class NotificationActivity extends AppCompatActivity {
     private ListView notificationListView;
 
@@ -49,6 +52,13 @@ public class NotificationActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Sets up the list view of notifications received by the user.
+     * When the user presses on a notification, then the user is sent to
+     * view the trade's Trade Detail page.
+     * When the user long presses on a notification, the notification is temporarily removed
+     * from view until the user refreshes the notification tab.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -68,31 +78,34 @@ public class NotificationActivity extends AppCompatActivity {
                 }
                 notificationController.updateToWebServer();
 
-                // call another intent
+                // Calls another intent
                 Intent intent = new Intent(context, TradeDetailActivity.class);
                 intent.putExtra("trade_id", tradeId);
                 startActivity(intent);
             }
         });
 
-        // Delete friends on long click
+        // Delete notifications on long click
         notificationListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Notification notification = notifications.get(position);
-                // delete it in webserver
+                // Deletes it in webserver
                 LoginActivity.USERLOGIN.getNotifications().remove(notification);
                 notificationController.updateToWebServer();
-                // delete it in list
+                // Deletes it from the list
                 notifications.remove(notification);
                 notificationArrayAdapter.notifyDataSetChanged();
-                // show a toast
+                // Shows a toast
                 Toast.makeText(context, "Deleting Success", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
     }
 
+    /**
+     * Loads the user's notifications.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -101,10 +114,19 @@ public class NotificationActivity extends AppCompatActivity {
         updateNotificationThread.start();
     }
 
+    /**
+     * Called when the refresh button is pressed.
+     * <p>Refreshes the notification list view.
+     *
+     * @param item refresh button
+     */
     public void updateNotification(MenuItem item) {
         onResume();
     }
 
+    /**
+     * Notifies the list view to be refreshed.
+     */
     public void notifyUpdated() {
         Runnable doUpdateGUIList = new Runnable() {
             public void run() {
@@ -117,7 +139,9 @@ public class NotificationActivity extends AppCompatActivity {
         runOnUiThread(doUpdateGUIList);
     }
 
-
+    /**
+     * This thread updates the notification list.
+     */
     class UpdateNotificationThread extends Thread {
         public UpdateNotificationThread() {}
 

@@ -35,13 +35,13 @@ public class LoginController {
     };
 
     /**
-     * Class constructor.
+     * Class constructor for logging in and signing up.
      */
     public LoginController() {
     }
 
     /**
-     * Class constructor specifying this controller class is a subclass of Context.
+     * Class constructor specifying that this controller class is a subclass of Context.
      *
      * @param context
      */

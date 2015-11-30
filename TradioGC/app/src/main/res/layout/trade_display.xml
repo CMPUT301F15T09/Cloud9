@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            android:text="Trade With Doge"
+            android:text="Trade With User"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button

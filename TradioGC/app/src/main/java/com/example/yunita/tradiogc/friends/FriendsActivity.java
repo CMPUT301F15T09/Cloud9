@@ -99,7 +99,7 @@ public class FriendsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         friendsInUser.clear();
         friendsViewAdapter.notifyDataSetChanged();
-        // keep updating friend list (since we use tabmenu, after first
+        // Keeps updating friend list (since we use a tab menu, after the first
         // visit, this activity will be on resume/pause).
         Thread getFriendsInUserThread = new GetFriendsInUserThread();
         getFriendsInUserThread.start();

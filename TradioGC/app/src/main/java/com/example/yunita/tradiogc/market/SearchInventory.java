@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SearchInventory extends ArrayList<SearchItem> {
 
     /**
-     * Class constructor.
+     * Class constructor for searching inventories.
      */
     public SearchInventory() {
     }
@@ -16,8 +16,8 @@ public class SearchInventory extends ArrayList<SearchItem> {
     /**
      * Sets the current search inventory by the specified category.
      *
-     * @param searchInventory friends' inventories.
-     * @param category        item's category.
+     * @param searchInventory friends' inventories
+     * @param category        item category to be searched by
      */
     public void setInventoryByCategory(SearchInventory searchInventory, int category) {
         for (SearchItem searchItem : searchInventory) {
@@ -30,8 +30,8 @@ public class SearchInventory extends ArrayList<SearchItem> {
     /**
      * Sets the current search inventory by the specified item's name.
      *
-     * @param searchInventory friends' inventories.
-     * @param search          item's name.
+     * @param searchInventory friends' inventories
+     * @param search          item's name
      */
     public void setInventoryByQuery(SearchInventory searchInventory, String search) {
         for (SearchItem searchItem : searchInventory) {

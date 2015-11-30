@@ -5,7 +5,9 @@ import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.notification.Notifications;
 import com.example.yunita.tradiogc.trade.Trades;
 
-
+/**
+ * This class defines a user.
+ */
 public class User {
 
     private String username;
@@ -18,7 +20,7 @@ public class User {
     private Notifications notifications;
 
     /**
-     * Class constructor.
+     * Class constructor for a user.
      */
     public User() {
         username = "";
@@ -35,139 +37,151 @@ public class User {
     /**
      * Class constructor specifying the name of the object.
      *
-     * @param username contains the name of user.
+     * @param username name of the user
      */
     public User(String username) {
         this.username = username;
     }
 
     /**
-     * Gets the name of this user.
+     * Gets the name of the user.
      *
-     * @return username.
+     * @return username username of the user
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * Changes the name of this user.
+     * Changes the name of the user.
      *
-     * @param username this user's new name.
+     * @param username user's new name
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     * Gets the friend list of this user.
+     * Gets the friend list of the user.
      *
-     * @return friends.
+     * @return friends friends of the user
      */
     public Friends getFriends() {
         return friends;
     }
 
     /**
-     * Changes the friend list of this user.
+     * Changes the friend list of the user.
      *
-     * @param friends this user's new friend list.
+     * @param friends user's new list of friends
      */
     public void setFriends(Friends friends) {
         this.friends = friends;
     }
 
     /**
-     * Gets the location (city) where this user lives in.
+     * Gets the location (city) where the user lives in.
      *
-     * @return location.
+     * @return location location that the user lives in
      */
     public String getLocation() {
         return location;
     }
 
     /**
-     * Changes the location (city) of this user.
+     * Changes the location (city) of the user.
      *
-     * @param location this user's new location(city).
+     * @param location user's new location (city)
      */
     public void setLocation(String location) {
         this.location = getLocationFormat(location);
     }
 
     /**
-     * Gets the email of this user.
+     * Gets the e-mail address of the user.
      *
-     * @return email.
+     * @return email e-mail address of the user
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * Changes the email of this user.
+     * Changes the e-mail address of the user.
      *
-     * @param email this user's new email.
+     * @param email user's new e-mail address
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * Gets the phone number of this user.
+     * Gets the phone number of the user.
      *
-     * @return phone.
+     * @return phone phone number of the user
      */
     public String getPhone() {
         return phone;
     }
 
     /**
-     * Changes the phone number of this user.
+     * Changes the phone number of the user.
      *
-     * @param phone this user's new phone number.
+     * @param phone user's new phone number
      */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     /**
-     * Gets the inventory of this user.
+     * Gets the inventory of the user.
      *
-     * @return inventory.
+     * @return inventory inventory of the user
      */
     public Inventory getInventory() {
         return inventory;
     }
     /**
-     * Changes the inventory of this user.
+     * Changes the inventory of the user.
      *
-     * @param inventory this user's new inventory.
+     * @param inventory user's new inventory
      */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
 
+    /**
+     * Gets the trades involving the user.
+     *
+     * @return trades trades involving the user
+     */
     public Trades getTrades() {
         return trades;
     }
 
+    /**
+     * Changes the trades involving the user.
+     *
+     * @param trades user's new list of trades involving the user
+     */
     public void setTrades(Trades trades) {
         this.trades = trades;
     }
 
+    /**
+     * Changes the user's notifications.
+     *
+     * @return notifications user's notifications
+     */
     public Notifications getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(Notifications notifications) {
-        this.notifications = notifications;
-    }
-
     /**
-     * convert a string to a location-format string
-     * @param location input location string from user
-     * @return a string with location format
+     * Converts a string to a location-format string
+     *
+     * @param location  input location string from user
+     * @return String   a string with location format
      */
     public String getLocationFormat(String location) {
         String string = "";
@@ -188,10 +202,10 @@ public class User {
     }
 
     /**
-     * Return the new printing format of user.
-     * <p>The new format of user is [username].
+     * Return the new printing format of the user.
+     * <p>The new format of user is: [username].
      *
-     * @return String user's name.
+     * @return String user's username
      */
     @Override
     public String toString() {

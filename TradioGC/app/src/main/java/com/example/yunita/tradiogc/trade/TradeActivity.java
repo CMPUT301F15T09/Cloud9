@@ -23,6 +23,9 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
+/**
+ * This activity handles trades made between two users.
+ */
 public class TradeActivity extends AppCompatActivity {
 
     private Context context = this;
@@ -49,18 +52,38 @@ public class TradeActivity extends AppCompatActivity {
 
     private UserController userController;
 
+    /**
+     * Gets the "Offer Trade" button.
+     *
+     * @return Button "Offer Trade" button
+     */
     public Button getOfferTradeButton(){
         return (Button) findViewById(R.id.offer_trade_button);
     }
 
+    /**
+     * Gets the borrower's inventory list view.
+     *
+     * @return borrowerInventoryListView borrower's inventory list view
+     */
     public ListView getBorrowerInventoryListView() {
         return borrowerInventoryListView;
     }
 
+    /**
+     * Gets the borrower's offered list of items.
+     *
+     * @return borrowerOfferListView borrower's list view of offered items
+     */
     public ListView getBorrowerOfferListView() {
         return borrowerOfferListView;
     }
 
+    /**
+     * Gets the "X" button for cancelling trades.
+     *
+     * @return Button "X" button
+     */
     public Button getCancelButton(){
         return (Button) findViewById(R.id.cancel_button);
     }
@@ -108,11 +131,11 @@ public class TradeActivity extends AppCompatActivity {
             }
         }
 
-        // set trade with
+        // Set trade with
         tradeWith.setText("Trade with " + ownerName);
         tradeWith.setTypeface(null, Typeface.BOLD);
 
-        // set item photo and information
+        // Set item photo and information
         //LOAD PHOTO
         //Bitmap itemPhoto = decodeImage(ownerItem.getPhotos());
         //LOAD PHOTO
@@ -146,52 +169,55 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     /**
+     * Called when the user presses the "Offer Trade" button.
+     * <p>This method creates a new trade with the owner and borrower items.
+     * It sets the new trade as a pending trade for the borrower and an offered
+     * trade to the owner. It also sends the owner a notification for the new trade.
      *
      * @param view "offer trade" button.
      */
     public void offerTrade(View view){
-        // owner has offered trade
+        // Owner has an offered trade
         offeredTrade = new Trade(ownerName, borrower.getUsername(),ownerItem, borrowerOffer);
         offeredTrade.setStatus("offered");
 
-        // borrower has pending trade
+        // Borrower has a pending trade
         pendingTrade = new Trade(ownerName, borrower.getUsername(), ownerItem, borrowerOffer);
         pendingTrade.setId(offeredTrade.getId());
         pendingTrade.setStatus("pending");
 
-        // save the pending trade in borrower trades
+        // Save the pending trade in the borrower's trades
         SavePendingTradeThread savePendingTradeThread = new SavePendingTradeThread();
         savePendingTradeThread.start();
 
-        // send notification to owner
+        // Send notification to the owner
         sendOwnerNotifThread sendOwnerNotifThread = new sendOwnerNotifThread(ownerName);
         sendOwnerNotifThread.start();
 
-        // after offer a trade, should the borrower item is on hold?
-        // so that no one can offer a trade to that borrower item.
-
-        // finish the parent item detail activity
+        // Finish the parent item detail activity
         setResult(1);
 
         finish();
     }
 
     /**
+     * Called when the user presses the "X" button.
+     * <p>This method cancels the trade that is getting composed.
      *
-     * @param view "cancel trade" button.
+     * @param view "X" button
      */
     public void cancelTrade(View view) {
         finish();
     }
 
-    // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
-    // (C) 2011 user432209
-
     /**
      * Decodes the encoded string into an image and returns it.
+     * Code taken from:
+     * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+     * (C) 2011 user432209
      *
-     * @param encoded encoded image in string format.
-     * @return Bitmap.
+     * @param encoded       encoded image in string format
+     * @return decodedByte  decoded image in a Bitmap format
      */
     public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
@@ -200,7 +226,7 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     /**
-     * for owner
+     * Sends the owner a notification for the new trade.
      */
     class sendOwnerNotifThread extends Thread {
         private String username;
@@ -214,14 +240,14 @@ public class TradeActivity extends AppCompatActivity {
             User owner = userController.getUser(username);
             owner.getTrades().add(0, offeredTrade);
             System.out.println(offeredTrade.getClass());
-            // notify owner
+            // Notifies owner
             Thread updateTradeThread = userController.new UpdateUserThread(owner);
             updateTradeThread.start();
         }
     }
 
     /**
-     * for borrower
+     * Saves the new trade as a pending trade for the borrower.
      */
     class SavePendingTradeThread extends Thread {
         public SavePendingTradeThread() {}
@@ -229,7 +255,6 @@ public class TradeActivity extends AppCompatActivity {
         @Override
         public void run() {
             borrower.getTrades().add(0, pendingTrade);
-            // notify owner
             Thread updateTradeThread = userController.new UpdateUserThread(borrower);
             updateTradeThread.start();
         }

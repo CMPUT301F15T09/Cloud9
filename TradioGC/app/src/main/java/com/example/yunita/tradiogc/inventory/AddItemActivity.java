@@ -54,19 +54,38 @@ public class AddItemActivity extends AppCompatActivity {
     private PhotoController photoController;
     private Photo photo = new Photo();
 
-
+    /**
+     * Gets the name of the new item.
+     *
+     * @return nameEdit name of the new item
+     */
     public EditText getNameEdit() {
         return nameEdit;
     }
 
+    /**
+     * Gets the price of the new item.
+     *
+     * @return priceEdit price fo the new item
+     */
     public EditText getPriceEdit() {
         return priceEdit;
     }
 
+    /**
+     * Gets the description of the new item.
+     *
+     * @return descriptionEdit description of the new item
+     */
     public EditText getDescriptionEdit() {
         return descriptionEdit;
     }
 
+    /**
+     * Gets the "Add Item" button on the Add New Item page.
+     *
+     * @return add "Add Item" button
+     */
     public Button getAdd() {
         return add;
     }

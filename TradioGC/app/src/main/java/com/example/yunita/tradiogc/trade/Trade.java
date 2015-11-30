@@ -7,6 +7,9 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 
 import java.util.Random;
 
+/**
+ * This class defines a trade.
+ */
 public class Trade {
 
     private String owner = "";
@@ -16,11 +19,19 @@ public class Trade {
     private String status = "";
     private int id;
 
+    /**
+     * Class constructor for a trade.
+     */
     public Trade(){
         Random random = new Random();
         id = random.nextInt(999999999);
     }
 
+    /**
+     * Class constructor for a trade.
+     *
+     * @param trade existing trade
+     */
     public Trade(Trade trade){
         this.owner = trade.getOwner();
         this.borrower = trade.getBorrower();
@@ -30,6 +41,13 @@ public class Trade {
         this.id = trade.getId();
     }
 
+    /**
+     * Class constructor for a trade.
+     *
+     * @param owner         owner of the item in the trade
+     * @param ownerItem     item from the owner
+     * @param borrowerItems item from the borrower
+     */
     public Trade(String owner, Item ownerItem, Inventory borrowerItems) {
         this.owner = owner;
         this.ownerItem = ownerItem;
@@ -38,6 +56,14 @@ public class Trade {
         id = random.nextInt(999999999);
     }
 
+    /**
+     * Class constructor for a trade.
+     *
+     * @param owner         owner of the item in the trade
+     * @param borrower      borrower of the item in the trade
+     * @param ownerItem     item from the owner
+     * @param borrowerItems item from the borrower
+     */
     public Trade(String owner, String borrower, Item ownerItem, Inventory borrowerItems) {
         this.owner = owner;
         this.borrower = borrower;
@@ -47,56 +73,117 @@ public class Trade {
         id = random.nextInt(999999999);
     }
 
+    /**
+     * Gets the id for the trade.
+     *
+     * @return id id of the trade
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Changes the id for the trade.
+     *
+     * @param id id of the trade
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Gets the owner name for the trade.
+     *
+     * @return owner name of the owner
+     */
     public String getOwner() {
         return owner;
     }
 
+    /**
+     * Changes the owner name for the trade.
+     *
+     * @param owner name of the owner in the trade
+     */
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
+    /**
+     * Gets the borrower name for the trade.
+     *
+     * @return borrower name of the borrower
+     */
     public String getBorrower() {
         return borrower;
     }
 
+    /**
+     * Changes the borrower name for the trade.
+     *
+     * @param borrower name of the borrower in the trade
+     */
     public void setBorrower(String borrower) {
         this.borrower = borrower;
     }
 
+    /**
+     * Gets the owner's item to be used in the trade.
+     *
+     * @return ownerItem owner's item to be traded
+     */
     public Item getOwnerItem() {
         return ownerItem;
     }
 
-    public void setOwnerItem(Item ownerItem) {
-        this.ownerItem = ownerItem;
-    }
-
+    /**
+     * Gets the borrower items to be used in the trade.
+     *
+     * @return borrowerItems borrower's items to be traded
+     */
     public Inventory getBorrowerItems() {
         return borrowerItems;
     }
 
+    /**
+     * Changes the borrower's items to be traded.
+     *
+     * @param borrowerItems borrower's items to be traded
+     */
     public void setBorrowerItems(Inventory borrowerItems) {
         this.borrowerItems = borrowerItems;
     }
 
+    /**
+     * Gets the status of the trade.
+     *
+     * @return status status of the trade
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Changes the status of the trade.
+     *
+     * @param status status of the trade
+     */
     public void setStatus(String status) {
         // offered, pending, accepted, declined, completed
         this.status = status;
     }
 
-
+    /**
+     * Returns the printing format for the trade statuses.
+     * <p>The format of the trade records are:
+     * <p>Offered: [borrower] offered a trade for [owner's item]
+     * <p>Completed: Trade for [owner's item] is completed.
+     * <p>Accepted: [owner] accepted your trade for [owner's item]
+     * <p>Pending: Trade for [owner's item] is pending.
+     * <p>Declined: [owner] declined your trade for [owner's item]
+     *
+     * @return String containing borrower/owner, the items in the trade, and the status
+     */
     @Override
     public String toString(){
         String str = "";

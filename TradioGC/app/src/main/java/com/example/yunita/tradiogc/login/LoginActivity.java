@@ -41,7 +41,7 @@ public class LoginActivity extends Activity {
     private InventoryController inventoryController;
     private FriendsController friendsController;
 
-    private ItemstobeAdded newItems = new ItemstobeAdded(mContext);
+    private ItemstobeAdded newItems;
     private ItemstobeDeleted oldItems = new ItemstobeDeleted(mContext);
     private ItemstobeUpdated changedItems = new ItemstobeUpdated(mContext);
 
@@ -132,6 +132,8 @@ public class LoginActivity extends Activity {
         inventoryController = new InventoryController(mContext);
         friendsController = new FriendsController(mContext);
 
+        newItems = new ItemstobeAdded(mContext);
+
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
 
@@ -216,18 +218,27 @@ public class LoginActivity extends Activity {
                         toast.show();
                     } else {
                         loginController.saveUserInFile(LoginActivity.USERLOGIN);
-                        inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
-                        goToMain();
-                        /*if (newItems.getAddInventory().isEmpty()){
+                        if (newItems.getAddInventory().isEmpty()){
                             inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
                             goToMain();
                         } else {
-                            newItems.addAllItems();
-                            inventoryController.saveInventoryInFile(LoginActivity.USERLOGIN.getInventory(), LoginActivity.USERLOGIN);
+                            Inventory newInventory = inventoryController.loadInventoryInFile(LoginActivity.USERLOGIN);
+                            LoginActivity.USERLOGIN.setInventory(newInventory);
+                            Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+                            updateUserThread.start();
+                            synchronized (updateUserThread) {
+                                try {
+                                    updateUserThread.wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            Inventory newinventory = new Inventory();
+                            newItems.saveAddInvInFile(newinventory, LoginActivity.USERLOGIN);
                             /*changedItems.upAllItems();
-                            oldItems.delAllItems();
+                            oldItems.delAllItems();*/
                             goToMain();
-                        }*/
+                        }
                     }
                 }
             }else{

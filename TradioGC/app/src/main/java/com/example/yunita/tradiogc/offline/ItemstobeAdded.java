@@ -23,8 +23,8 @@ import java.io.OutputStreamWriter;
 public class ItemstobeAdded {
 
     Inventory addInventory;
-    InventoryController inventoryController;
     private Context context;
+    InventoryController inventoryController;
     private Gson gson = new Gson();
 
     public ItemstobeAdded(Context context) {
@@ -44,6 +44,7 @@ public class ItemstobeAdded {
     }
 
     public void addAllItems(){
+        addInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
         for (Item item: addInventory){
             inventoryController.addItem(item, LoginActivity.USERLOGIN);
         }
@@ -52,7 +53,7 @@ public class ItemstobeAdded {
     }
 
 
-    private void saveAddInvInFile(Inventory inventory, User user){
+    public void saveAddInvInFile(Inventory inventory, User user){
         try{
             FileOutputStream fos = context.openFileOutput(user.getUsername() + "addinventory.sav", 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);

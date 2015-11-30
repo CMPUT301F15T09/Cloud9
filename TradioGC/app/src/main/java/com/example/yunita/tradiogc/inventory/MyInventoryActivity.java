@@ -98,8 +98,12 @@ public class  MyInventoryActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Item deletedItem = inventory.get(position);
+<<<<<<< HEAD
                 Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
                 deleteThread.start();
+=======
+                inventoryController.removeExistingItem(deletedItem);
+>>>>>>> 1042c7b6ce289e5d44a3cdeb2657ba380f985b6e
                 inventory.remove(deletedItem);
                 Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
                 inventoryViewAdapter.notifyDataSetChanged();

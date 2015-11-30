@@ -5,11 +5,18 @@ import com.example.yunita.tradiogc.Observer;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines a list of users and sorts the top traders.
+ */
 public class Users extends ArrayList<User> implements Observable {
 
     private static final long serialVersionUID = 3199561696102797345L;
     private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
 
+    /**
+     * Sorts the list of users by the number of trades each user is involved in.
+     * The list is sorted from most trades to least trades.
+     */
     public void sortByNumberOfTrades() {
         Users result = new Users();
         for (User user: this) {

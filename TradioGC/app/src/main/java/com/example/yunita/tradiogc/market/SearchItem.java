@@ -13,17 +13,17 @@ public class SearchItem implements Serializable {
     private Item oItem;
 
     /**
-     * Class constructor.
+     * Class constructor for searching an item.
      */
     public SearchItem() {
 
     }
 
     /**
-     * Class constructor specifying the details of the object.
+     * Class constructor specifying the details of the item.
      *
-     * @param ownerName owner name.
-     * @param oItem     owner item.
+     * @param ownerName owner's name
+     * @param oItem     owner's item
      */
     public SearchItem(String ownerName, Item oItem) {
         this.ownerName = ownerName;
@@ -33,7 +33,7 @@ public class SearchItem implements Serializable {
     /**
      * Gets the name of the owner.
      *
-     * @return String
+     * @return ownerName owner's name
      */
     public String getOwnerName() {
         return ownerName;
@@ -42,7 +42,7 @@ public class SearchItem implements Serializable {
     /**
      * Changes the name of the owner.
      *
-     * @param ownerName new owner name.
+     * @param ownerName new owner name
      */
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
@@ -51,7 +51,7 @@ public class SearchItem implements Serializable {
     /**
      * Gets the item of the owner.
      *
-     * @return Item
+     * @return oItem owner's item
      */
     public Item getoItem() {
         return oItem;
@@ -60,7 +60,7 @@ public class SearchItem implements Serializable {
     /**
      * Changes the item of the owner.
      *
-     * @param oItem new owner item.
+     * @param oItem new owner item
      */
     public void setoItem(Item oItem) {
         this.oItem = oItem;
@@ -68,9 +68,9 @@ public class SearchItem implements Serializable {
 
     /**
      * Return the new printing format of the search item.
-     * <p>The new format of item is [item name]\n[price]\n[owner]
+     * <p>The format of item is [item name]\n[price]\n[owner]
      *
-     * @return String
+     * @return String contains the item's name, price, quantity, and owner name
      */
     @Override
     public String toString() {

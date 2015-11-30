@@ -56,34 +56,74 @@ public class EditItemActivity extends AppCompatActivity {
     private PhotoController photoController;
     private Photo photo;
 
+    /**
+     * Gets the name of the item to be edited.
+     *
+     * @return nameEdit name of the item
+     */
     public EditText getNameEdit() {
         return nameEdit;
     }
 
+    /**
+     * Gets the price of the item to be edited.
+     *
+     * @return priceEdit price of the item
+     */
     public EditText getPriceEdit() {
         return priceEdit;
     }
 
+    /**
+     * Gets the description of the item to be edited.
+     *
+     * @return descriptionEdit description of the item
+     */
     public EditText getDescriptionEdit() {
         return descriptionEdit;
     }
 
+    /**
+     * Gets the visibility of the item to be edited.
+     *
+     * @return privateChoice button to determine the visibility of the item
+     */
     public RadioButton getPrivateChoice() {
         return privateChoice;
     }
 
+    /**
+     * Gets the category of the item to be edited.
+     *
+     * @return categoriesChoice category chosen to place the item in
+     */
     public Spinner getCategoriesChoice() {
         return categoriesChoice;
     }
 
+    /**
+     * Gets the quantity of the item to be edited.
+     *
+     * @return quantityEdit quantity of the item
+     */
     public EditText getQuantityEdit() {
         return quantityEdit;
     }
 
+    /**
+     * Gets the quality of the item to be edited.
+     *
+     * @return qualityEdit quality of the item
+     */
     public Spinner getQualityChoice() {
         return qualityChoice;
     }
 
+    /**
+     * Gets the "Save" button on the Edit Item page.
+     *
+     * @return save "Save" button
+     */
     public Button getSave() {
         return save;
     }

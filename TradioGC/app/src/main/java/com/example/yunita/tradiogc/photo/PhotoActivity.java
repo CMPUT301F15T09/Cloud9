@@ -25,6 +25,9 @@ import com.example.yunita.tradiogc.market.ItemSearchActivity;
 
 import java.io.File;
 
+/**
+ * This activity handles
+ */
 public class PhotoActivity extends Activity {
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;

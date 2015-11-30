@@ -42,18 +42,32 @@ public class  MyInventoryActivity extends AppCompatActivity {
     private String query = "";
     private int categorySelection = 0;
 
+    /**
+     * Gets the button for adding a new item.
+     *
+     * @return addItem "+" button on the user's inventory
+     */
     public Button getAddItem() {
         return addItem;
     }
 
+    /**
+     * Gets the list of items in the user's inventory.
+     *
+     * @return itemList list of items in the user's inventory
+     */
     public ListView getItemList() {
         return itemList;
     }
 
+    /**
+     * Changes the list of items in the user's inventory.
+     *
+     * @param inventory user's inventory
+     */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +184,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
      * pass the item index position, and tell the Item Detail activity
      * to show the Item Detail page from the user's perspective.
      *
-     * @param index the index of item in inventory
+     * @param index the index of an item in the user's inventory
      */
     public void viewItemDetails(int index) {
         Intent intent = new Intent(context, ItemActivity.class);
@@ -180,11 +194,11 @@ public class  MyInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user changes the category selection or edittext.
+     * Called when the user changes the category selection or text query.
      * This method is used to browse items by query and category.
      *
-     * @param category the category choosed
-     * @param query    input of part of item name
+     * @param category the category chosen
+     * @param query    part of the item name to be searched for
      */
     public void searchItem(int category, String query) {
         searchResult.clear();
@@ -200,9 +214,10 @@ public class  MyInventoryActivity extends AppCompatActivity {
     /**
      * This class sets up the accuracy of the search list view
      * while doing a partial search.
+     * Code taken from:
+     * http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+     * (C) 2015 user1338795
      */
-    // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
-    // (C) 2015 user1338795
     abstract class DelayedTextWatcher implements TextWatcher {
 
         private long delayTime;

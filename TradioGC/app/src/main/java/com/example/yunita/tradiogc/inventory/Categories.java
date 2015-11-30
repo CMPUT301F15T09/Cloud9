@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public class Categories {
     private ArrayList<String> categories = new ArrayList<>();
 
+    /**
+     * Class constructor specifying the categories available to choose from.
+     */
     public Categories() {
         categories.add("Books");
         categories.add("Electronics");

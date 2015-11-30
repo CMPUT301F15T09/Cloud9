@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-
+/**
+ * This adapter handles the fragmented pages of the user's trade records.
+ */
 public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
     private String tabTitles[] = new String[]{"Current", "Completed", "Past"};
@@ -17,7 +19,12 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
     private ArrayList<String> tagList = new ArrayList<>();
     private FragmentManager fm;
 
-
+    /**
+     * Class constructor specifying that this controller class is a subclass of Context
+     * and FragmentManager.
+     *
+     * @param context
+     */
     public RecordFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.fm = fm;
@@ -29,6 +36,11 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
         return super.instantiateItem(container, position);
     }
 
+    /**
+     * Updates the page fragments.
+     *
+     * @param item page fragment
+     */
     public void update(int item){
         RecordPageFragment recordPageFragment = (RecordPageFragment) fm.findFragmentByTag(tagList.get(item));
         if(recordPageFragment != null){
@@ -39,7 +51,7 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
     /**
      * Gets the number of the page.
      *
-     * @return Integer
+     * @return PAGE_COUNT number of the page
      */
     @Override
     public int getCount() {
@@ -49,7 +61,7 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
     /**
      * Gets the next tab.
      *
-     * @param position tab index
+     * @param position  tab index
      * @return RecordPageFragment
      */
     @Override
@@ -61,7 +73,7 @@ public class RecordFragmentPagerAdapter extends android.support.v4.app.FragmentP
      * Gets the title of the current tab.
      *
      * @param position tab index
-     * @return CharSequence
+     * @return tabTitles[position] page title
      */
     @Override
     public CharSequence getPageTitle(int position) {

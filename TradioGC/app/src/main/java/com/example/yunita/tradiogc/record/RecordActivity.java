@@ -6,18 +6,24 @@ package com.example.yunita.tradiogc.record;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.example.yunita.tradiogc.R;
 
+/**
+ * This activity handles a user's trade records.
+ */
 public class RecordActivity extends AppCompatActivity {
     private String tab_title;
 
 
+    /**
+     * Gets the view of trade records.
+     *
+     * @return ListView
+     */
     public ListView getRecordListView(){
         return (ListView) findViewById(R.id.record_list_view);
     }

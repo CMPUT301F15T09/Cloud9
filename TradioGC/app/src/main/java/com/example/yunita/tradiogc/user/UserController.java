@@ -27,6 +27,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
+/**
+ * This controller handles users in the application and webserver.
+ */
 public class UserController {
     private static final String TAG = "UserController";
     private Gson gson;
@@ -46,11 +49,11 @@ public class UserController {
     }
 
     /**
-     * Called when update user thread is running.
-     * <p>This method is used to update this user information
-     * in the webserver.
+     * Called when "Update User Thread" is running.
+     * <p>This method is used to update the login user's information
+     * into the webserver.
      *
-     * @param user this user.
+     * @param user login user
      */
     public void updateUser(User user) {
         HttpClient httpClient = new DefaultHttpClient();
@@ -71,9 +74,9 @@ public class UserController {
     }
 
     /**
-     * Gets the user information from the webserver.
+     * Gets the login user's information from the webserver.
      *
-     * @param username this user's name.
+     * @param username login user's username
      */
     public User getUser(String username) {
         SearchHit<User> sr = null;
@@ -112,10 +115,10 @@ public class UserController {
     }
 
     /**
-     * Gets users with the specified search string. If the search does not
-     * specify fields, it searches on all the fields.
+     * Gets users that partially match the specified search string. If the search does not
+     * specify fields, it searches all of the fields.
      *
-     * @param field search string.
+     * @param field search string
      */
     public Users getAllUsers(String field) {
         Users result = new Users();
@@ -182,10 +185,10 @@ public class UserController {
     }
 
     /**
-     * Adds all user who are not login user or friends into user list.
+     * Adds all users who are not the login user or friends into the user list.
      *
-     * @param searchString search string.
-     * @return Users.
+     * @param searchString  search string
+     * @return              result users that are not the login user or friends of the login user
      */
     public Users searchStrangers(String searchString) {
         Users result = new Users();
@@ -203,10 +206,10 @@ public class UserController {
     }
 
     /**
-     * Adds all user into user list.
+     * Adds all users into the user list.
      *
-     * @param searchString search string.
-     * @return Users.
+     * @param searchString  search string
+     * @return result       list of all users
      */
     public Users searchUsers(String searchString) {
         Users result = new Users();
@@ -220,12 +223,10 @@ public class UserController {
         return result;
     }
 
-
-
     /**
-     * Called when this user information needs to be updated in
+     * Called when the login user's information needs to be updated into the
      * webserver.
-     * <p>While it is running, it updates this user information in
+     * <p>While it is running, it updates the login user's information into the
      * webserver.
      */
     public class UpdateUserThread extends Thread {
@@ -245,8 +246,8 @@ public class UserController {
     }
 
     /**
-     * Called when this user information needs to be updated.
-     * While it is running, it updates this user information.
+     * Called when the login user's information needs to be updated.
+     * While it is running, it updates the login user's information.
      */
     public class GetUserLoginThread extends Thread {
         private String username;
@@ -264,4 +265,3 @@ public class UserController {
         }
     }
 }
-

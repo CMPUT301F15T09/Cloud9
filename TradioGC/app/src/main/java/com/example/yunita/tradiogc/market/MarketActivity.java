@@ -32,6 +32,9 @@ public class MarketActivity extends AppCompatActivity {
     private ListView friendsItemListView;
     private ArrayAdapter<SearchItem> friendsItemViewAdapter;
 
+    /**
+     *  Updates the GUI details.
+     */
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             friendsItems.clear();
@@ -60,9 +63,8 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the view for Market page.
-     * <p>In addition, when the user clicks on an item,
-     * it sends the user to the Item Detail page.
+     * Sets up the view for the Market page.
+     * <p>When the user clicks on an item, it sends the user to the Item Detail page.
      */
     @Override
     protected void onStart() {
@@ -80,13 +82,13 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     /**
-     * Updates user login, and gets all users from webserver.
+     * Updates the user login and gets all users from the webserver.
      */
     @Override
     protected void onResume() {
         super.onResume();
 
-        // update user information
+        // Updates user information
         Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
         getUserLoginThread.start();
         synchronized (getUserLoginThread) {
@@ -99,17 +101,17 @@ public class MarketActivity extends AppCompatActivity {
 
         friends = LoginActivity.USERLOGIN.getFriends();
 
-        // get all users in webserver
+        // Gets all users in the webserver
         Thread getUsersThread = new GetUsersThread("");
         getUsersThread.start();
 
     }
 
     /**
-     * Called when the user clicks the "Search by Category" button in Market page.
+     * Called when the user presses the "Search by Category" button in the Market page.
      * <p>This method is used to send the user to the Search Item by Category page.
      *
-     * @param view "Search by Category" button.
+     * @param view "Search by Category" button
      */
     public void goToSearchByCategory(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
@@ -119,10 +121,10 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks the "Search by Query" button in Market page.
+     * Called when the user presses the "Search by Query" button in the Market page.
      * <p>This method is used to send the user to the Search Item by Query page.
      *
-     * @param view "Search by Query" button.
+     * @param view "Search by Query" button
      */
     public void goToSearchByQuery(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
@@ -132,13 +134,13 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks on item.
-     * This method is used to send user to Item Detail page and
-     * pass item index position and tell Item Detail activity
-     * to show the Item Detail page from borrower(friend)'s perspective.
+     * Called when the user presses on an item.
+     * This method is used to send the user to the item's Item Detail page,
+     * pass the item index position, and tell the Item Detail activity
+     * to show the Item Detail page from a borrower(friend)'s perspective.
      *
-     * @param searchItem this item.
-     * @param position   this item's index in friends' item list.
+     * @param searchItem item pressed
+     * @param position   the item's index in the friend's inventory
      */
     public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
@@ -153,7 +155,7 @@ public class MarketActivity extends AppCompatActivity {
     /**
      * Called when the activity starts.
      * <p>This class creates a thread and runs "Search Users".
-     * The purpose of this class is to get all users from webserver.
+     * The purpose of this class is to get all users from the webserver.
      */
     class GetUsersThread extends Thread {
         private String search;

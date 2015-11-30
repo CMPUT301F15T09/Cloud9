@@ -19,7 +19,7 @@ import com.example.yunita.tradiogc.inventory.ItemActivity;
 import java.util.ArrayList;
 
 /**
- * This activity handles the search of an item.
+ * This activity handles searching for items in a user's inventory.
  */
 public class ItemSearchActivity extends AppCompatActivity {
 
@@ -39,7 +39,7 @@ public class ItemSearchActivity extends AppCompatActivity {
 
     private SearchInventory friendsItems;
 
-    // temporary friends' inventories to manipulate the list view
+    // Temporary friend inventories to manipulate the list view
     private SearchInventory tempFriendsItems;
 
     @Override
@@ -62,10 +62,10 @@ public class ItemSearchActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets the search type that was passed from previous activity.
+     * Gets the search type that was passed from the previous activity.
      * <p>This method runs the view setup (either search by query
      * or by category) and the search method according to the search
-     * type that this user chose. In addition, when the user clicks on
+     * type that the user chose. In addition, when the user clicks on
      * an item, it sends the user to the Item Detail page.
      */
     @Override
@@ -75,13 +75,13 @@ public class ItemSearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        //this is how to handle class that extends ArrayList<> and implements Serializable
-        // all inventories are stored in this temporary Inventory
+        // This is to handle class that extends ArrayList<> and implements Serializable
+        // All inventories are stored in this temporary Inventory
         ArrayList<SearchItem> tempInventory = (ArrayList<SearchItem>) extras.getSerializable("friendsItems");
         friendsItems.addAll(tempInventory);
 
         if (extras.getString("search").equals("query")) {
-            //if search by query is chosen
+            // If search by query is chosen
             query_panel.setVisibility(View.VISIBLE);
 
             queryViewAdapter = new ArrayAdapter<>(this, R.layout.friend_list_item, tempFriendsItems);
@@ -98,7 +98,7 @@ public class ItemSearchActivity extends AppCompatActivity {
                 }
             });
 
-            // view item detail
+            // View item detail
             queryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,7 +108,7 @@ public class ItemSearchActivity extends AppCompatActivity {
             });
 
         } else {
-            // if search by category is chosen
+            // If search by category is chosen
             category_panel.setVisibility(View.VISIBLE);
 
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
@@ -135,7 +135,7 @@ public class ItemSearchActivity extends AppCompatActivity {
 
             });
 
-            // view item detail
+            // View item detail
             categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -149,13 +149,13 @@ public class ItemSearchActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks on item.
-     * This method is used to send user to Item Detail page and
-     * pass item index position and tell Item Detail activity
-     * to show the Item Detail page from borrower(friend)'s perspective.
+     * Called when the user clicks on an item.
+     * This method is used to send the user to the item's Item Detail page,
+     * pass the item index position, and tell the Item Detail activity
+     * to show the Item Detail page from a borrower(friend)'s perspective.
      *
-     * @param searchItem this item.
-     * @param position   this item's index in friends' item list.
+     * @param searchItem item pressed
+     * @param position   index of the item in the friend's inventory
      */
     public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);

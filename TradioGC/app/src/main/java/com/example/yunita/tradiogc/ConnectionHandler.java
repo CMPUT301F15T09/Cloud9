@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+/**
+ * This class handles the application's internet connection.
+ */
 public class ConnectionHandler {
 
     public ConnectionHandler() {

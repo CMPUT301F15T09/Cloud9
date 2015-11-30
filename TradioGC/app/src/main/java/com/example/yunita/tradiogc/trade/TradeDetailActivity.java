@@ -28,6 +28,10 @@ import com.example.yunita.tradiogc.record.RecordActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.email.GMailSender;
+
+/**
+ * This activity handles viewing trade details, and accepting/declining trades.
+ */
 public class TradeDetailActivity extends AppCompatActivity {
     private TextView tradeWith;
     private TextView ownerItemName;
@@ -53,18 +57,38 @@ public class TradeDetailActivity extends AppCompatActivity {
     private AlertDialog acceptBuilder;
     private AlertDialog counterBuilder;
 
+    /**
+     * Gets the "Accept Trade" button.
+     *
+     * @return Button "Accept Trade" button
+     */
     public Button getAcceptTradeButton(){
         return (Button) findViewById(R.id.accept_trade_button);
     }
 
+    /**
+     * Gets the "Decline Trade" button.
+     *
+     * @return Button "Decline Trade" button
+     */
     public Button getDeclineTradeButton(){
         return (Button) findViewById(R.id.decline_trade_button);
     }
 
+    /**
+     * Gets the owner's comments after accepting the trade.
+     *
+     * @return comments_et owner's comments after accepting the trade
+     */
     public EditText getComments_et() {
         return comments_et;
     }
 
+    /**
+     * Gets the alert dialog to enter a comment when a trade is accepted.
+     *
+     * @return acceptBuilder alert dialog to enter comments
+     */
     public AlertDialog getAcceptBuilder() {
         return acceptBuilder;
     }
@@ -96,7 +120,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         itemsOfferedArrayAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, itemsOffered);
         itemsOfferedList.setAdapter(itemsOfferedArrayAdapter);
 
-        // get trade by index
+        // Gets trade by index
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getExtras() != null) {
@@ -113,7 +137,7 @@ public class TradeDetailActivity extends AppCompatActivity {
             anotherUsername = trade.getBorrower();
         }
 
-        // set trade from
+        // Sets trade from
         tradeWith.setText("Trade with " + anotherUsername);
 
         tradeWith.setTypeface(null, Typeface.BOLD);
@@ -144,12 +168,12 @@ public class TradeDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * Activity finishes automatically if user offers a counter trade
+     * Activity finishes automatically if the user offers a counter trade.
      *
-     * @param requestCode request code for the sender that will be associated
-     *                    with the result data when it is returned
-     * @param resultCode the integer result code returned by the child activity
-     * @param data an intent, which can return result data to the caller
+     * @param requestCode   request code for the sender that will be associated
+     *                      with the result data when it is returned
+     * @param resultCode    the integer result code returned by the child activity
+     * @param data          an intent that can return result data to the caller
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,13 +194,13 @@ public class TradeDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user presses "accept trade" button.
+     * Called when the user presses the "Accept Trade" button.
      * <p>This method is used to set the trade as "accepted" and call a dialog to enter a comment.
      *
-     * @param view "accept trade" button.
+     * @param view "Accept Trade" button
      */
     public void accept(View view){
-        // create a dialog asking for comments
+        // Creates a dialog asking the user to enter a comment
         acceptBuilder = new AlertDialog.Builder(this).create();
         comments_et = new EditText(this);
         comments_et.setHint("say something here...");
@@ -227,11 +251,11 @@ public class TradeDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user presses "decline trade" button.
+     * Called when the user presses the "Decline Trade" button.
      * <p>This method is used to set the trade as "declined" and call a prompt dialog
-     * whether owner wants to counter trade.
+     * asking if the owner wants to make a counter trade.
      *
-     * @param view "decline trade" button.
+     * @param view "Decline Trade" button
      */
     public void decline(View view){
         LoginActivity.USERLOGIN.getNotifications().remove(LoginActivity.USERLOGIN.getNotifications().findNotificationById(trade.getId()));
@@ -257,19 +281,19 @@ public class TradeDetailActivity extends AppCompatActivity {
             }
         }
 
-        // if it is a counter trade, back to notification directly
-        // else show a dialog
+        // If it is a counter trade, go directly back to Notifications
+        // Else, show a dialog
         if (counterTrade) {
             onBackPressed();
         } else {
-            // create a dialog asking for counter trade
+            // Create a dialog asking if the owner wants to make a counter trade
             counterBuilder = new AlertDialog.Builder(this).create();
             counterBuilder.setMessage("Do you want to offer a counter trade?");
             counterBuilder.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
-                    // call another intent
+                    // Calls another intent
                     Intent intent = new Intent(context, CounterTradeActivity.class);
                     intent.putExtra("item_for_trade", trade.getOwnerItem());
                     intent.putExtra("borrower_name", trade.getBorrower());
@@ -292,8 +316,11 @@ public class TradeDetailActivity extends AppCompatActivity {
     }
 
     /**
+     *  Called when the owner presses the "Complete Trade" button.
+     *  <p>This method is to set the trade to complete for both the owner and borrower
+     *  once the items have been traded and the owner chooses to set the trade to complete.
      *
-     * @param view "complete trade" button.
+     * @param view "Complete Trade" button
      */
     public void complete(View view){
         trade.setStatus("completed");
@@ -320,14 +347,16 @@ public class TradeDetailActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    // taken from http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
-    // (C) 2011 user432209
+    //
 
     /**
      * Decodes the encoded string into an image and returns it.
+     * Code taken from:
+     * http://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+     * (C) 2011 user432209
      *
-     * @param encoded encoded image in string format.
-     * @return Bitmap.
+     * @param encoded       encoded image in string format
+     * @return decodedByte  decoded image in Bitmap format
      */
     public Bitmap decodeImage(String encoded) {
         byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
@@ -337,7 +366,7 @@ public class TradeDetailActivity extends AppCompatActivity {
 
 
     /**
-     * reply to another user in trade
+     * Changes the status of the trade for another user.
      */
     class ReplyThread extends Thread {
         private String status;
@@ -362,6 +391,9 @@ public class TradeDetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * E-mails both the owner and borrower with trade details and the owner's comments.
+     */
     public class EmailThread extends Thread {
         private String email1;
         private String email2;
@@ -378,7 +410,7 @@ public class TradeDetailActivity extends AppCompatActivity {
         public void run() {
             synchronized (this) {
                 try {
-                    //taken from http://stackoverflow.com/questions/2020088/sending-email
+                    // Code taken from: http://stackoverflow.com/questions/2020088/sending-email
                     // -in-android-using-javamail-api-without-using-the-default-built-in-a
                     // (C) 2010 Vinayak B, shridutt kothari
                     GMailSender sender = new GMailSender("tradiogc@gmail.com", "tradiogc123");
@@ -391,8 +423,7 @@ public class TradeDetailActivity extends AppCompatActivity {
                             "tradiogcjunkmail@yopmail.com");
                     */
 
-                    // TODO: make an informative message
-                    sender.sendMail("TradioGC: Your trade is in progress now",
+                    sender.sendMail("TradioGC: New Accepted Trade",
                             "\nComments from " + LoginActivity.USERLOGIN.getUsername() + ": " + comments + "\n",
                             "tradiogc@gmail.com",
                              email1+ ","+email2);

@@ -20,6 +20,9 @@ import com.example.yunita.tradiogc.record.RecordActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
+/**
+ * This activity handles the user's profile page.
+ */
 public class ProfileActivity extends AppCompatActivity {
     private String targetUsername = "";
     private User user;
@@ -43,6 +46,9 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView phone;
 
 
+    /**
+     * Updates the GUI details.
+     */
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             username.setText(user.getUsername());
@@ -52,46 +58,101 @@ public class ProfileActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Gets the username of the user.
+     *
+     * @return username username of the user
+     */
     public TextView getUsername() {
         return username;
     }
 
+    /**
+     * Gets the location of the user.
+     *
+     * @return location location of the user
+     */
     public TextView getLocation() {
         return location;
     }
 
+    /**
+     * Gets the e-mail address of the user.
+     *
+     * @return email e-mail address of the user
+     */
     public TextView getEmail() {
         return email;
     }
 
+    /**
+     * Gets the phone number of the user.
+     *
+     * @return phone phone number of the user
+     */
     public TextView getPhone() {
         return phone;
     }
 
+    /**
+     * Changes the user shown on the Profile page.
+     *
+     * @param user user shown
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets the method to update the GUI details.
+     *
+     * @return doUpdateGUIDetails values from updating the GUI details
+     */
     public Runnable getDoUpdateGUIDetails() {
         return doUpdateGUIDetails;
     }
 
+    /**
+     * Gets the button for editing the user's profile.
+     *
+     * @return edit_button edit pencil button
+     */
     public ImageButton getEdit_button() {
         return edit_button;
     }
 
+    /**
+     * Gets the button for adding a friend.
+     *
+     * @return addfriend_button "Add Friend" button
+     */
     public Button getAddfriend_button() {
         return addfriend_button;
     }
 
+    /**
+     * Gets the button for going to view a friend's inventory when viewing a friend's profile.
+     *
+     * @return friendinventory_button "Inventory" button when viewing a friend's profile.
+     */
     public Button getFriendinventory_button() {
         return friendinventory_button;
     }
 
+    /**
+     * Gets the button for viewing a user's inventory.
+     *
+     * @return myinventory_button "Inventory" button when a user is viewing their own profile
+     */
     public Button getMyinventory_button() {
         return myinventory_button;
     }
 
+    /**
+     * Gets the context of the activity.
+     *
+     * @return context
+     */
     public Context getContext() {
         return context;
     }
@@ -215,7 +276,7 @@ public class ProfileActivity extends AppCompatActivity {
      * Called when the user presses the "Trade Record" button in their Profile page.
      * <p>This method is used to send the user to Trade Record page.
      *
-     * @param view "Trade Record" button,
+     * @param view "Trade Record" button
      */
     public void goToRecord(View view){
         Intent intent = new Intent(context, RecordActivity.class);

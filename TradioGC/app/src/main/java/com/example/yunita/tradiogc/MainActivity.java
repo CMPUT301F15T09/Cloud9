@@ -15,6 +15,9 @@ import com.example.yunita.tradiogc.market.MarketActivity;
 import com.example.yunita.tradiogc.notification.NotificationActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
+/**
+ * This class handles the main activity that starts after the user logs into the application.
+ */
 public class MainActivity extends TabActivity {
 
     private String textArray[] = {"Notification", "Friends", "Market", "Account"};

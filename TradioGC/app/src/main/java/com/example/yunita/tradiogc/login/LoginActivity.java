@@ -42,34 +42,69 @@ public class LoginActivity extends Activity {
     private Button login;
     private Button signup;
 
-
+    /**
+     * Gets the button to open the button panel to create a new account.
+     *
+     * @return create_account button for "Create Account"
+     */
     public TextView getCreate_account() {
         return create_account;
     }
 
+    /**
+     * Gets the phone number of the new user.
+     *
+     * @return phone_et phone number of the new user
+     */
     public EditText getPhone_et() {
         return phone_et;
     }
 
+    /**
+     * Gets the e-mail of the new user.
+     *
+     * @return email_et e-mail of the new user
+     */
     public EditText getEmail_et() {
         return email_et;
     }
 
+    /**
+     * Gets the location of the new user.
+     *
+     * @return location_et location of the new user
+     */
     public EditText getLocation_et() {
         return location_et;
     }
 
+    /**
+     * Gets the username of the new user.
+     *
+     * @return username_et username of the new user
+     */
     public EditText getUsername_et() {
         return username_et;
     }
 
+    /**
+     * Gets the login button on the login page.
+     *
+     * @return login "Login" button
+     */
     public Button getLogin() {
         return login;
     }
 
+    /**
+     * Gets the sign up button on the sign up page.
+     *
+     * @return signup "Sign Up" button
+     */
     public Button getSignup() {
         return signup;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

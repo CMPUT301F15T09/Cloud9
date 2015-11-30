@@ -53,6 +53,13 @@ public class PhotoController {
     public void getItem(int item_id){
         GetItemPhotoThread getItemPhotoThread = new GetItemPhotoThread(item_id);
         getItemPhotoThread.start();
+        synchronized (getItemPhotoThread) {
+            try {
+                getItemPhotoThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void updateItemPhotos(int itemId, Photo photo) {
@@ -134,8 +141,10 @@ public class PhotoController {
 
         @Override
         public void run() {
-            photo = getItemPhoto(itemId);
+            synchronized (this) {
+                photo = getItemPhoto(itemId);
+                notify();
+            }
         }
-
     }
 }

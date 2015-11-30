@@ -49,6 +49,7 @@ public class AddItemActivity extends AppCompatActivity {
     private Bitmap thumbnail;
     private Button add;
     private Button delItem;
+    private Button delPhoto;
     private Boolean usePhoto;
 
     private PhotoController photoController;
@@ -88,8 +89,10 @@ public class AddItemActivity extends AppCompatActivity {
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
         add = (Button) findViewById(R.id.add_item_button);
         delItem = (Button) findViewById(R.id.delete_item_button);
+        delPhoto = (Button) findViewById(R.id.delete_photo_button);
 
         delItem.setVisibility(View.GONE);
+        delPhoto.setVisibility(View.GONE);
 
         photoController = new PhotoController(mContext);
     }
@@ -158,9 +161,12 @@ public class AddItemActivity extends AppCompatActivity {
                 quantity = Integer.parseInt(quantityEdit.getText().toString());
             }
             int quality = qualityChoice.getSelectedItemPosition();
+
             if (thumbnail != null) {
-                photo.setItemId(id);
-                photoController.addPhoto(id, photo);
+                if (usePhoto) {
+                    photo.setItemId(id);
+                    photoController.addPhoto(id, photo);
+                }
             }
 
             Item newItem = new Item(id, name, category, price, description, visibility, quantity, quality);

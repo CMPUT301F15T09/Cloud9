@@ -6,7 +6,6 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Photo {
 
@@ -40,8 +39,10 @@ public class Photo {
     }
 
     public void addEncodedPhoto(Bitmap bitmap){
-        if (this.encodedPhoto.get(0).equals("")){
-            this.encodedPhoto.remove(0);
+        if (this.encodedPhoto.size()!=0) {
+            if (this.encodedPhoto.get(0).equals("")) {
+                this.encodedPhoto.remove(0);
+            }
         }
         this.encodedPhoto.add(encodeImage(bitmap));
     }

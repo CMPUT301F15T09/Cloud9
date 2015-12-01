@@ -80,8 +80,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 friendname = friendsInUser.get(position).getUsername();
-                Thread deleteThread = new DeleteFriendThread(friendname);
-                deleteThread.start();
+                friendsController.deleteFriend(friendname);
                 friendsInUser.remove(position);
                 friendsViewAdapter.notifyDataSetChanged();
                 Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
@@ -144,25 +143,6 @@ public class FriendsActivity extends AppCompatActivity {
             }
         };
         runOnUiThread(doUpdateGUIList);
-    }
-    /**
-     * This class is called when the user deletes a friend by long pressing
-     * on a friend's name.
-     * <p>This class creates a thread and runs "Delete Friend".
-     * While it is running, it removes this friend from the user's friend list
-     * and updates the friends list view.
-     */
-    class DeleteFriendThread extends Thread {
-        private String friendname;
-
-        public DeleteFriendThread(String friendname) {
-            this.friendname = friendname;
-        }
-
-        @Override
-        public void run() {
-            friendsController.deleteFriend(friendname);
-        }
     }
 
     /**

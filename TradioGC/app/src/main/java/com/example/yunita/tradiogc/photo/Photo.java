@@ -48,8 +48,10 @@ public class Photo {
     }
 
     public void removeEncodedPhoto() {
-        if (this.encodedPhoto.get(0) != null){
-            this.encodedPhoto.remove(0);
+        if (this.encodedPhoto.size()!=0) {
+            if (this.encodedPhoto.get(0) != null) {
+                this.encodedPhoto.remove(0);
+            }
         }
     }
     // taken from http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android

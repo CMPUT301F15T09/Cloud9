@@ -103,6 +103,7 @@ public class NotificationActivity extends AppCompatActivity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     Notification notification = notifications.get(position);
                     // Deletes it in webserver
+
                     LoginActivity.USERLOGIN.getNotifications().remove(notification);
                     notificationController.updateToWebServer();
                     // Deletes it from the list

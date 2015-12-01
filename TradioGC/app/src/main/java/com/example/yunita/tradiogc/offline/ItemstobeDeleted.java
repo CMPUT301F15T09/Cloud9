@@ -20,9 +20,11 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+
 /**
  * Created by User on 2015-11-29.
  */
+
 public class ItemstobeDeleted {
     Inventory delInventory;
     InventoryController inventoryController;
@@ -42,7 +44,9 @@ public class ItemstobeDeleted {
     }
     public void delAllItems(){
         for (Item item: delInventory){
+
             inventoryController.removeExistingItem(item, LoginActivity.USERLOGIN);
+
         }
         Inventory inventory = new Inventory();
         saveDelInvInFile(inventory, LoginActivity.USERLOGIN);

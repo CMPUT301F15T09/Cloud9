@@ -60,6 +60,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="clone">Clone</string>
+    <string name="photo_download">Photo Download</string>
+
 
 
     <!-- Error messages -->

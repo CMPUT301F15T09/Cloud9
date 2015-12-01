@@ -1,20 +1,7 @@
 ![tradioGC](https://github.com/CMPUT301F15T09/Cloud9/blob/yunita/TradioGC/app/src/main/res/mipmap-hdpi/logo.png?raw=true)
 
-## Update (24/11)
-- READ IMPORTANT INFORMATION IN WIKI!
-- Working on OFFLINE behaviour / connection handler (save/load file)
-- Working on PHOTOGRAPHS (refactor 'photographs' into a new class)
-- Working on BUG and MISSING REQUIREMENTS
-- Working on Use Case & UI test
-- Working on Use cases, Story board, Class and UC diagram (extra requirements)
-- Use cases need to be updated (extra requirements)
-- Story board, Class and UC diagram need to be updated
-- Demo 5 and Trailer on the way!
-- Finding a bug!
-- Keep updating bug under issue.
-
 ## TradioGC
-A trading gift-card application
+An application for trading gift cards between friends.
 
 ## Specifications
 - Compile Sdk Version: 21
@@ -26,7 +13,7 @@ A trading gift-card application
 [TradioGC Preview is up now!](https://youtu.be/r3O27hR8o0U)
 
 ## Demo
-On the way...
+[TradioGC Demo is up now!](https://youtu.be/pxnRsc4ec9A)
 
 ## Documentation
 You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/Cloud9/wiki)
@@ -43,6 +30,7 @@ You can find our documentation in [our wiki](https://github.com/CMPUT301F15T09/C
 - Alexander Y. Kleymenov, https://svn.apache.org/repos/asf/harmony/enhanced/archive/classlib/java6/modules/x-net/src/main/java/org/apache/harmony/xnet/provider/jsse/JSSEProvider.java
 - Vinayak B, shridutt kothari, http://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
 - Jane Tedjasukmana, http://janetedja.com
+- Recep Kutuk, http://rcpktk.deviantart.com/?rnrd=161775
 
 ## License
 TradioGC is licensed under Apache License Version 2.0.

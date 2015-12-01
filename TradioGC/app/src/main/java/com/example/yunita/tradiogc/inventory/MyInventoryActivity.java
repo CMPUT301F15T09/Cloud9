@@ -38,6 +38,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
     private ArrayAdapter<Item> inventoryViewAdapter;
     private InventoryController inventoryController;
 
+
     private Context context = this;
     private CheckNetwork checkNetwork = new CheckNetwork(context);
 
@@ -125,6 +126,7 @@ public class  MyInventoryActivity extends AppCompatActivity {
                     ItemstobeDeleted items = new ItemstobeDeleted(context);
                     items.addItem(deletedItem);
                 }
+
                 inventory.remove(deletedItem);
                 inventoryController.saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
                 Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();

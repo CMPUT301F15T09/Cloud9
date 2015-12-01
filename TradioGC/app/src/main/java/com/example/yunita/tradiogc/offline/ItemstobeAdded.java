@@ -25,6 +25,7 @@ public class ItemstobeAdded {
     Inventory addInventory;
     private Context context;
     InventoryController inventoryController;
+
     private Gson gson = new Gson();
 
     public ItemstobeAdded(Context context) {
@@ -34,6 +35,7 @@ public class ItemstobeAdded {
 
     public Inventory getAddInventory(){
         addInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
+
         return addInventory;
     }
 
@@ -47,13 +49,16 @@ public class ItemstobeAdded {
         addInventory = loadAddInvFromFile(LoginActivity.USERLOGIN);
         for (Item item: addInventory){
             inventoryController.addItem(item, LoginActivity.USERLOGIN);
+
         }
         Inventory inventory = new Inventory();
         saveAddInvInFile(inventory, LoginActivity.USERLOGIN);
     }
 
 
+
     public void saveAddInvInFile(Inventory inventory, User user){
+
         try{
             FileOutputStream fos = context.openFileOutput(user.getUsername() + "addinventory.sav", 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
@@ -73,6 +78,7 @@ public class ItemstobeAdded {
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             addInventory = gson.fromJson(in, Inventory.class);
+
             return addInventory;
         } catch (FileNotFoundException e) {
             addInventory = new Inventory();

@@ -296,6 +296,7 @@ public class LoginActivity extends Activity {
                     if (USERLOGIN != null) {
                         Toast toast = Toast.makeText(mContext, "This username already exists.", Toast.LENGTH_SHORT);
 
+
                         toast.show();
                     } else {
                         try {

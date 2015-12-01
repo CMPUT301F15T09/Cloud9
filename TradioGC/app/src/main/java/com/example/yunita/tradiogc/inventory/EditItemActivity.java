@@ -155,16 +155,18 @@ public class EditItemActivity extends AppCompatActivity {
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
-        photoController.getItem(item.getId());
-        photo = photoController.getPhoto();
-        ArrayList<String> photoArray;
+        if (LoginActivity.USERLOGIN.getDownloadPhotos()) {
+            photoController.getItem(item.getId());
+            photo = photoController.getPhoto();
 
-        if (photo != null) {
-            photoArray = photo.getEncodedPhoto();
-            tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
-        }
-        else{
-            photo = new Photo();
+            ArrayList<String> photoArray;
+
+            if (photo != null) {
+                photoArray = photo.getEncodedPhoto();
+                tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+            } else {
+                photo = new Photo();
+            }
         }
 
         Button delPhoto = (Button) findViewById(R.id.delete_photo_button);
@@ -207,16 +209,17 @@ public class EditItemActivity extends AppCompatActivity {
 
         tempPhoto = (ImageView) findViewById(R.id.temp_photo_view);
 
-        photoController.getItem(item.getId());
-        photo = photoController.getPhoto();
-        ArrayList<String> photoArray;
+        if (LoginActivity.USERLOGIN.getDownloadPhotos()) {
+            photoController.getItem(item.getId());
+            photo = photoController.getPhoto();
+            ArrayList<String> photoArray;
 
-        if (photo != null) {
-            photoArray = photo.getEncodedPhoto();
-            tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
-        }
-        else{
-            photo = new Photo();
+            if (photo != null) {
+                photoArray = photo.getEncodedPhoto();
+                tempPhoto.setImageBitmap(decodeImage(photoArray.get(0)));
+            } else {
+                photo = new Photo();
+            }
         }
     }
 
@@ -366,17 +369,21 @@ public class EditItemActivity extends AppCompatActivity {
 
 
     public void delItem(View v){
+
+        photoController.clearPhoto(photo.getItemId(),photo);
         inventoryController.removeExistingItem(item, LoginActivity.USERLOGIN);
+
         Intent intent = new Intent(mContext, MyInventoryActivity.class);
         startActivity(intent);
         finish();
     }
     public void delPhoto(View v){
-        photo.removeEncodedPhoto();
-        photoController.updateItemPhotos(photo.getItemId(),photo);
-        Intent intent = new Intent(mContext, MyInventoryActivity.class);
-        startActivity(intent);
-        finish();
+        if (photo != null) {
+            photoController.delPhoto(photo.getItemId(), photo);
+            Intent intent = new Intent(mContext, MyInventoryActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

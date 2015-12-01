@@ -20,9 +20,11 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+
 /**
  * Created by User on 2015-11-29.
  */
+
 public class ItemstobeUpdated {
     Inventory upInventory;
     InventoryController inventoryController;
@@ -45,6 +47,7 @@ public class ItemstobeUpdated {
     public void upAllItems(){
         for (Item item: upInventory){
             inventoryController.updateItem(item, LoginActivity.USERLOGIN);
+
         }
         Inventory inventory = new Inventory();
         saveAddInvInFile(inventory, LoginActivity.USERLOGIN);

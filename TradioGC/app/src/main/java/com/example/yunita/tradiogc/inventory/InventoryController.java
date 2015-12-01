@@ -82,10 +82,10 @@ public class InventoryController {
 
     /**
      * Called when the user long presses on an item that exists in the inventory.
-     * <p>This method is used to remove an item from the user's inventory and
+     * <p>This method is used to remove the item from the inventory and
      * run the "Update User Thread".
      *
-     * @param item an existing item in the user's inventory
+     * @param item existing item in the inventory
      */
     public void removeExistingItem(Item item, User user) {
         inventory.remove(item);
@@ -197,4 +197,5 @@ public class InventoryController {
             throw new RuntimeException(e);
         }
     }
+
 }

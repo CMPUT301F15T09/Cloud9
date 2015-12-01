@@ -18,6 +18,7 @@ public class User {
     private Inventory inventory;
     private Trades trades;
     private Notifications notifications;
+    private Boolean downloadPhotos;
 
     /**
      * Class constructor for a user.
@@ -31,7 +32,16 @@ public class User {
         inventory = new Inventory();
         trades = new Trades();
         notifications = new Notifications();
+        downloadPhotos = true;
 
+    }
+
+    public Boolean getDownloadPhotos() {
+        return downloadPhotos;
+    }
+
+    public void setDownloadPhotos(Boolean downloadPhotos) {
+        this.downloadPhotos = downloadPhotos;
     }
 
     /**
@@ -191,7 +201,7 @@ public class User {
             if (word.length() != 0) {
                 string += " " + String.valueOf(word.charAt(0)).toUpperCase();
                 if (word.length() != 1) {
-                    string += word.substring(1);
+                    string += word.substring(1).toLowerCase();
                 }
             }
         }

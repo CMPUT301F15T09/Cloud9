@@ -53,6 +53,11 @@ public class FriendsController {
         Collections.sort(LoginActivity.USERLOGIN.getFriends(), String.CASE_INSENSITIVE_ORDER);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+        try {
+            updateUserThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -67,6 +72,11 @@ public class FriendsController {
         System.out.println("login friends = " + LoginActivity.USERLOGIN.getFriends().size());
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+        try {
+            updateUserThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

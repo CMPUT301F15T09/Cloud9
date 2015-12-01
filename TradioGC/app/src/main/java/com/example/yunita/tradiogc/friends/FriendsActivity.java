@@ -1,8 +1,10 @@
 package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -82,13 +84,26 @@ public class FriendsActivity extends AppCompatActivity {
         // Delete friends on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 friendname = friendsInUser.get(position).getUsername();
-                Thread deleteThread = new DeleteFriendThread(friendname);
-                deleteThread.start();
-                friendsInUser.remove(position);
-                friendsViewAdapter.notifyDataSetChanged();
-                Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setMessage("Do you want to remove friend <" + friendname + ">?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        friendsController.deleteFriend(friendname);
+                        friendsInUser.remove(position);
+                        friendsViewAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
                 return true;
             }
         });
@@ -152,25 +167,6 @@ public class FriendsActivity extends AppCompatActivity {
             }
         };
         runOnUiThread(doUpdateGUIList);
-    }
-    /**
-     * This class is called when the user deletes a friend by long pressing
-     * on a friend's name.
-     * <p>This class creates a thread and runs "Delete Friend".
-     * While it is running, it removes this friend from the user's friend list
-     * and updates the friends list view.
-     */
-    class DeleteFriendThread extends Thread {
-        private String friendname;
-
-        public DeleteFriendThread(String friendname) {
-            this.friendname = friendname;
-        }
-
-        @Override
-        public void run() {
-            friendsController.deleteFriend(friendname);
-        }
     }
 
     /**

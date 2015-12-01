@@ -201,8 +201,12 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (!username.equals("")) {
+            if (username.contains(" ")) {
+                username_et.setError("Username cannot include empty space.");
+            } else {
+                if(checkNetwork.isOnline()) {
 
-            if(checkNetwork.isOnline()) {
+
                 Thread thread = userController.new GetUserLoginThread(username);
                 thread.start();
 
@@ -250,6 +254,7 @@ public class LoginActivity extends Activity {
                     Inventory inventory = inventoryController.loadInventoryInFile(LoginActivity.USERLOGIN);
                     LoginActivity.USERLOGIN.setInventory(inventory);
                     goToMain();
+                    }
                 }
             }
         } else {

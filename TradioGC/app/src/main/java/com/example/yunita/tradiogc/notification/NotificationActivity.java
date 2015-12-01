@@ -75,7 +75,7 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(checkNetwork.isOnline()) {
-            notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.inventory_list_item, notifications);
+            notificationArrayAdapter = new ArrayAdapter<>(this, R.layout.notification_list_item, notifications);
             notificationListView.setAdapter(notificationArrayAdapter);
 
             notificationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

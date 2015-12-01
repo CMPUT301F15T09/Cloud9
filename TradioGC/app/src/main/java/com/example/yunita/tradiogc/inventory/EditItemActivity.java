@@ -373,15 +373,18 @@ public class EditItemActivity extends AppCompatActivity {
         photoController.clearPhoto(photo.getItemId(),photo);
         inventoryController.removeExistingItem(item, LoginActivity.USERLOGIN);
 
-        Intent intent = new Intent(mContext, MyInventoryActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(mContext, MyInventoryActivity.class);
+        //startActivity(intent);
+        setResult(1);
+
         finish();
     }
     public void delPhoto(View v){
         if (photo != null) {
             photoController.delPhoto(photo.getItemId(), photo);
-            Intent intent = new Intent(mContext, MyInventoryActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(mContext, MyInventoryActivity.class);
+            //startActivity(intent);
+            setResult(1);
             finish();
         }
     }

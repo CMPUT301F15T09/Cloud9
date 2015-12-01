@@ -271,7 +271,10 @@ public class ItemActivity extends AppCompatActivity {
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
         intent.putExtra("index", index);
-        startActivity(intent);
+
+        int result = 0;
+        startActivityForResult(intent, result);
+        //startActivity(intent);
     }
 
     //

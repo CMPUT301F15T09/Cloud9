@@ -204,11 +204,19 @@ public class ProfileActivity extends AppCompatActivity {
         downloadPhotos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     LoginActivity.USERLOGIN.setDownloadPhotos(true);
-                }
-                else{
+                } else {
                     LoginActivity.USERLOGIN.setDownloadPhotos(false);
+                }
+                if (checkNetwork.isOnline()) {
+                    Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+                    updateUserThread.start();
+                    try {
+                        updateUserThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

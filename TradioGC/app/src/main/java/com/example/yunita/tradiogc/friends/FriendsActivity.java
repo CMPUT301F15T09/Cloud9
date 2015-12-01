@@ -1,8 +1,10 @@
 package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
+import com.example.yunita.tradiogc.trade.CounterTradeActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
@@ -78,12 +81,26 @@ public class FriendsActivity extends AppCompatActivity {
         // Delete friends on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 friendname = friendsInUser.get(position).getUsername();
-                friendsController.deleteFriend(friendname);
-                friendsInUser.remove(position);
-                friendsViewAdapter.notifyDataSetChanged();
-                Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setMessage("Do you want to remove friend <" + friendname + ">?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        friendsController.deleteFriend(friendname);
+                        friendsInUser.remove(position);
+                        friendsViewAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
                 return true;
             }
         });
